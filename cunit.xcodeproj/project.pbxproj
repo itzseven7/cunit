@@ -14,6 +14,8 @@
 		04CBDDB11FCDF45100AFD45D /* cunit.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CBDDB01FCDF43600AFD45D /* cunit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04CBDDB91FCDF48800AFD45D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDB81FCDF48800AFD45D /* main.m */; };
 		04CBDDC61FCDFA4400AFD45D /* libcunit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CBDDA01FCDF3F500AFD45D /* libcunit.a */; };
+		04CBDDCA1FCE026F00AFD45D /* ctperf.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CBDDC91FCE026F00AFD45D /* ctperf.h */; };
+		04CBDDCC1FCE028000AFD45D /* ctperf.c in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDCB1FCE028000AFD45D /* ctperf.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		04CBDDB01FCDF43600AFD45D /* cunit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cunit.h; sourceTree = "<group>"; };
 		04CBDDB61FCDF48800AFD45D /* CUnitTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CUnitTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04CBDDB81FCDF48800AFD45D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		04CBDDC91FCE026F00AFD45D /* ctperf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ctperf.h; sourceTree = "<group>"; };
+		04CBDDCB1FCE028000AFD45D /* ctperf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ctperf.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				04CBDDC21FCDF99200AFD45D /* include */,
+				04CBDDCB1FCE028000AFD45D /* ctperf.c */,
 				04CBDDA81FCDF41900AFD45D /* ctcase.c */,
 				04CBDDA91FCDF41900AFD45D /* ctsuite.c */,
 			);
@@ -115,6 +120,7 @@
 		04CBDDC21FCDF99200AFD45D /* include */ = {
 			isa = PBXGroup;
 			children = (
+				04CBDDC91FCE026F00AFD45D /* ctperf.h */,
 				04CBDDAB1FCDF41900AFD45D /* ctcase.h */,
 				04CBDDAA1FCDF41900AFD45D /* ctsuite.h */,
 				04CBDDB01FCDF43600AFD45D /* cunit.h */,
@@ -131,6 +137,7 @@
 			files = (
 				04CBDDB11FCDF45100AFD45D /* cunit.h in Headers */,
 				04CBDDAE1FCDF41900AFD45D /* ctsuite.h in Headers */,
+				04CBDDCA1FCE026F00AFD45D /* ctperf.h in Headers */,
 				04CBDDAF1FCDF41900AFD45D /* ctcase.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -217,6 +224,7 @@
 			files = (
 				04CBDDAC1FCDF41900AFD45D /* ctcase.c in Sources */,
 				04CBDDAD1FCDF41900AFD45D /* ctsuite.c in Sources */,
+				04CBDDCC1FCE028000AFD45D /* ctperf.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
