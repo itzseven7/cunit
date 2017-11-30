@@ -11,5 +11,6 @@
 
 #include "ctcase.h"
 #include "ctsuite.h"
+#include "cassert.h"
 
 #endif /* cunit_h */
