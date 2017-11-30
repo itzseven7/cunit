@@ -16,6 +16,8 @@
 		04CBDDC61FCDFA4400AFD45D /* libcunit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CBDDA01FCDF3F500AFD45D /* libcunit.a */; };
 		04CBDDCA1FCE026F00AFD45D /* ctperf.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CBDDC91FCE026F00AFD45D /* ctperf.h */; };
 		04CBDDCC1FCE028000AFD45D /* ctperf.c in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDCB1FCE028000AFD45D /* ctperf.c */; };
+		04CBDDC81FCE01FC00AFD45D /* cassert.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CBDDC71FCE01FB00AFD45D /* cassert.h */; };
+		BD4A7ACE1FD00F000044404B /* cassert.c in Sources */ = {isa = PBXBuildFile; fileRef = BD4A7ACD1FD00F000044404B /* cassert.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		04CBDDB81FCDF48800AFD45D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04CBDDC91FCE026F00AFD45D /* ctperf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ctperf.h; sourceTree = "<group>"; };
 		04CBDDCB1FCE028000AFD45D /* ctperf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ctperf.c; sourceTree = "<group>"; };
+		04CBDDC71FCE01FB00AFD45D /* cassert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cassert.h; sourceTree = "<group>"; };
+		BD4A7ACD1FD00F000044404B /* cassert.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cassert.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +102,7 @@
 				04CBDDCB1FCE028000AFD45D /* ctperf.c */,
 				04CBDDA81FCDF41900AFD45D /* ctcase.c */,
 				04CBDDA91FCDF41900AFD45D /* ctsuite.c */,
+				BD4A7ACD1FD00F000044404B /* cassert.c */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -121,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				04CBDDC91FCE026F00AFD45D /* ctperf.h */,
+				04CBDDC71FCE01FB00AFD45D /* cassert.h */,
 				04CBDDAB1FCDF41900AFD45D /* ctcase.h */,
 				04CBDDAA1FCDF41900AFD45D /* ctsuite.h */,
 				04CBDDB01FCDF43600AFD45D /* cunit.h */,
@@ -135,6 +141,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04CBDDC81FCE01FC00AFD45D /* cassert.h in Headers */,
 				04CBDDB11FCDF45100AFD45D /* cunit.h in Headers */,
 				04CBDDAE1FCDF41900AFD45D /* ctsuite.h in Headers */,
 				04CBDDCA1FCE026F00AFD45D /* ctperf.h in Headers */,
@@ -223,6 +230,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04CBDDAC1FCDF41900AFD45D /* ctcase.c in Sources */,
+				BD4A7ACE1FD00F000044404B /* cassert.c in Sources */,
 				04CBDDAD1FCDF41900AFD45D /* ctsuite.c in Sources */,
 				04CBDDCC1FCE028000AFD45D /* ctperf.c in Sources */,
 			);
