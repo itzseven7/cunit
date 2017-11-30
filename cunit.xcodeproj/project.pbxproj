@@ -15,6 +15,7 @@
 		04CBDDB91FCDF48800AFD45D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDB81FCDF48800AFD45D /* main.m */; };
 		04CBDDC61FCDFA4400AFD45D /* libcunit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CBDDA01FCDF3F500AFD45D /* libcunit.a */; };
 		04CBDDC81FCE01FC00AFD45D /* cassert.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CBDDC71FCE01FB00AFD45D /* cassert.h */; };
+		BD4A7ACE1FD00F000044404B /* cassert.c in Sources */ = {isa = PBXBuildFile; fileRef = BD4A7ACD1FD00F000044404B /* cassert.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		04CBDDB61FCDF48800AFD45D /* CUnitTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CUnitTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04CBDDB81FCDF48800AFD45D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04CBDDC71FCE01FB00AFD45D /* cassert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cassert.h; sourceTree = "<group>"; };
+		BD4A7ACD1FD00F000044404B /* cassert.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cassert.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 				04CBDDC21FCDF99200AFD45D /* include */,
 				04CBDDA81FCDF41900AFD45D /* ctcase.c */,
 				04CBDDA91FCDF41900AFD45D /* ctsuite.c */,
+				BD4A7ACD1FD00F000044404B /* cassert.c */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04CBDDAC1FCDF41900AFD45D /* ctcase.c in Sources */,
+				BD4A7ACE1FD00F000044404B /* cassert.c in Sources */,
 				04CBDDAD1FCDF41900AFD45D /* ctsuite.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
