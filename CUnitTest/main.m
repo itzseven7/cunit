@@ -85,6 +85,30 @@ ctcase_fct testLessOrEqual() {
     return -1;
 }
 
+ctperf_fct testPerformanceNotTooLong() {
+    int i = 0;
+    
+    FILE* debug = fopen("/dev/null", "w");
+    
+    for (i = 0; i < 10000; i++) {
+        fprintf(debug, "%d.", i);
+    }
+    
+    puts("testPerformanceNotTooLong finished\n");
+}
+
+ctperf_fct testPerformanceTooLong() {
+    int i = 0;
+    
+    FILE* debug = fopen("/dev/null", "w");
+    
+    for (i = 0; i < 10000; i++) {
+        fprintf(debug, "%d.", i);
+    }
+    
+    puts("testPerformanceTooLong finished\n");
+}
+
 int main(int argc, const char * argv[]) {
     
     tsuite_t *suite = tsuitealloc("Test assertions1");
@@ -110,12 +134,18 @@ int main(int argc, const char * argv[]) {
     
     tsuite_t *suite2 = tsuitealloc("Test assertions2");
     
+    tperf_t *tperf1 = tperf("testPerformanceNotTooLong", testPerformanceNotTooLong, 0.005);
+    tperf_t *tperf2 = tperf("testPerformanceTooLong", testPerformanceTooLong, 0.0005);
+    
     tsuiteadd(tcase6, suite2);
     tsuiteadd(tcase7, suite2);
     tsuiteadd(tcase8, suite2);
     tsuiteadd(tcase9, suite2);
     tsuiteadd(tcase10, suite2);
     
+    tsaddperf(tperf1, suite2);
+    tsaddperf(tperf2, suite2);
+  
     tsuiterun(suite);
     tsuiterun(suite2);
     
