@@ -22,6 +22,6 @@ typedef struct tcase_t {
     ctopt_inv_ptr_t teardown;
 }ctcase_t;
 
-ctcase_t *ctcase(const char *name, ctcase_inv_ptr_t inv, ctopt_inv_ptr_t setup, ctopt_inv_ptr_t teardown);
+ctcase_t *ctcase(const char *name, ctcase_inv_ptr_t inv);
 
 #endif /* ctcase_h */

@@ -126,18 +126,21 @@ int main(int argc, const char * argv[]) {
     
     ctsuite_t *suite = ctsuite("Test assertions1");
     
-    ctcase_t *tcase0 = ctcase("testFail", testFail, NULL, NULL);
-    ctcase_t *tcase1 = ctcase("testEquality", testEquality, NULL, NULL);
-    ctcase_t *tcase2 = ctcase("testNonEquality", testNonEquality, NULL, NULL);
-    ctcase_t *tcase3 = ctcase("testTrue", testTrue, NULL, NULL);
-    ctcase_t *tcase4 = ctcase("testFalse", testFalse, NULL, NULL);
-    ctcase_t *tcase5 = ctcase("testNull", testNull, NULL, NULL);
-    ctcase_t *tcase6 = ctcase("testNotNull", testNotNull, NULL, NULL);
-    ctcase_t *tcase7 = ctcase("testGreaterThan", testGreaterThan, NULL, NULL);
-    ctcase_t *tcase8 = ctcase("testGreaterOrEqual", testGreaterOrEqual, NULL, NULL);
-    ctcase_t *tcase9 = ctcase("testLessThan", testLessThan, NULL, NULL);
-    ctcase_t *tcase10 = ctcase("testLessOrEqual", testLessOrEqual, NULL, NULL);
-    ctcase_t *tcase11 = ctcase("testWithOptionalFunctions", testWithOptionalFunctions, testCaseSetup, testCaseTeardown);
+    ctcase_t *tcase0 = ctcase("testFail", testFail);
+    ctcase_t *tcase1 = ctcase("testEquality", testEquality);
+    ctcase_t *tcase2 = ctcase("testNonEquality", testNonEquality);
+    ctcase_t *tcase3 = ctcase("testTrue", testTrue);
+    ctcase_t *tcase4 = ctcase("testFalse", testFalse);
+    ctcase_t *tcase5 = ctcase("testNull", testNull);
+    ctcase_t *tcase6 = ctcase("testNotNull", testNotNull);
+    ctcase_t *tcase7 = ctcase("testGreaterThan", testGreaterThan);
+    ctcase_t *tcase8 = ctcase("testGreaterOrEqual", testGreaterOrEqual);
+    ctcase_t *tcase9 = ctcase("testLessThan", testLessThan);
+    ctcase_t *tcase10 = ctcase("testLessOrEqual", testLessOrEqual);
+    
+    ctcase_t *tcase11 = ctcase("testWithOptionalFunctions", testWithOptionalFunctions);
+    tcase11->setup = testCaseSetup;
+    tcase11->teardown = testCaseTeardown;
     
     ctsaddcase(tcase0, suite);
     ctsaddcase(tcase1, suite);
