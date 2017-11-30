@@ -9,11 +9,11 @@
 #include "ctperf.h"
 #include <stdlib.h>
 
-tperf_t *tperf(const char *name, tperf_fct_ptr ptr, double expectedTime) {
-    tperf_t *tperf = (tperf_t *)malloc(sizeof(tperf_t));
+ctperf_t *ctperf(const char *name, ctperf_inv_ptr_t inv, double expectedTime) {
+    ctperf_t *tperf = (ctperf_t *)malloc(sizeof(ctperf_t));
     tperf->name = name;
-    tperf->fct_ptr = ptr;
-    tperf->exptime = expectedTime;
+    tperf->inv = inv;
+    tperf->time = expectedTime;
     
     return tperf;
 }

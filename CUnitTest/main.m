@@ -9,83 +9,83 @@
 #import <Foundation/Foundation.h>
 #include "cunit.h"
 
-ctcase_fct testFail() {
+ctcase_return_t testFail() {
     puts("testFail execution\n");
     cfail("This library should be more comprehensive :(\n")
     return 0;
 }
 
-ctcase_fct testEquality() {
+ctcase_return_t testEquality() {
     puts("testEquality execution\n");
     int a = 5, b = 9;
     casserteq(a, b, "testEquality failed: %d and %d are not equal\n", a, b)
     return 0;
 }
 
-ctcase_fct testNonEquality() {
+ctcase_return_t testNonEquality() {
     puts("testNonEquality execution\n");
     int a = 5, b = 9;
     cassertneq(a, b, "testNonEquality failed: %d and %d are equal\n", a, b)
     return 2;
 }
 
-ctcase_fct testTrue() {
+ctcase_return_t testTrue() {
     puts("testTrue execution\n");
     int a = 5, b = 9, c = 14;
     cassertt((a + b) == c)
     return 0;
 }
 
-ctcase_fct testFalse() {
+ctcase_return_t testFalse() {
     puts("testFalse execution\n");
     int a = 5, b = 9, c = 14;
     cassertf((a + b) == c, "testFalse failed: (%d + %d) is equal to %d\n", a, b, c)
     return 1;
 }
 
-ctcase_fct testNull() {
+ctcase_return_t testNull() {
     puts("testNull execution\n");
     const char *string = NULL;
     cassertnull(string, "testNull failed: string is not NULL\n")
     return 0;
 }
 
-ctcase_fct testNotNull() {
+ctcase_return_t testNotNull() {
     puts("testNotNull execution\n");
     const char *string = (const char *)malloc(5 * sizeof(char));
     cassertnnull(string, "testNotNull failed: string is NULL\n")
     return 0;
 }
 
-ctcase_fct testGreaterThan() {
+ctcase_return_t testGreaterThan() {
     puts("testGreaterThan execution\n");
     int a = 2, b = 10;
     cassertgt(a, b, "testGreaterThan failed: %d is not greater than %d\n", a, b)
     return 2;
 }
 
-ctcase_fct testGreaterOrEqual() {
+ctcase_return_t testGreaterOrEqual() {
     puts("testGreaterOrEqual execution\n");
     int a = 9, b = 10;
     cassertgteq(a, b, "testGreaterOrEqual failed: %d is not greater or equal to %d\n", a, b)
     return -1;
 }
 
-ctcase_fct testLessThan() {
+ctcase_return_t testLessThan() {
     puts("testLessThan execution\n");
     int a = 2, b = 10;
     cassertgt(a, b, "testLessThan failed: %d is not less than %d\n", a, b)
     return 0;
 }
 
-ctcase_fct testLessOrEqual() {
+ctcase_return_t testLessOrEqual() {
     puts("testLessOrEqual execution\n");
     int a = 9, b = 10;
     cassertgteq(a, b, "testLessOrEqual failed: %d is not less or equal to %d\n", a, b)
     return -1;
 }
 
-ctperf_fct testPerformanceNotTooLong() {
+ctperf_return_t testPerformanceNotTooLong() {
     int i = 0;
     
     FILE* debug = fopen("/dev/null", "w");
@@ -97,7 +97,7 @@ ctperf_fct testPerformanceNotTooLong() {
     puts("testPerformanceNotTooLong finished\n");
 }
 
-ctperf_fct testPerformanceTooLong() {
+ctperf_return_t testPerformanceTooLong() {
     int i = 0;
     
     FILE* debug = fopen("/dev/null", "w");
@@ -111,43 +111,43 @@ ctperf_fct testPerformanceTooLong() {
 
 int main(int argc, const char * argv[]) {
     
-    tsuite_t *suite = tsuitealloc("Test assertions1");
+    ctsuite_t *suite = ctsuite("Test assertions1");
     
-    tcase_t *tcase0 = tcasealloc("testFail", testFail);
-    tcase_t *tcase1 = tcasealloc("testEquality", testEquality);
-    tcase_t *tcase2 = tcasealloc("testNonEquality", testNonEquality);
-    tcase_t *tcase3 = tcasealloc("testTrue", testTrue);
-    tcase_t *tcase4 = tcasealloc("testFalse", testFalse);
-    tcase_t *tcase5 = tcasealloc("testNull", testNull);
-    tcase_t *tcase6 = tcasealloc("testNotNull", testNotNull);
-    tcase_t *tcase7 = tcasealloc("testGreaterThan", testGreaterThan);
-    tcase_t *tcase8 = tcasealloc("testGreaterOrEqual", testGreaterOrEqual);
-    tcase_t *tcase9 = tcasealloc("testLessThan", testLessThan);
-    tcase_t *tcase10 = tcasealloc("testLessOrEqual", testLessOrEqual);
+    ctcase_t *tcase0 = ctcase("testFail", testFail);
+    ctcase_t *tcase1 = ctcase("testEquality", testEquality);
+    ctcase_t *tcase2 = ctcase("testNonEquality", testNonEquality);
+    ctcase_t *tcase3 = ctcase("testTrue", testTrue);
+    ctcase_t *tcase4 = ctcase("testFalse", testFalse);
+    ctcase_t *tcase5 = ctcase("testNull", testNull);
+    ctcase_t *tcase6 = ctcase("testNotNull", testNotNull);
+    ctcase_t *tcase7 = ctcase("testGreaterThan", testGreaterThan);
+    ctcase_t *tcase8 = ctcase("testGreaterOrEqual", testGreaterOrEqual);
+    ctcase_t *tcase9 = ctcase("testLessThan", testLessThan);
+    ctcase_t *tcase10 = ctcase("testLessOrEqual", testLessOrEqual);
     
-    tsuiteadd(tcase0, suite);
-    tsuiteadd(tcase1, suite);
-    tsuiteadd(tcase2, suite);
-    tsuiteadd(tcase3, suite);
-    tsuiteadd(tcase4, suite);
-    tsuiteadd(tcase5, suite);
+    ctsaddcase(tcase0, suite);
+    ctsaddcase(tcase1, suite);
+    ctsaddcase(tcase2, suite);
+    ctsaddcase(tcase3, suite);
+    ctsaddcase(tcase4, suite);
+    ctsaddcase(tcase5, suite);
     
-    tsuite_t *suite2 = tsuitealloc("Test assertions2");
+    ctsuite_t *suite2 = ctsuite("Test assertions2");
     
-    tperf_t *tperf1 = tperf("testPerformanceNotTooLong", testPerformanceNotTooLong, 0.005);
-    tperf_t *tperf2 = tperf("testPerformanceTooLong", testPerformanceTooLong, 0.0005);
+    ctperf_t *tperf1 = ctperf("testPerformanceNotTooLong", testPerformanceNotTooLong, 0.005);
+    ctperf_t *tperf2 = ctperf("testPerformanceTooLong", testPerformanceTooLong, 0.0005);
     
-    tsuiteadd(tcase6, suite2);
-    tsuiteadd(tcase7, suite2);
-    tsuiteadd(tcase8, suite2);
-    tsuiteadd(tcase9, suite2);
-    tsuiteadd(tcase10, suite2);
+    ctsaddcase(tcase6, suite2);
+    ctsaddcase(tcase7, suite2);
+    ctsaddcase(tcase8, suite2);
+    ctsaddcase(tcase9, suite2);
+    ctsaddcase(tcase10, suite2);
     
-    tsaddperf(tperf1, suite2);
-    tsaddperf(tperf2, suite2);
+    ctsaddperf(tperf1, suite2);
+    ctsaddperf(tperf2, suite2);
   
-    tsuiterun(suite);
-    tsuiterun(suite2);
+    ctsrun(suite);
+    ctsrun(suite2);
     
     return 0;
 }

@@ -12,16 +12,15 @@
 #include <stdio.h>
 #include <time.h>
 
-typedef void ctperf_fct;
-
-typedef ctperf_fct (*tperf_fct_ptr)(void);
+typedef void ctperf_return_t;
+typedef ctperf_return_t (*ctperf_inv_ptr_t)(void);
 
 typedef struct tperf_t {
     const char *name;
-    tperf_fct_ptr fct_ptr;
-    double exptime;
-}tperf_t;
+    ctperf_inv_ptr_t inv;
+    double time;
+}ctperf_t;
 
-tperf_t *tperf(const char *name, tperf_fct_ptr ptr, double expectedTime);
+ctperf_t *ctperf(const char *name, ctperf_inv_ptr_t ptr, double expectedTime);
 
 #endif /* ctperf_h */
