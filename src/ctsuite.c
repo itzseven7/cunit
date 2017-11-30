@@ -12,8 +12,8 @@
 #include <time.h>
 #include <float.h>
 
-tsuite_t *tsuitealloc(const char *name) {
-    tsuite_t *tsuite = (tsuite_t *)malloc(sizeof(tsuite_t));
+ctsuite_t *ctsuite(const char *name) {
+    ctsuite_t *tsuite = (ctsuite_t *)malloc(sizeof(ctsuite_t));
     tsuite->name = name;
     tsuite->count = 0;
     tsuite->passed = 0;
@@ -24,16 +24,15 @@ tsuite_t *tsuitealloc(const char *name) {
     return tsuite;
 }
 
-#warning rename to tsaddcase
-void tsuiteadd(tcase_t *tcase, tsuite_t *tsuite) {
-    tcaselist_t *tcaselist = (tcaselist_t *)malloc(sizeof(tcaselist_t));
+void ctsaddcase(ctcase_t *tcase, ctsuite_t *tsuite) {
+    ctcaselist_t *tcaselist = (ctcaselist_t *)malloc(sizeof(ctcaselist_t));
     tcaselist->tcase = tcase;
     tcaselist->next = NULL;
     
     if (tsuite->tcaselist == NULL) {
         tsuite->tcaselist = tcaselist;
     } else {
-        tcaselist_t *tcurrentList = tsuite->tcaselist;
+        ctcaselist_t *tcurrentList = tsuite->tcaselist;
         
         while (tcurrentList->next != NULL) {
             tcurrentList = tcurrentList->next;
@@ -45,15 +44,15 @@ void tsuiteadd(tcase_t *tcase, tsuite_t *tsuite) {
     tsuite->count += 1;
 }
 
-void tsaddperf(tperf_t *tperf, tsuite_t *tsuite) {
-    tperflist_t *tperflist = (tperflist_t *)malloc(sizeof(tperflist_t));
+void ctsaddperf(ctperf_t *tperf, ctsuite_t *tsuite) {
+    ctperflist_t *tperflist = (ctperflist_t *)malloc(sizeof(ctperflist_t));
     tperflist->tperf = tperf;
     tperflist->next = NULL;
     
     if (tsuite->tperflist == NULL) {
         tsuite->tperflist = tperflist;
     } else {
-        tperflist_t *tcurrentList = tsuite->tperflist;
+        ctperflist_t *tcurrentList = tsuite->tperflist;
         
         while (tcurrentList->next != NULL) {
             tcurrentList = tcurrentList->next;
@@ -65,14 +64,14 @@ void tsaddperf(tperf_t *tperf, tsuite_t *tsuite) {
     tsuite->count += 1;
 }
 
-void _tsuiteruncases(tsuite_t *tsuite) {
-    tcaselist_t *tcurrentList = tsuite->tcaselist;
+void _tsruncases(ctsuite_t *tsuite) {
+    ctcaselist_t *tcurrentList = tsuite->tcaselist;
     
     while (tcurrentList != NULL) {
         
         printf("Starting %s test case\n", tcurrentList->tcase->name);
         
-        int result = tcurrentList->tcase->fct_ptr();
+        int result = tcurrentList->tcase->inv();
         tsuite->failed += result != 0;
         tsuite->passed += result == 0;
         
@@ -86,38 +85,38 @@ void _tsuiteruncases(tsuite_t *tsuite) {
     }
 }
 
-void _tsuiterunperf(tsuite_t *tsuite) {
-    tperflist_t *tcurrentList = tsuite->tperflist;
+void _tsrunperf(ctsuite_t *tsuite) {
+    ctperflist_t *tcurrentList = tsuite->tperflist;
     
     while (tcurrentList != NULL) {
         
         printf("Starting %s test perf\n", tcurrentList->tperf->name);
         
         clock_t begin = clock();
-        tcurrentList->tperf->fct_ptr();
+        tcurrentList->tperf->inv();
         clock_t end = clock();
         
         clock_t time = end - begin;
-        clock_t expected = (clock_t)(tcurrentList->tperf->exptime * CLOCKS_PER_SEC);
+        clock_t expected = (clock_t)(tcurrentList->tperf->time * CLOCKS_PER_SEC);
         
         tsuite->failed += time > expected;
         tsuite->passed += time <= expected;
         
         if (time <= expected) {
-            printf("Test perf %s succeeded (took %lf seconds, expected %lf)\n", tcurrentList->tperf->name, (double)((double)time / CLOCKS_PER_SEC), tcurrentList->tperf->exptime);
+            printf("Test perf %s succeeded (took %lf seconds, expected %lf)\n", tcurrentList->tperf->name, (double)((double)time / CLOCKS_PER_SEC), tcurrentList->tperf->time);
         } else {
-            printf("Test perf %s failed (took %lf seconds, expected %lf)\n", tcurrentList->tperf->name, (double)((double)time / CLOCKS_PER_SEC), tcurrentList->tperf->exptime);
+            printf("Test perf %s failed (took %lf seconds, expected %lf)\n", tcurrentList->tperf->name, (double)((double)time / CLOCKS_PER_SEC), tcurrentList->tperf->time);
         }
         
         tcurrentList = tcurrentList->next;
     }
 }
 
-void tsuiterun(tsuite_t *tsuite) {
+void ctsrun(ctsuite_t *tsuite) {
     printf("Starting %s test suite\n", tsuite->name);
     
-    _tsuiteruncases(tsuite);
-    _tsuiterunperf(tsuite);
+    _tsruncases(tsuite);
+    _tsrunperf(tsuite);
     
     printf("Finished %s test suite (%d passed, %d failed on %d tests)\n", tsuite->name, tsuite->passed, tsuite->failed, tsuite->count);
     puts("\n-----------------------------------------------------------------------------------------------\n");

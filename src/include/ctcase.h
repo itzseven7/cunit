@@ -9,15 +9,14 @@
 #ifndef ctcase_h
 #define ctcase_h
 
-typedef int ctcase_fct;
-
-typedef ctcase_fct (*tcase_fct_ptr)(void);
+typedef int ctcase_return_t;
+typedef ctcase_return_t (*ctcase_inv_ptr_t)(void);
 
 typedef struct tcase_t {
     const char *name;
-    tcase_fct_ptr fct_ptr;
-}tcase_t;
+    ctcase_inv_ptr_t inv;
+}ctcase_t;
 
-tcase_t *tcasealloc(const char *name, tcase_fct_ptr ptr);
+ctcase_t *ctcase(const char *name, ctcase_inv_ptr_t inv);
 
 #endif /* ctcase_h */

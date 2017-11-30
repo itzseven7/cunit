@@ -12,28 +12,29 @@
 #include "ctcase.h"
 #include "ctperf.h"
 
-typedef struct tcaselist_t {
-    tcase_t *tcase;
-    struct tcaselist_t *next;
-}tcaselist_t;
+typedef struct ctcaselist_t {
+    ctcase_t *tcase;
+    struct ctcaselist_t *next;
+}ctcaselist_t;
 
-typedef struct tperflist_t {
-    tperf_t *tperf;
-    struct tperflist_t *next;
-}tperflist_t;
+typedef struct ctperflist_t {
+    ctperf_t *tperf;
+    struct ctperflist_t *next;
+}ctperflist_t;
 
 typedef struct tsuite_t {
     const char *name;
     int count;
     int passed;
     int failed;
-    tcaselist_t *tcaselist;
-    tperflist_t *tperflist;
-}tsuite_t;
+    ctcaselist_t *tcaselist;
+    ctperflist_t *tperflist;
+}ctsuite_t;
 
-tsuite_t *tsuitealloc(const char *name);
-void tsuiteadd(tcase_t *tcase, tsuite_t *tsuite);
-void tsaddperf(tperf_t *tperf, tsuite_t *tsuite);
-void tsuiterun(tsuite_t *tsuite);
+ctsuite_t *ctsuite(const char *name);
+
+void ctsaddcase(ctcase_t *tcase, ctsuite_t *tsuite);
+void ctsaddperf(ctperf_t *tperf, ctsuite_t *tsuite);
+void ctsrun(ctsuite_t *tsuite);
 
 #endif /* ctsuite_h */
