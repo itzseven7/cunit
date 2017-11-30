@@ -97,16 +97,16 @@ void _tsuiterunperf(tsuite_t *tsuite) {
         tcurrentList->tperf->fct_ptr();
         clock_t end = clock();
         
-        double time = (double)(end - begin) / CLOCKS_PER_SEC;
-        double comp = time - tcurrentList->tperf->exptime;
+        clock_t time = end - begin;
+        clock_t expected = (clock_t)(tcurrentList->tperf->exptime * CLOCKS_PER_SEC);
         
-        tsuite->failed += comp > 0.f;
-        tsuite->passed += comp <= 0.f;
+        tsuite->failed += time > expected;
+        tsuite->passed += time <= expected;
         
-        if (comp <= 0.f) {
-            printf("Test perf %s succeeded (took %lf seconds, expected %lf)\n", tcurrentList->tperf->name, time, tcurrentList->tperf->exptime);
+        if (time <= expected) {
+            printf("Test perf %s succeeded (took %lf seconds, expected %lf)\n", tcurrentList->tperf->name, (double)((double)time / CLOCKS_PER_SEC), tcurrentList->tperf->exptime);
         } else {
-            printf("Test perf %s failed (took %lf seconds, expected %lf)\n", tcurrentList->tperf->name, time, tcurrentList->tperf->exptime);
+            printf("Test perf %s failed (took %lf seconds, expected %lf)\n", tcurrentList->tperf->name, (double)((double)time / CLOCKS_PER_SEC), tcurrentList->tperf->exptime);
         }
         
         tcurrentList = tcurrentList->next;

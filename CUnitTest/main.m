@@ -52,17 +52,25 @@ ctcase_fct fct8() {
 ctperf_fct testPerformanceNotTooLong() {
     int i = 0;
     
+    FILE* debug = fopen("/dev/null", "w");
+    
     for (i = 0; i < 10000; i++) {
-        printf("%d.", i);
+        fprintf(debug, "%d.", i);
     }
+    
+    puts("testPerformanceNotTooLong finished\n");
 }
 
 ctperf_fct testPerformanceTooLong() {
     int i = 0;
     
-    for (i = 0; i < 100000; i++) {
-        printf("%d.", i);
+    FILE* debug = fopen("/dev/null", "w");
+    
+    for (i = 0; i < 10000; i++) {
+        fprintf(debug, "%d.", i);
     }
+    
+    puts("testPerformanceTooLong finished\n");
 }
 
 int main(int argc, const char * argv[]) {
@@ -89,8 +97,8 @@ int main(int argc, const char * argv[]) {
     tcase_t *tcase7 = tcasealloc("fct7", fct7);
     tcase_t *tcase8 = tcasealloc("fct8", fct8);
     
-    tperf_t *tperf1 = tperf("testPerformanceNotTooLong", testPerformanceNotTooLong, 0.2);
-    tperf_t *tperf2 = tperf("testPerformanceTooLong", testPerformanceTooLong, 0.002);
+    tperf_t *tperf1 = tperf("testPerformanceNotTooLong", testPerformanceNotTooLong, 0.005);
+    tperf_t *tperf2 = tperf("testPerformanceTooLong", testPerformanceTooLong, 0.0005);
     
     tsuiteadd(tcase6, suite2);
     tsuiteadd(tcase7, suite2);
