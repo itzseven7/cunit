@@ -1,6 +1,6 @@
 //
 //  ctperf.h
-//  CUnit
+//  cunit
 //
 //  Created by itzseven on 28/11/2017.
 //  Copyright © 2017 itzseven. All rights reserved.
@@ -11,12 +11,17 @@
 
 #include <stdio.h>
 #include <time.h>
-#include "ctcase.h"
+
+typedef void ctperf_fct;
+
+typedef ctperf_fct (*tperf_fct_ptr)(void);
 
 typedef struct tperf_t {
     const char *name;
-    tcase_fct_ptr fct_ptr;
-    time_t exptime;
+    tperf_fct_ptr fct_ptr;
+    double exptime;
 }tperf_t;
+
+tperf_t *tperf(const char *name, tperf_fct_ptr ptr, double expectedTime);
 
 #endif /* ctperf_h */

@@ -49,6 +49,22 @@ ctcase_fct fct8() {
     return -1;
 }
 
+ctperf_fct testPerformanceNotTooLong() {
+    int i = 0;
+    
+    for (i = 0; i < 10000; i++) {
+        printf("%d.", i);
+    }
+}
+
+ctperf_fct testPerformanceTooLong() {
+    int i = 0;
+    
+    for (i = 0; i < 100000; i++) {
+        printf("%d.", i);
+    }
+}
+
 int main(int argc, const char * argv[]) {
     
     tsuite_t *suite = tsuitealloc("test");
@@ -73,9 +89,15 @@ int main(int argc, const char * argv[]) {
     tcase_t *tcase7 = tcasealloc("fct7", fct7);
     tcase_t *tcase8 = tcasealloc("fct8", fct8);
     
+    tperf_t *tperf1 = tperf("testPerformanceNotTooLong", testPerformanceNotTooLong, 0.2);
+    tperf_t *tperf2 = tperf("testPerformanceTooLong", testPerformanceTooLong, 0.002);
+    
     tsuiteadd(tcase6, suite2);
     tsuiteadd(tcase7, suite2);
     tsuiteadd(tcase8, suite2);
+    
+    tsaddperf(tperf1, suite2);
+    tsaddperf(tperf2, suite2);
     
     tsuiterun(suite2);
     
