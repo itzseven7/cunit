@@ -71,7 +71,16 @@ void _tsruncases(ctsuite_t *tsuite) {
         
         printf("Starting %s test case\n", tcurrentList->tcase->name);
         
+        if (tcurrentList->tcase->setup != NULL) {
+            tcurrentList->tcase->setup();
+        }
+        
         int result = tcurrentList->tcase->inv();
+        
+        if (tcurrentList->tcase->teardown != NULL) {
+            tcurrentList->tcase->teardown();
+        }
+        
         tsuite->failed += result != 0;
         tsuite->passed += result == 0;
         

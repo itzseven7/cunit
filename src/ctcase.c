@@ -13,6 +13,8 @@ ctcase_t *ctcase(const char *name, ctcase_inv_ptr_t inv) {
     ctcase_t *tcase = (ctcase_t *)malloc(sizeof(ctcase_t));
     tcase->name = name;
     tcase->inv = inv;
+    tcase->setup = NULL;
+    tcase->teardown = NULL;
     
     return tcase;
 }
