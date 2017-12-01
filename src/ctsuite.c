@@ -13,6 +13,10 @@
 #include <float.h>
 
 ctsuite_t *ctsuite(const char *name) {
+    if (name == NULL) {
+        return NULL;
+    }
+    
     ctsuite_t *tsuite = (ctsuite_t *)malloc(sizeof(ctsuite_t));
     tsuite->name = name;
     tsuite->count = 0;

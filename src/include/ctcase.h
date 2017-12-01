@@ -9,7 +9,12 @@
 #ifndef ctcase_h
 #define ctcase_h
 
-typedef int ctcase_return_t;
+typedef enum {
+    CTPASSED = 0,
+    CTFAILED = 1
+}CTestResultType;
+
+typedef CTestResultType ctcase_return_t;
 typedef ctcase_return_t (*ctcase_inv_ptr_t)(void);
 
 typedef void ctopt_return_t;

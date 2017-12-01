@@ -22,7 +22,7 @@ typedef struct ctperflist_t {
     struct ctperflist_t *next;
 }ctperflist_t;
 
-typedef struct tsuite_t {
+typedef struct ctsuite_t {
     const char *name;
     int count;
     int passed;

@@ -21,6 +21,6 @@ typedef struct tperf_t {
     double time;
 }ctperf_t;
 
-ctperf_t *ctperf(const char *name, ctperf_inv_ptr_t ptr, double expectedTime);
+ctperf_t *ctperf(const char *name, ctperf_inv_ptr_t inv, double expectedTime);
 
 #endif /* ctperf_h */
