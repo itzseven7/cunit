@@ -28,7 +28,7 @@ ctsuite_t *ctsuite(const char *name) {
     return tsuite;
 }
 
-void ctsaddc(ctcase_t *tcase, ctsuite_t *tsuite) {
+void ctsaddtc(ctcase_t *tcase, ctsuite_t *tsuite) {
     ctcaselist_t *tcaselist = (ctcaselist_t *)malloc(sizeof(ctcaselist_t));
     tcaselist->tcase = tcase;
     tcaselist->next = NULL;
@@ -48,7 +48,7 @@ void ctsaddc(ctcase_t *tcase, ctsuite_t *tsuite) {
     tsuite->count += 1;
 }
 
-void ctsaddp(ctperf_t *tperf, ctsuite_t *tsuite) {
+void ctsaddtp(ctperf_t *tperf, ctsuite_t *tsuite) {
     ctperflist_t *tperflist = (ctperflist_t *)malloc(sizeof(ctperflist_t));
     tperflist->tperf = tperf;
     tperflist->next = NULL;
