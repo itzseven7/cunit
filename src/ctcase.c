@@ -18,7 +18,7 @@ ctcase_t *ctcase(const char *name, ctcase_inv_ptr_t inv) {
     tcase->name = name;
     tcase->inv = inv;
     tcase->setup = NULL;
-    tcase->teardown = NULL;
+    tcase->tdown = NULL;
     
     return tcase;
 }

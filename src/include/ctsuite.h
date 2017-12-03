@@ -33,8 +33,8 @@ typedef struct ctsuite_t {
 
 ctsuite_t *ctsuite(const char *name);
 
-void ctsaddcase(ctcase_t *tcase, ctsuite_t *tsuite);
-void ctsaddperf(ctperf_t *tperf, ctsuite_t *tsuite);
+void ctsaddc(ctcase_t *tcase, ctsuite_t *tsuite);
+void ctsaddp(ctperf_t *tperf, ctsuite_t *tsuite);
 void ctsrun(ctsuite_t *tsuite);
 
 #endif /* ctsuite_h */

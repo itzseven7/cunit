@@ -18,6 +18,8 @@ ctperf_t *ctperf(const char *name, ctperf_inv_ptr_t inv, double expectedTime) {
     tperf->name = name;
     tperf->inv = inv;
     tperf->time = expectedTime;
+    tperf->setup = NULL;
+    tperf->tdown = NULL;
     
     return tperf;
 }

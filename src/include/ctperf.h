@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <time.h>
+#include "ctypes.h"
 
 typedef void ctperf_return_t;
 typedef ctperf_return_t (*ctperf_inv_ptr_t)(void);
@@ -18,6 +19,8 @@ typedef ctperf_return_t (*ctperf_inv_ptr_t)(void);
 typedef struct tperf_t {
     const char *name;
     ctperf_inv_ptr_t inv;
+    ctopt_inv_ptr_t setup;
+    ctopt_inv_ptr_t tdown;
     double time;
 }ctperf_t;
 
