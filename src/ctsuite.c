@@ -13,6 +13,10 @@
 #include <float.h>
 
 ctsuite_t *ctsuite(const char *name) {
+    if (name == NULL) {
+        return NULL;
+    }
+    
     ctsuite_t *tsuite = (ctsuite_t *)malloc(sizeof(ctsuite_t));
     tsuite->name = name;
     tsuite->count = 0;
@@ -24,7 +28,7 @@ ctsuite_t *ctsuite(const char *name) {
     return tsuite;
 }
 
-void ctsaddcase(ctcase_t *tcase, ctsuite_t *tsuite) {
+void ctsaddc(ctcase_t *tcase, ctsuite_t *tsuite) {
     ctcaselist_t *tcaselist = (ctcaselist_t *)malloc(sizeof(ctcaselist_t));
     tcaselist->tcase = tcase;
     tcaselist->next = NULL;
@@ -44,7 +48,7 @@ void ctsaddcase(ctcase_t *tcase, ctsuite_t *tsuite) {
     tsuite->count += 1;
 }
 
-void ctsaddperf(ctperf_t *tperf, ctsuite_t *tsuite) {
+void ctsaddp(ctperf_t *tperf, ctsuite_t *tsuite) {
     ctperflist_t *tperflist = (ctperflist_t *)malloc(sizeof(ctperflist_t));
     tperflist->tperf = tperf;
     tperflist->next = NULL;
@@ -77,8 +81,8 @@ void _tsruncases(ctsuite_t *tsuite) {
         
         int result = tcurrentList->tcase->inv();
         
-        if (tcurrentList->tcase->teardown != NULL) {
-            tcurrentList->tcase->teardown();
+        if (tcurrentList->tcase->tdown != NULL) {
+            tcurrentList->tcase->tdown();
         }
         
         tsuite->failed += result != 0;
@@ -101,9 +105,17 @@ void _tsrunperf(ctsuite_t *tsuite) {
         
         printf("Starting %s test perf\n", tcurrentList->tperf->name);
         
+        if (tcurrentList->tperf->setup != NULL) {
+            tcurrentList->tperf->setup();
+        }
+        
         clock_t begin = clock();
         tcurrentList->tperf->inv();
         clock_t end = clock();
+        
+        if (tcurrentList->tperf->tdown != NULL) {
+            tcurrentList->tperf->tdown();
+        }
         
         clock_t time = end - begin;
         clock_t expected = (clock_t)(tcurrentList->tperf->time * CLOCKS_PER_SEC);

@@ -22,7 +22,7 @@ typedef struct ctperflist_t {
     struct ctperflist_t *next;
 }ctperflist_t;
 
-typedef struct tsuite_t {
+typedef struct ctsuite_t {
     const char *name;
     int count;
     int passed;
@@ -33,8 +33,8 @@ typedef struct tsuite_t {
 
 ctsuite_t *ctsuite(const char *name);
 
-void ctsaddcase(ctcase_t *tcase, ctsuite_t *tsuite);
-void ctsaddperf(ctperf_t *tperf, ctsuite_t *tsuite);
+void ctsaddc(ctcase_t *tcase, ctsuite_t *tsuite);
+void ctsaddp(ctperf_t *tperf, ctsuite_t *tsuite);
 void ctsrun(ctsuite_t *tsuite);
 
 #endif /* ctsuite_h */
