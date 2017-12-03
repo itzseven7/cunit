@@ -120,6 +120,13 @@
 
 #define cassertlteq(expression1, expression2, ...) if ((expression1) > (expression2)) { cfailure("Less than or equal assertion", __VA_ARGS__) }
 
+/*!
+ @function   _cfail
+ @abstract   Generates a failure unconditionally.
+ 
+@discussion This function is for internal usage. If you want to generate a failure unconditionally, please use the defined macro cfail(...)
+ */
+
 int _cfail(const char *assertion, const char *filename, unsigned long lineNumber, const char * format, ...);
 
 #endif /* cassert_h */

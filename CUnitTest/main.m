@@ -150,12 +150,12 @@ int main(int argc, const char * argv[]) {
     tcase11->setup = testCaseSetup;
     tcase11->tdown = testCaseTeardown;
     
-    ctsaddc(tcase0, suite);
-    ctsaddc(tcase1, suite);
-    ctsaddc(tcase2, suite);
-    ctsaddc(tcase3, suite);
-    ctsaddc(tcase4, suite);
-    ctsaddc(tcase5, suite);
+    ctsaddtc(tcase0, suite);
+    ctsaddtc(tcase1, suite);
+    ctsaddtc(tcase2, suite);
+    ctsaddtc(tcase3, suite);
+    ctsaddtc(tcase4, suite);
+    ctsaddtc(tcase5, suite);
     
     ctsuite_t *suite2 = ctsuite("Test assertions2");
     
@@ -165,15 +165,15 @@ int main(int argc, const char * argv[]) {
     tperf2->setup = testPerformanceSetup;
     tperf2->tdown = testPerformanceTeardown;
     
-    ctsaddc(tcase6, suite2);
-    ctsaddc(tcase7, suite2);
-    ctsaddc(tcase8, suite2);
-    ctsaddc(tcase9, suite2);
-    ctsaddc(tcase10, suite2);
-    ctsaddc(tcase11, suite2);
+    ctsaddtc(tcase6, suite2);
+    ctsaddtc(tcase7, suite2);
+    ctsaddtc(tcase8, suite2);
+    ctsaddtc(tcase9, suite2);
+    ctsaddtc(tcase10, suite2);
+    ctsaddtc(tcase11, suite2);
     
-    ctsaddp(tperf1, suite2);
-    ctsaddp(tperf2, suite2);
+    ctsaddtp(tperf1, suite2);
+    ctsaddtp(tperf2, suite2);
   
     ctsrun(suite);
     ctsrun(suite2);
