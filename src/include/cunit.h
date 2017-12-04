@@ -10,6 +10,8 @@
 #define cunit_h
 
 #include "ctcase.h"
+#include "ctperf.h"
 #include "ctsuite.h"
+#include "cassert.h"
 
 #endif /* cunit_h */

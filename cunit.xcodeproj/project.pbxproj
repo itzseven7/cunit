@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		043ABF2A1FD47C5300BD84D0 /* ctypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 043ABF291FD47AB000BD84D0 /* ctypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04CBDDAC1FCDF41900AFD45D /* ctcase.c in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDA81FCDF41900AFD45D /* ctcase.c */; };
 		04CBDDAD1FCDF41900AFD45D /* ctsuite.c in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDA91FCDF41900AFD45D /* ctsuite.c */; };
 		04CBDDAE1FCDF41900AFD45D /* ctsuite.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CBDDAA1FCDF41900AFD45D /* ctsuite.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -14,6 +15,10 @@
 		04CBDDB11FCDF45100AFD45D /* cunit.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CBDDB01FCDF43600AFD45D /* cunit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04CBDDB91FCDF48800AFD45D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDB81FCDF48800AFD45D /* main.m */; };
 		04CBDDC61FCDFA4400AFD45D /* libcunit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CBDDA01FCDF3F500AFD45D /* libcunit.a */; };
+		04CBDDC81FCE01FC00AFD45D /* cassert.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CBDDC71FCE01FB00AFD45D /* cassert.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04CBDDCA1FCE026F00AFD45D /* ctperf.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CBDDC91FCE026F00AFD45D /* ctperf.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04CBDDCC1FCE028000AFD45D /* ctperf.c in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDCB1FCE028000AFD45D /* ctperf.c */; };
+		BD4A7ACE1FD00F000044404B /* cassert.c in Sources */ = {isa = PBXBuildFile; fileRef = BD4A7ACD1FD00F000044404B /* cassert.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +44,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		043ABF291FD47AB000BD84D0 /* ctypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ctypes.h; sourceTree = "<group>"; };
 		04CBDDA01FCDF3F500AFD45D /* libcunit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcunit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		04CBDDA81FCDF41900AFD45D /* ctcase.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ctcase.c; sourceTree = "<group>"; };
 		04CBDDA91FCDF41900AFD45D /* ctsuite.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ctsuite.c; sourceTree = "<group>"; };
@@ -47,6 +53,10 @@
 		04CBDDB01FCDF43600AFD45D /* cunit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cunit.h; sourceTree = "<group>"; };
 		04CBDDB61FCDF48800AFD45D /* CUnitTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CUnitTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04CBDDB81FCDF48800AFD45D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		04CBDDC71FCE01FB00AFD45D /* cassert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cassert.h; sourceTree = "<group>"; };
+		04CBDDC91FCE026F00AFD45D /* ctperf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ctperf.h; sourceTree = "<group>"; };
+		04CBDDCB1FCE028000AFD45D /* ctperf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ctperf.c; sourceTree = "<group>"; };
+		BD4A7ACD1FD00F000044404B /* cassert.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cassert.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,8 +101,10 @@
 			isa = PBXGroup;
 			children = (
 				04CBDDC21FCDF99200AFD45D /* include */,
+				04CBDDCB1FCE028000AFD45D /* ctperf.c */,
 				04CBDDA81FCDF41900AFD45D /* ctcase.c */,
 				04CBDDA91FCDF41900AFD45D /* ctsuite.c */,
+				BD4A7ACD1FD00F000044404B /* cassert.c */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -115,9 +127,12 @@
 		04CBDDC21FCDF99200AFD45D /* include */ = {
 			isa = PBXGroup;
 			children = (
+				04CBDDC91FCE026F00AFD45D /* ctperf.h */,
+				04CBDDC71FCE01FB00AFD45D /* cassert.h */,
 				04CBDDAB1FCDF41900AFD45D /* ctcase.h */,
 				04CBDDAA1FCDF41900AFD45D /* ctsuite.h */,
 				04CBDDB01FCDF43600AFD45D /* cunit.h */,
+				043ABF291FD47AB000BD84D0 /* ctypes.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -129,6 +144,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				043ABF2A1FD47C5300BD84D0 /* ctypes.h in Headers */,
+				04CBDDC81FCE01FC00AFD45D /* cassert.h in Headers */,
+				04CBDDCA1FCE026F00AFD45D /* ctperf.h in Headers */,
 				04CBDDB11FCDF45100AFD45D /* cunit.h in Headers */,
 				04CBDDAE1FCDF41900AFD45D /* ctsuite.h in Headers */,
 				04CBDDAF1FCDF41900AFD45D /* ctcase.h in Headers */,
@@ -216,7 +234,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				04CBDDAC1FCDF41900AFD45D /* ctcase.c in Sources */,
+				BD4A7ACE1FD00F000044404B /* cassert.c in Sources */,
 				04CBDDAD1FCDF41900AFD45D /* ctsuite.c in Sources */,
+				04CBDDCC1FCE028000AFD45D /* ctperf.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +370,7 @@
 				DEPLOYMENT_POSTPROCESSING = NO;
 				DEVELOPMENT_TEAM = QQ64R4PS8Q;
 				DSTROOT = "/tmp/$(PROJECT_NAME).dist";
+				DYLIB_CURRENT_VERSION = 1.0;
 				EXECUTABLE_PREFIX = lib;
 				INSTALL_PATH = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "";
@@ -366,6 +387,7 @@
 				DEPLOYMENT_POSTPROCESSING = NO;
 				DEVELOPMENT_TEAM = QQ64R4PS8Q;
 				DSTROOT = "/tmp/$(PROJECT_NAME).dist";
+				DYLIB_CURRENT_VERSION = 1.0;
 				EXECUTABLE_PREFIX = lib;
 				INSTALL_PATH = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "";
