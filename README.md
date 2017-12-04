@@ -1,10 +1,11 @@
 # cunit
 
-[STILL IN DEVELOPMENT]
+### Current release: v1.0
+### In development: v1.1
 
-A small library for unit/performance tests.
+A small library for unit/performance tests (based on XCTest framework).
 
-Version 1.0 will provide :
+Library provides :
 - test case and suite
 - test performance
 - assertion macros
