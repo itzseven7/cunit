@@ -11,78 +11,78 @@
 
 ctcase_return_t testFail() {
     puts("testFail execution\n");
-    cfail("This library should be more comprehensive :(\n")
+    CTFail("This library should be more comprehensive :(\n")
     return CTPassed;
 }
 
 ctcase_return_t testEquality() {
     puts("testEquality execution\n");
     int a = 5, b = 9;
-    casserteq(a, b, "testEquality failed: %d and %d are not equal\n", a, b)
+    CTAssertEqual(a, b, "testEquality failed: %d and %d are not equal\n", a, b)
     return CTPassed;
 }
 
 ctcase_return_t testNonEquality() {
     puts("testNonEquality execution\n");
     int a = 5, b = 9;
-    cassertneq(a, b, "testNonEquality failed: %d and %d are equal\n", a, b)
-    return CTFailed;
+    CTAssertNotEqual(a, b, "testNonEquality failed: %d and %d are equal\n", a, b)
+    return CTPassed;
 }
 
 ctcase_return_t testTrue() {
     puts("testTrue execution\n");
     int a = 5, b = 9, c = 14;
-    cassertt((a + b) == c)
+    CTAssertTrue((a + b) == c)
     return CTPassed;
 }
 
 ctcase_return_t testFalse() {
     puts("testFalse execution\n");
     int a = 5, b = 9, c = 14;
-    cassertf((a + b) == c, "testFalse failed: (%d + %d) is equal to %d\n", a, b, c)
-    return CTFailed;
+    CTAssertFalse((a + b) == c, "testFalse failed: (%d + %d) is equal to %d\n", a, b, c)
+    return CTPassed;
 }
 
 ctcase_return_t testNull() {
     puts("testNull execution\n");
     const char *string = NULL;
-    cassertnull(string, "testNull failed: string is not NULL\n")
+    CTAssertNull(string, "testNull failed: string is not NULL\n")
     return CTPassed;
 }
 
 ctcase_return_t testNotNull() {
     puts("testNotNull execution\n");
     const char *string = (const char *)malloc(5 * sizeof(char));
-    cassertnnull(string, "testNotNull failed: string is NULL\n")
+    CTAssertNotNull(string, "testNotNull failed: string is NULL\n")
     return CTPassed;
 }
 
 ctcase_return_t testGreaterThan() {
     puts("testGreaterThan execution\n");
     int a = 2, b = 10;
-    cassertgt(a, b, "testGreaterThan failed: %d is not greater than %d\n", a, b)
-    return CTFailed;
+    CTAssertGreaterThan(a, b, "testGreaterThan failed: %d is not greater than %d\n", a, b)
+    return CTPassed;
 }
 
 ctcase_return_t testGreaterOrEqual() {
     puts("testGreaterOrEqual execution\n");
     int a = 9, b = 10;
-    cassertgteq(a, b, "testGreaterOrEqual failed: %d is not greater or equal to %d\n", a, b)
+    CTAssertGreaterThanOrEqual(a, b, "testGreaterOrEqual failed: %d is not greater or equal to %d\n", a, b)
     return CTPassed;
 }
 
 ctcase_return_t testLessThan() {
     puts("testLessThan execution\n");
     int a = 2, b = 10;
-    cassertgt(a, b, "testLessThan failed: %d is not less than %d\n", a, b)
+    CTAssertLessThan(a, b, "testLessThan failed: %d is not less than %d\n", a, b)
     return CTPassed;
 }
 
 ctcase_return_t testLessOrEqual() {
     puts("testLessOrEqual execution\n");
     int a = 9, b = 10;
-    cassertgteq(a, b, "testLessOrEqual failed: %d is not less or equal to %d\n", a, b)
-    return CTFailed;
+    CTAssertLessThanOrEqual(a, b, "testLessOrEqual failed: %d is not less or equal to %d\n", a, b)
+    return CTPassed;
 }
 
 ctperf_return_t testPerformanceNotTooLong() {
