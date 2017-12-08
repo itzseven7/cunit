@@ -1,6 +1,6 @@
 # cunit
 
-A small library for unit/performance tests.
+A small library for unit/performance tests (based on XCTest framework).
 
 Features :
 - test case and suite
