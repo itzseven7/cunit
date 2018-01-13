@@ -9,9 +9,9 @@
 #ifndef cunit_h
 #define cunit_h
 
+#include "ctest.h"
 #include "ctcase.h"
-#include "ctperf.h"
 #include "ctsuite.h"
-#include "cassert.h"
+#include "ctassert.h"
 
 #endif /* cunit_h */
