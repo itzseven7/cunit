@@ -9,12 +9,14 @@
 #ifndef cassert_h
 #define cassert_h
 
+#include "ctest.h"
+
 /*!
  * @define _CTFailure(assertion, ...)
  * Generates a failure unconditionally (for internal usage, use cfail(...) instead in your code).
  */
 
-#define _CTFailure(assertion, ...) return _cfail(assertion, __FILE__, __LINE__, "" __VA_ARGS__);
+#define _CTFailure(test, assertion, ...) _cfail(test, assertion, __FILE__, __LINE__, "" __VA_ARGS__);
 
 /*!
  * @define CTFail(...)
@@ -22,7 +24,7 @@
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTFail(...) _CTFailure("Assertion", __VA_ARGS__);
+#define CTFail(test, ...) _CTFailure(test, "Assertion", __VA_ARGS__);
 
 /*!
  * @define CTAssertEqual(expression, expression1, ...)
@@ -32,7 +34,7 @@
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertEqual(expression, expression1, ...) if ((expression) != (expression1)) { _CTFailure("Equality assertion", __VA_ARGS__) }
+#define CTAssertEqual(test, expression, expression1, ...) if ((expression) != (expression1)) { _CTFailure(test, "Equality assertion", __VA_ARGS__) }
 
 /*!
  * @define CTAssertNotEqual(expression, expression1, ...)
@@ -42,7 +44,7 @@
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertNotEqual(expression, expression1, ...) if ((expression) == (expression1)) { _CTFailure("Non equality assertion", __VA_ARGS__) }
+#define CTAssertNotEqual(test, expression, expression1, ...) if ((expression) == (expression1)) { _CTFailure(test, "Non equality assertion", __VA_ARGS__) }
 
 /*!
  * @define CTAssertTrue(expression, ...)
@@ -51,7 +53,7 @@
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertTrue(expression, ...) if (!(expression)) { _CTFailure("Truth assertion", __VA_ARGS__) }
+#define CTAssertTrue(test, expression, ...) if (!(expression)) { _CTFailure(test, "Truth assertion", __VA_ARGS__) }
 
 /*!
  * @define CTAssertFalse(expression, ...)
@@ -60,7 +62,7 @@
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertFalse(expression, ...) if ((expression)) { _CTFailure("Non truth assertion", __VA_ARGS__) }
+#define CTAssertFalse(test, expression, ...) if ((expression)) { _CTFailure(test, "Non truth assertion", __VA_ARGS__) }
 
 /*!
  * @define CTAssertNull(expression, ...)
@@ -69,7 +71,7 @@
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertNull(expression, ...) if ((expression) != NULL) { _CTFailure("Nullity assertion", __VA_ARGS__) }
+#define CTAssertNull(test, expression, ...) if ((expression) != NULL) { _CTFailure(test, "Nullity assertion", __VA_ARGS__) }
 
 /*!
  * @define CTAssertNotNull(expression, ...)
@@ -78,7 +80,7 @@
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertNotNull(expression, ...) if ((expression) == NULL) { _CTFailure("Non nullity assertion", __VA_ARGS__) }
+#define CTAssertNotNull(test, expression, ...) if ((expression) == NULL) { _CTFailure(test, "Non nullity assertion", __VA_ARGS__) }
 
 /*!
  * @define CTAssertGreaterThan(expression1, expression2, ...)
@@ -88,7 +90,7 @@
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertGreaterThan(expression1, expression2, ...) if ((expression1) <= (expression2)) { _CTFailure("Greather than assertion", __VA_ARGS__) }
+#define CTAssertGreaterThan(test, expression1, expression2, ...) if ((expression1) <= (expression2)) { _CTFailure(test, "Greather than assertion", __VA_ARGS__) }
 
 /*!
  * @define CTAssertGreaterThanOrEqual(expression1, expression2, ...)
@@ -98,7 +100,7 @@
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertGreaterThanOrEqual(expression1, expression2, ...) if ((expression1) < (expression2)) { _CTFailure("Greater than or equal assertion", __VA_ARGS__) }
+#define CTAssertGreaterThanOrEqual(test, expression1, expression2, ...) if ((expression1) < (expression2)) { _CTFailure(test, "Greater than or equal assertion", __VA_ARGS__) }
 
 /*!
  * @define CTAssertLessThan(expression1, expression2, ...)
@@ -108,7 +110,7 @@
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertLessThan(expression1, expression2, ...) if ((expression1) >= (expression2)) { _CTFailure("Less than assertion", __VA_ARGS__) }
+#define CTAssertLessThan(test, expression1, expression2, ...) if ((expression1) >= (expression2)) { _CTFailure(test, "Less than assertion", __VA_ARGS__) }
 
 /*!
  * @define CTAssertLessThanOrEqual(expression1, expression2, ...)
@@ -118,7 +120,7 @@
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertLessThanOrEqual(expression1, expression2, ...) if ((expression1) > (expression2)) { _CTFailure("Less than or equal assertion", __VA_ARGS__) }
+#define CTAssertLessThanOrEqual(test, expression1, expression2, ...) if ((expression1) > (expression2)) { _CTFailure(test, "Less than or equal assertion", __VA_ARGS__) }
 
 /*!
  @function   _cfail
@@ -127,6 +129,6 @@
 @discussion This function is for internal usage. If you want to generate a failure unconditionally, please use the defined macro CTFail(...)
  */
 
-int _cfail(const char *assertion, const char *filename, unsigned long lineNumber, const char * format, ...);
+void _cfail(const ctest_t *test, const char *assertion, const char *filename, unsigned long lineNumber, const char * format, ...);
 
 #endif /* cassert_h */
