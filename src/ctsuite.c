@@ -66,7 +66,7 @@ void ctsaddtc(ctsuite_t *tsuite, ctcase_t *tcase) {
     }
     
     suite_int->tcaseCount++;
-    tsuite->count += (((ctcase_int_t *)tcase->_internal)->testListCount + ((ctcase_int_t *)tcase->_internal)->testPerfListCount);
+    tsuite->count += (((ctcase_int_t *)tcase->_internal)->testCount + ((ctcase_int_t *)tcase->_internal)->perfTestCount);
 }
 
 void ctsrun(ctsuite_t *tsuite) {
@@ -77,7 +77,11 @@ void ctsrun(ctsuite_t *tsuite) {
     ctcaselist_t *caseList = suite_int->tcases;
     
     while (caseList != NULL) {
+        printf("Starting %s test case\n", caseList->tcase->name);
+        
         _tcrun(caseList->tcase);
+        
+        printf("Finished %s test case\n", caseList->tcase->name);
         
         tsuite->passed += ((ctcase_int_t *)caseList->tcase->_internal)->passed;
         tsuite->failed += ((ctcase_int_t *)caseList->tcase->_internal)->failed;

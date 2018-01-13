@@ -1,5 +1,5 @@
 //
-//  cassert.c
+//  ctassert.c
 //  cunit
 //
 //  Created by itzseven on 30/11/2017.
@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-#include "cassert.h"
+#include "ctassert.h"
 #include "_ctest.h"
 
 void _cfail(const ctest_t *test, const char *assertion, const char *filename, unsigned long lineNumber, const char * format, ...) {

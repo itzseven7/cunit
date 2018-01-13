@@ -1,13 +1,13 @@
 //
-//  cassert.h
+//  ctassert.h
 //  cunit
 //
 //  Created by itzseven on 28/11/2017.
 //  Copyright © 2017 itzseven. All rights reserved.
 //
 
-#ifndef cassert_h
-#define cassert_h
+#ifndef ctassert_h
+#define ctassert_h
 
 #include "ctest.h"
 
@@ -131,4 +131,4 @@
 
 void _cfail(const ctest_t *test, const char *assertion, const char *filename, unsigned long lineNumber, const char * format, ...);
 
-#endif /* cassert_h */
+#endif /* ctassert_h */

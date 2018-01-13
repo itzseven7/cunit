@@ -25,10 +25,10 @@ typedef struct ctperflist_t {
 }ctperflist_t;
 
 typedef struct ctcase_int_t {
-    ctestlist_t *testList;
-    unsigned int testListCount;
-    ctperflist_t *testPerfList;
-    unsigned int testPerfListCount;
+    ctestlist_t *tests;
+    unsigned int testCount;
+    ctperflist_t *perfTests;
+    unsigned int perfTestCount;
     unsigned int passed;
     unsigned int failed;
 }ctcase_int_t;
