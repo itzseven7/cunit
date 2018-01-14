@@ -30,6 +30,7 @@
 /*!
  * @define CTAssertEqual(expression1, expression2, ...)
  * Generates a failure when ((\a expression1) != (\a expression2)).
+ * @param test The test
  * @param expression1 An expression of C scalar type.
  * @param expression2 An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
@@ -40,6 +41,7 @@
 /*!
  * @define CTAssertNotEqual(expression1, expression2, ...)
  * Generates a failure when ((\a expression1) == (\a expression2)).
+ * @param test The test
  * @param expression1 An expression of C scalar type.
  * @param expression2 An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
@@ -50,6 +52,7 @@
 /*!
  * @define CTAssertTrue(expression, ...)
  * Generates a failure when ((\a expression) != true).
+ * @param test The test
  * @param expression An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
@@ -59,6 +62,7 @@
 /*!
  * @define CTAssertFalse(expression, ...)
  * Generates a failure when ((\a expression) != false).
+ * @param test The test
  * @param expression An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
@@ -68,6 +72,7 @@
 /*!
  * @define CTAssertNull(expression, ...)
  * Generates a failure when ((\a expression) != NULL).
+ * @param test The test
  * @param expression An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
@@ -77,6 +82,7 @@
 /*!
  * @define CTAssertNotNull(expression, ...)
  * Generates a failure when ((\a expression) == NULL).
+ * @param test The test
  * @param expression An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
@@ -86,6 +92,7 @@
 /*!
  * @define CTAssertGreaterThan(expression1, expression2, ...)
  * Generates a failure when ((\a expression1) <= (\a expression2)).
+ * @param test The test
  * @param expression1 An expression of C scalar type.
  * @param expression2 An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
@@ -96,6 +103,7 @@
 /*!
  * @define CTAssertGreaterThanOrEqual(expression1, expression2, ...)
  * Generates a failure when ((\a expression1) < (\a expression2)).
+ * @param test The test
  * @param expression1 An expression of C scalar type.
  * @param expression2 An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
@@ -106,6 +114,7 @@
 /*!
  * @define CTAssertLessThan(expression1, expression2, ...)
  * Generates a failure when ((\a expression1) >= (\a expression2)).
+ * @param test The test
  * @param expression1 An expression of C scalar type.
  * @param expression2 An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
@@ -116,6 +125,7 @@
 /*!
  * @define CTAssertLessThanOrEqual(expression1, expression2, ...)
  * Generates a failure when ((\a expression1) > (\a expression2)).
+ * @param test The test
  * @param expression1 An expression of C scalar type.
  * @param expression2 An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
