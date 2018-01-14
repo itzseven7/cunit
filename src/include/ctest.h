@@ -9,6 +9,8 @@
 #ifndef ctest_h
 #define ctest_h
 
+#include "ctexpect.h"
+
 struct ctest_t;
 
 typedef void ctest_return_t;
@@ -28,5 +30,8 @@ typedef struct ctest_t {
 
 ctest_t *ctest(const char *name, ctinv_ptr_t inv, void *arg);
 void fctest(ctest_t *test);
+
+ctexpect_t *expectationWithDescription(ctest_t *test, const char *desc);
+void waitForExpectationsWithTimeout(ctest_t *test, unsigned int timeout);
 
 #endif /* ctest_h */

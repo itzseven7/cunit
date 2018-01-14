@@ -111,14 +111,16 @@ void _tcruntest(ctcase_t *tcase, ctest_t *test) {
         test->tdown(test->arg);
     }
     
-    if (((ctest_int_t *)test->_internal)->failures == 0) {
+    ctest_int_t *test_int = (ctest_int_t *)test->_internal;
+    
+    if ((test_int->failures == 0) && (test_int->unfulfilledExpectations == 0)) {
         printf("Test %s succeeded\n", test->name);
     } else {
-        printf("Test %s failed (%d failures)\n", test->name, ((ctest_int_t *)test->_internal)->failures);
+        printf("Test %s failed (%d failures, %d unfulfilled expectations)\n", test->name, test_int->failures, test_int->unfulfilledExpectations);
     }
     
-    ((ctcase_int_t *)tcase->_internal)->passed += ((ctest_int_t *)test->_internal)->failures == 0;
-    ((ctcase_int_t *)tcase->_internal)->failed += ((ctest_int_t *)test->_internal)->failures > 0;
+    ((ctcase_int_t *)tcase->_internal)->passed += (test_int->failures == 0) && (test_int->unfulfilledExpectations == 0);
+    ((ctcase_int_t *)tcase->_internal)->failed += (test_int->failures > 0) || (test_int->unfulfilledExpectations > 0);
 }
 
 void _tcrunperf(ctcase_t *tcase, ctperf_t *perf) {

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		044A29AA200BB3F7005CC2F4 /* ctexpect.h in Headers */ = {isa = PBXBuildFile; fileRef = 044A29A8200BB3F7005CC2F4 /* ctexpect.h */; };
+		044A29AB200BB3F7005CC2F4 /* ctexpect.c in Sources */ = {isa = PBXBuildFile; fileRef = 044A29A9200BB3F7005CC2F4 /* ctexpect.c */; };
+		044A29AC200BB3F7005CC2F4 /* ctexpect.c in Sources */ = {isa = PBXBuildFile; fileRef = 044A29A9200BB3F7005CC2F4 /* ctexpect.c */; };
+		044A29AE200BB5D2005CC2F4 /* _ctexpect.h in Headers */ = {isa = PBXBuildFile; fileRef = 044A29AD200BB5D2005CC2F4 /* _ctexpect.h */; };
 		0483244A200A65CA006DC3FF /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 04832449200A65CA006DC3FF /* main.c */; };
 		0483244F200A6692006DC3FF /* ctcase.c in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDA81FCDF41900AFD45D /* ctcase.c */; };
 		04832450200A6692006DC3FF /* ctsuite.c in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDA91FCDF41900AFD45D /* ctsuite.c */; };
@@ -38,6 +42,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		044A29A8200BB3F7005CC2F4 /* ctexpect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ctexpect.h; sourceTree = "<group>"; };
+		044A29A9200BB3F7005CC2F4 /* ctexpect.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ctexpect.c; sourceTree = "<group>"; };
+		044A29AD200BB5D2005CC2F4 /* _ctexpect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _ctexpect.h; sourceTree = "<group>"; };
 		04832447200A65C9006DC3FF /* CUnitTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CUnitTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04832449200A65CA006DC3FF /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		04CBDDA01FCDF3F500AFD45D /* libcunit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcunit.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,6 +114,7 @@
 				04CBDDA91FCDF41900AFD45D /* ctsuite.c */,
 				BD4A7ACD1FD00F000044404B /* ctassert.c */,
 				04DF699A200A6E9C00238AB2 /* ctest.c */,
+				044A29A9200BB3F7005CC2F4 /* ctexpect.c */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -127,6 +135,7 @@
 				04CBDDAB1FCDF41900AFD45D /* ctcase.h */,
 				04CBDDAA1FCDF41900AFD45D /* ctsuite.h */,
 				04CBDDB01FCDF43600AFD45D /* cunit.h */,
+				044A29A8200BB3F7005CC2F4 /* ctexpect.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -136,6 +145,7 @@
 			children = (
 				04DF699E200A789600238AB2 /* _ctcase.h */,
 				04DF69A0200A7D6100238AB2 /* _ctest.h */,
+				044A29AD200BB5D2005CC2F4 /* _ctexpect.h */,
 			);
 			path = internal;
 			sourceTree = "<group>";
@@ -147,6 +157,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				044A29AE200BB5D2005CC2F4 /* _ctexpect.h in Headers */,
+				044A29AA200BB3F7005CC2F4 /* ctexpect.h in Headers */,
 				04DF699B200A6E9C00238AB2 /* ctest.h in Headers */,
 				04CBDDC81FCE01FC00AFD45D /* ctassert.h in Headers */,
 				04CBDDB11FCDF45100AFD45D /* cunit.h in Headers */,
@@ -239,6 +251,7 @@
 				04DF699D200A6EE100238AB2 /* ctest.c in Sources */,
 				0483244F200A6692006DC3FF /* ctcase.c in Sources */,
 				04832450200A6692006DC3FF /* ctsuite.c in Sources */,
+				044A29AC200BB3F7005CC2F4 /* ctexpect.c in Sources */,
 				04832451200A6692006DC3FF /* ctassert.c in Sources */,
 				0483244A200A65CA006DC3FF /* main.c in Sources */,
 			);
@@ -251,6 +264,7 @@
 				04CBDDAC1FCDF41900AFD45D /* ctcase.c in Sources */,
 				04DF699C200A6E9C00238AB2 /* ctest.c in Sources */,
 				BD4A7ACE1FD00F000044404B /* ctassert.c in Sources */,
+				044A29AB200BB3F7005CC2F4 /* ctexpect.c in Sources */,
 				04CBDDAD1FCDF41900AFD45D /* ctsuite.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
