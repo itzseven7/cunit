@@ -19,6 +19,6 @@ typedef struct ctcase_t {
 ctcase_t *ctcase(const char *name);
 void ctestadd(ctcase_t *tcase, ctest_t *test);
 void ctestperfadd(ctcase_t *tcase, ctest_t *test, double time);
-void fctcase(ctcase_t *tcase);
+void freectcase(ctcase_t *tcase);
 
 #endif /* ctcase_h */

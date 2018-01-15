@@ -64,12 +64,12 @@ ctcase_t *ctcase(const char *name) {
 }
 
 void ctestadd(ctcase_t *tcase, ctest_t *ctest) {
-    ctcase_int_t *case_int = (ctcase_int_t *)tcase->_internal;
+    ctcase_int_t *caseInternal = (ctcase_int_t *)tcase->_internal;
     
-    if (case_int->tests == NULL) {
-        case_int->tests = ctestlist(ctest);
+    if (caseInternal->tests == NULL) {
+        caseInternal->tests = ctestlist(ctest);
     } else {
-        ctestlist_t *tcurrentList = case_int->tests;
+        ctestlist_t *tcurrentList = caseInternal->tests;
         
         while (tcurrentList->next != NULL) {
             tcurrentList = tcurrentList->next;
@@ -78,17 +78,17 @@ void ctestadd(ctcase_t *tcase, ctest_t *ctest) {
         tcurrentList->next = ctestlist(ctest);
     }
     
-    case_int->testCount++;
+    caseInternal->testCount++;
 }
 
 void ctestperfadd(ctcase_t *tcase, ctest_t *test, double time) {
-    ctcase_int_t *case_int = (ctcase_int_t *)tcase->_internal;
+    ctcase_int_t *caseInternal = (ctcase_int_t *)tcase->_internal;
     ctperf_t * perf = ctperf(test, time);
     
-    if (case_int->perfTests == NULL) {
-        case_int->perfTests = ctperflist(perf);
+    if (caseInternal->perfTests == NULL) {
+        caseInternal->perfTests = ctperflist(perf);
     } else {
-        ctperflist_t *tcurrentList = case_int->perfTests;
+        ctperflist_t *tcurrentList = caseInternal->perfTests;
         
         while (tcurrentList->next != NULL) {
             tcurrentList = tcurrentList->next;
@@ -97,7 +97,7 @@ void ctestperfadd(ctcase_t *tcase, ctest_t *test, double time) {
         tcurrentList->next = ctperflist(perf);
     }
     
-    case_int->perfTestCount++;
+    caseInternal->perfTestCount++;
 }
 
 void _tcruntest(ctcase_t *tcase, ctest_t *test) {
@@ -111,14 +111,16 @@ void _tcruntest(ctcase_t *tcase, ctest_t *test) {
         test->tdown(test->arg);
     }
     
-    if (((ctest_int_t *)test->_internal)->failures == 0) {
+    ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
+    
+    if ((testInternal->failures == 0) && (testInternal->unfulfilledExpectations == 0)) {
         printf("Test %s succeeded\n", test->name);
     } else {
-        printf("Test %s failed (%d failures)\n", test->name, ((ctest_int_t *)test->_internal)->failures);
+        printf("Test %s failed (%d failures, %d unfulfilled expectations)\n", test->name, testInternal->failures, testInternal->unfulfilledExpectations);
     }
     
-    ((ctcase_int_t *)tcase->_internal)->passed += ((ctest_int_t *)test->_internal)->failures == 0;
-    ((ctcase_int_t *)tcase->_internal)->failed += ((ctest_int_t *)test->_internal)->failures > 0;
+    ((ctcase_int_t *)tcase->_internal)->passed += (testInternal->failures == 0) && (testInternal->unfulfilledExpectations == 0);
+    ((ctcase_int_t *)tcase->_internal)->failed += (testInternal->failures > 0) || (testInternal->unfulfilledExpectations > 0);
 }
 
 void _tcrunperf(ctcase_t *tcase, ctperf_t *perf) {
@@ -150,9 +152,9 @@ void _tcrunperf(ctcase_t *tcase, ctperf_t *perf) {
 }
 
 void _tcrun(ctcase_t *tcase) {
-    ctcase_int_t *case_int = (ctcase_int_t *)tcase->_internal;
+    ctcase_int_t *caseInternal = (ctcase_int_t *)tcase->_internal;
     
-    ctestlist_t *testList = case_int->tests;
+    ctestlist_t *testList = caseInternal->tests;
     
     while (testList != NULL) {
         printf("Invoking %s test\n", testList->test->name);
@@ -161,7 +163,7 @@ void _tcrun(ctcase_t *tcase) {
         testList = testList->next;
     }
     
-    ctperflist_t *perfList = case_int->perfTests;
+    ctperflist_t *perfList = caseInternal->perfTests;
     
     while (perfList != NULL) {
         printf("Invoking %s performance test\n", perfList->tperf->test->name);
@@ -171,24 +173,24 @@ void _tcrun(ctcase_t *tcase) {
     }
 }
 
-void fctcase(ctcase_t *tcase) {
-    ctcase_int_t *case_int = (ctcase_int_t *)tcase->_internal;
+void freectcase(ctcase_t *tcase) {
+    ctcase_int_t *caseInternal = (ctcase_int_t *)tcase->_internal;
     
-    ctestlist_t *testList = case_int->tests;
+    ctestlist_t *testList = caseInternal->tests;
     
     while (testList != NULL) {
-        fctest(testList->test);
+        freectest(testList->test);
         testList = testList->next;
     }
     
-    ctperflist_t *perfList = case_int->perfTests;
+    ctperflist_t *perfList = caseInternal->perfTests;
     
     while (perfList != NULL) {
-        fctest(perfList->tperf->test);
+        freectest(perfList->tperf->test);
         free(perfList->tperf);
         perfList = perfList->next;
     }
     
-    free(case_int);
+    free(caseInternal);
     free(tcase);
 }
