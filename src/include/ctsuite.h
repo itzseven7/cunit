@@ -22,6 +22,6 @@ typedef struct ctsuite_t {
 ctsuite_t *ctsuite(const char *name);
 void ctsaddtc(ctsuite_t *tsuite, ctcase_t *tcase);
 void ctsrun(ctsuite_t *tsuite);
-void fctsuite(ctsuite_t *tsuite);
+void freectsuite(ctsuite_t *tsuite);
 
 #endif /* ctsuite_h */

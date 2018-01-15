@@ -29,9 +29,9 @@ typedef struct ctest_t {
 }ctest_t;
 
 ctest_t *ctest(const char *name, ctinv_ptr_t inv, void *arg);
-void fctest(ctest_t *test);
+ctexpect_t *ctexpectwdesc(ctest_t *test, const char *desc);
+void ctexpectwait(ctest_t *test, unsigned int timeout);
 
-ctexpect_t *expectationWithDescription(ctest_t *test, const char *desc);
-void waitForExpectationsWithTimeout(ctest_t *test, unsigned int timeout);
+void freectest(ctest_t *test);
 
 #endif /* ctest_h */

@@ -23,12 +23,12 @@ ctexpectlist_t *ctexpectlist(ctexpect_t *expectation) {
 }
 
 ctest_int_t *ctest_int() {
-    ctest_int_t *test_int = malloc(sizeof(ctest_int_t));
-    test_int->failures = 0;
-    test_int->unfulfilledExpectations = 0;
-    test_int->expectations = NULL;
-    test_int->expectCount = 0;
-    return test_int;
+    ctest_int_t *testInternal = malloc(sizeof(ctest_int_t));
+    testInternal->failures = 0;
+    testInternal->unfulfilledExpectations = 0;
+    testInternal->expectations = NULL;
+    testInternal->expectCount = 0;
+    return testInternal;
 }
 
 ctest_t *ctest(const char *name, ctinv_ptr_t inv, void *arg) {
@@ -43,19 +43,19 @@ ctest_t *ctest(const char *name, ctinv_ptr_t inv, void *arg) {
     return test;
 }
 
-void fctest(ctest_t *test) {
+void freectest(ctest_t *test) {
     free(test->_internal);
     free(test);
 }
 
-ctexpect_t *expectationWithDescription(ctest_t *test, const char *desc) {
-    ctest_int_t *test_int = (ctest_int_t *)test->_internal;
+ctexpect_t *ctexpectwdesc(ctest_t *test, const char *desc) {
+    ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
     ctexpect_t *expect = ctexpect(desc);
     
-    if (test_int->expectations == NULL) {
-        test_int->expectations = ctexpectlist(expect);
+    if (testInternal->expectations == NULL) {
+        testInternal->expectations = ctexpectlist(expect);
     } else {
-        ctexpectlist_t *tcurrentList = test_int->expectations;
+        ctexpectlist_t *tcurrentList = testInternal->expectations;
         
         while (tcurrentList->next != NULL) {
             tcurrentList = tcurrentList->next;
@@ -64,7 +64,7 @@ ctexpect_t *expectationWithDescription(ctest_t *test, const char *desc) {
         tcurrentList->next = ctexpectlist(expect);
     }
     
-    test_int->expectCount++;
+    testInternal->expectCount++;
     
     return expect;
 }
@@ -75,7 +75,7 @@ void *waitThread(void *arg) {
     pthread_exit(NULL);
 }
 
-void waitForExpectationsWithTimeout(ctest_t *test, unsigned int timeout) {
+void ctexpectwait(ctest_t *test, unsigned int timeout) {
     pthread_t thread;
     pthread_attr_t attr;
     
@@ -96,12 +96,12 @@ void waitForExpectationsWithTimeout(ctest_t *test, unsigned int timeout) {
     
     while (list != NULL) {
         ctexpect_t *exp = list->expect;
-        ctest_int_t *test_int = (ctest_int_t *)test->_internal;
-        ctexpect_int_t *expect_int = (ctexpect_int_t *)exp->_internal;
+        ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
+        ctexpect_int_t *expectInternal = (ctexpect_int_t *)exp->_internal;
         
-        if (!expect_int->fulfilled) {
+        if (!expectInternal->fulfilled) {
             printf("Expectation %s is unfulfilled\n", exp->desc);
-            test_int->unfulfilledExpectations++;
+            testInternal->unfulfilledExpectations++;
         }
         
         list = list->next;
