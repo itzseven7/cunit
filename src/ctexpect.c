@@ -2,7 +2,7 @@
 //  ctexpect.c
 //  cunit
 //
-//  Created by Romain on 14/01/2018.
+//  Created by itzseven on 14/01/2018.
 //  Copyright © 2018 itzseven. All rights reserved.
 //
 
@@ -25,11 +25,19 @@ ctexpect_t *ctexpect(const char *description) {
 }
 
 void fulfill(ctexpect_t *expectation) {
-    ((ctexpect_int_t *)expectation->_internal)->currentFulfillmentCount++;
+    ctexpect_int_t *expectInternal = (ctexpect_int_t *)expectation->_internal;
     
-    if (((ctexpect_int_t *)expectation->_internal)->currentFulfillmentCount == expectation->expectedFulfillmentCount) {
-        ((ctexpect_int_t *)expectation->_internal)->fulfilled = true && !expectation->inverted;
+    if (expectation->inverted) {
+        expectInternal->fulfilled = false;
     } else {
-        ((ctexpect_int_t *)expectation->_internal)->fulfilled = false;
+        expectInternal->currentFulfillmentCount++;
+        
+        if (expectInternal->currentFulfillmentCount == expectation->expectedFulfillmentCount) {
+            expectInternal->fulfilled = true;
+        } else if ((expectInternal->currentFulfillmentCount > expectation->expectedFulfillmentCount)) {
+            expectInternal->fulfilled = !expectation->assertForOverFulfill;
+        } else {
+            expectInternal->fulfilled = false;
+        }
     }
 }

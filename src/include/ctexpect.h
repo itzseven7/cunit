@@ -2,7 +2,7 @@
 //  ctexpect.h
 //  cunit
 //
-//  Created by Romain on 14/01/2018.
+//  Created by itzseven on 14/01/2018.
 //  Copyright © 2018 itzseven. All rights reserved.
 //
 
