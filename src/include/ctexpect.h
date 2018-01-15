@@ -13,7 +13,7 @@
 
 typedef struct ctexpect_t {
     const char *desc;
-    //bool inverted;
+    bool inverted;
     unsigned int expectedFulfillmentCount;
     bool assertForOverFulfill;
     void *_internal;

@@ -14,7 +14,7 @@
 ctexpect_t *ctexpect(const char *description) {
     ctexpect_t *expectation = malloc(sizeof(ctexpect_t));
     expectation->desc = description;
-    //expectation->inverted = false;
+    expectation->inverted = false;
     expectation->expectedFulfillmentCount = 1;
     expectation->assertForOverFulfill = false;
     expectation->_internal = malloc(sizeof(ctexpect_int_t));
@@ -28,7 +28,7 @@ void fulfill(ctexpect_t *expectation) {
     ((ctexpect_int_t *)expectation->_internal)->currentFulfillmentCount++;
     
     if (((ctexpect_int_t *)expectation->_internal)->currentFulfillmentCount == expectation->expectedFulfillmentCount) {
-        ((ctexpect_int_t *)expectation->_internal)->fulfilled = true;
+        ((ctexpect_int_t *)expectation->_internal)->fulfilled = true && !expectation->inverted;
     } else {
         ((ctexpect_int_t *)expectation->_internal)->fulfilled = false;
     }
