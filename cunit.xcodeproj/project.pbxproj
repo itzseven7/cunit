@@ -15,6 +15,11 @@
 		0483244F200A6692006DC3FF /* ctcase.c in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDA81FCDF41900AFD45D /* ctcase.c */; };
 		04832450200A6692006DC3FF /* ctsuite.c in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDA91FCDF41900AFD45D /* ctsuite.c */; };
 		04832451200A6692006DC3FF /* ctassert.c in Sources */ = {isa = PBXBuildFile; fileRef = BD4A7ACD1FD00F000044404B /* ctassert.c */; };
+		04B052FE200E92CF0020432D /* ctexpect_tests.c in Sources */ = {isa = PBXBuildFile; fileRef = 04B052F3200E92CE0020432D /* ctexpect_tests.c */; };
+		04B052FF200E92CF0020432D /* ctsuite_tests.c in Sources */ = {isa = PBXBuildFile; fileRef = 04B052F4200E92CE0020432D /* ctsuite_tests.c */; };
+		04B05300200E92CF0020432D /* ctest_tests.c in Sources */ = {isa = PBXBuildFile; fileRef = 04B052F5200E92CE0020432D /* ctest_tests.c */; };
+		04B05301200E92CF0020432D /* ctassert_tests.c in Sources */ = {isa = PBXBuildFile; fileRef = 04B052F6200E92CE0020432D /* ctassert_tests.c */; };
+		04B05302200E92CF0020432D /* ctcase_tests.c in Sources */ = {isa = PBXBuildFile; fileRef = 04B052FD200E92CF0020432D /* ctcase_tests.c */; };
 		04CBDDAC1FCDF41900AFD45D /* ctcase.c in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDA81FCDF41900AFD45D /* ctcase.c */; };
 		04CBDDAD1FCDF41900AFD45D /* ctsuite.c in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDA91FCDF41900AFD45D /* ctsuite.c */; };
 		04CBDDAE1FCDF41900AFD45D /* ctsuite.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CBDDAA1FCDF41900AFD45D /* ctsuite.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -47,6 +52,16 @@
 		044A29AD200BB5D2005CC2F4 /* _ctexpect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _ctexpect.h; sourceTree = "<group>"; };
 		04832447200A65C9006DC3FF /* CUnitTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CUnitTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04832449200A65CA006DC3FF /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		04B052F3200E92CE0020432D /* ctexpect_tests.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ctexpect_tests.c; sourceTree = "<group>"; };
+		04B052F4200E92CE0020432D /* ctsuite_tests.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ctsuite_tests.c; sourceTree = "<group>"; };
+		04B052F5200E92CE0020432D /* ctest_tests.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ctest_tests.c; sourceTree = "<group>"; };
+		04B052F6200E92CE0020432D /* ctassert_tests.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ctassert_tests.c; sourceTree = "<group>"; };
+		04B052F8200E92CF0020432D /* ctassert_tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ctassert_tests.h; sourceTree = "<group>"; };
+		04B052F9200E92CF0020432D /* ctexpect_tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ctexpect_tests.h; sourceTree = "<group>"; };
+		04B052FA200E92CF0020432D /* ctest_tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ctest_tests.h; sourceTree = "<group>"; };
+		04B052FB200E92CF0020432D /* ctsuite_tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ctsuite_tests.h; sourceTree = "<group>"; };
+		04B052FC200E92CF0020432D /* ctcase_tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ctcase_tests.h; sourceTree = "<group>"; };
+		04B052FD200E92CF0020432D /* ctcase_tests.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ctcase_tests.c; sourceTree = "<group>"; };
 		04CBDDA01FCDF3F500AFD45D /* libcunit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcunit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		04CBDDA81FCDF41900AFD45D /* ctcase.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ctcase.c; sourceTree = "<group>"; };
 		04CBDDA91FCDF41900AFD45D /* ctsuite.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ctsuite.c; sourceTree = "<group>"; };
@@ -82,9 +97,27 @@
 		04832448200A65C9006DC3FF /* CUnitTest */ = {
 			isa = PBXGroup;
 			children = (
+				04B052F7200E92CF0020432D /* include */,
+				04B052F6200E92CE0020432D /* ctassert_tests.c */,
+				04B052FD200E92CF0020432D /* ctcase_tests.c */,
+				04B052F5200E92CE0020432D /* ctest_tests.c */,
+				04B052F3200E92CE0020432D /* ctexpect_tests.c */,
+				04B052F4200E92CE0020432D /* ctsuite_tests.c */,
 				04832449200A65CA006DC3FF /* main.c */,
 			);
 			path = CUnitTest;
+			sourceTree = "<group>";
+		};
+		04B052F7200E92CF0020432D /* include */ = {
+			isa = PBXGroup;
+			children = (
+				04B052F8200E92CF0020432D /* ctassert_tests.h */,
+				04B052F9200E92CF0020432D /* ctexpect_tests.h */,
+				04B052FA200E92CF0020432D /* ctest_tests.h */,
+				04B052FB200E92CF0020432D /* ctsuite_tests.h */,
+				04B052FC200E92CF0020432D /* ctcase_tests.h */,
+			);
+			path = include;
 			sourceTree = "<group>";
 		};
 		04CBDD971FCDF3F500AFD45D = {
@@ -248,10 +281,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04B05301200E92CF0020432D /* ctassert_tests.c in Sources */,
 				041C483F200D477100EBFE37 /* main.c in Sources */,
 				04DF699D200A6EE100238AB2 /* ctest.c in Sources */,
 				0483244F200A6692006DC3FF /* ctcase.c in Sources */,
+				04B05302200E92CF0020432D /* ctcase_tests.c in Sources */,
+				04B052FF200E92CF0020432D /* ctsuite_tests.c in Sources */,
 				04832450200A6692006DC3FF /* ctsuite.c in Sources */,
+				04B05300200E92CF0020432D /* ctest_tests.c in Sources */,
+				04B052FE200E92CF0020432D /* ctexpect_tests.c in Sources */,
 				044A29AC200BB3F7005CC2F4 /* ctexpect.c in Sources */,
 				04832451200A6692006DC3FF /* ctassert.c in Sources */,
 			);

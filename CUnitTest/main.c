@@ -12,137 +12,139 @@
 #include <unistd.h>
 #include <pthread.h>
 
-#pragma mark - Test assertions
+#include "ctest_tests.h"
 
-ctest_return_t testFail(ctest_t *test, void *arg) {
-    puts("testFail execution\n");
-    CTFail(test, "This library should be more comprehensive :(\n")
-}
-
-ctest_return_t testEquality(ctest_t *test, void *arg) {
-    puts("testEquality execution\n");
-    int a = 5, b = 9;
-    CTAssertEqual(test, a, b, "testEquality failed: %d and %d are not equal\n", a, b)
-}
-
-ctest_return_t testNonEquality(ctest_t *test, void *arg) {
-    puts("testNonEquality execution\n");
-    int a = 5, b = 9;
-    CTAssertNotEqual(test, a, b, "testNonEquality failed: %d and %d are equal\n", a, b)
-}
-
-ctest_return_t testTrue(ctest_t *test, void *arg) {
-    puts("testTrue execution\n");
-    int a = 5, b = 9, c = 14;
-    CTAssertTrue(test, (a + b) == c)
-}
-
-ctest_return_t testFalse(ctest_t *test, void *arg) {
-    puts("testFalse execution\n");
-    int a = 5, b = 9, c = 14;
-    CTAssertFalse(test, (a + b) == c, "testFalse failed: (%d + %d) is equal to %d\n", a, b, c)
-}
-
-ctest_return_t testNull(ctest_t *test, void *arg) {
-    puts("testNull execution\n");
-    const char *string = NULL;
-    CTAssertNull(test, string, "testNull failed: string is not NULL\n")
-}
-
-ctest_return_t testNotNull(ctest_t *test, void *arg) {
-    puts("testNotNull execution\n");
-    const char *string = (const char *)malloc(5 * sizeof(char));
-    CTAssertNotNull(test, string, "testNotNull failed: string is NULL\n")
-}
-
-ctest_return_t testGreaterThan(ctest_t *test, void *arg) {
-    puts("testGreaterThan execution\n");
-    int a = 2, b = 10;
-    CTAssertGreaterThan(test, a, b, "testGreaterThan failed: %d is not greater than %d\n", a, b)
-}
-
-ctest_return_t testGreaterOrEqual(ctest_t *test, void *arg) {
-    puts("testGreaterOrEqual execution\n");
-    int a = 9, b = 10;
-    CTAssertGreaterThanOrEqual(test, a, b, "testGreaterOrEqual failed: %d is not greater or equal to %d\n", a, b)
-}
-
-ctest_return_t testLessThan(ctest_t *test, void *arg) {
-    puts("testLessThan execution\n");
-    int a = 2, b = 10;
-    CTAssertLessThan(test, a, b, "testLessThan failed: %d is not less than %d\n", a, b)
-}
-
-ctest_return_t testLessOrEqual(ctest_t *test, void *arg) {
-    puts("testLessOrEqual execution\n");
-    int a = 9, b = 10;
-    CTAssertLessThanOrEqual(test, a, b, "testLessOrEqual failed: %d is not less or equal to %d\n", a, b)
-}
-
-ctest_return_t testPerformanceNotTooLong(ctest_t *test, void *arg) {
-    int i = 0;
-    
-    FILE* debug = fopen("/dev/null", "w");
-    
-    for (i = 0; i < 10000; i++) {
-        fprintf(debug, "%d.", i);
-    }
-    
-    puts("testPerformanceNotTooLong finished\n");
-}
-
-ctest_return_t testWithOptionalFunctions() {
-    puts("testWithOptionalFunctions execution\n");
-}
-
-ctopt_return_t testCaseSetup(void *arg) {
-    puts("testCaseSetup execution\n");
-    (*((int *)arg)) += 10;
-}
-
-ctopt_return_t testCaseTeardown(void *arg) {
-    puts("testCaseTeardown execution\n");
-}
-
-ctopt_return_t testPerformanceSetup(void *arg) {
-    puts("testPerformanceSetup execution\n");
-}
-
-ctopt_return_t testPerformanceTeardown(void *arg) {
-    puts("testPerformanceTeardown execution\n");
-}
-
-ctest_return_t testPerformanceTooLong(ctest_t *test, void *arg) {
-    int i = 0;
-    
-    FILE* debug = fopen("/dev/null", "w");
-    
-    for (i = 0; i < 10000; i++) {
-        fprintf(debug, "%d.", i);
-    }
-    
-    puts("testPerformanceTooLong finished\n");
-}
-
-void *testThread(void *arg) {
-    sleep(3);
-    fulfill((ctexpect_t *)arg);
-    
-    pthread_exit(NULL);
-}
-
-ctest_return_t testExpectation(ctest_t *test, void *arg) {
-    
-    ctexpect_t *expect = ctexpectwdesc(test, "Test expectation");
-    
-    pthread_t thread;
-    
-    if (pthread_create(&thread, NULL, testThread, (void *)expect) != 0) {
-        puts("Couldn't create thread (main)\n");
-    }
-    
-    ctexpectwait(test, 5);
-}
+//#pragma mark - Test assertions
+//
+//ctest_return_t testFail(ctest_t *test, void *arg) {
+//    puts("testFail execution\n");
+//    CTFail(test, "This library should be more comprehensive :(\n")
+//}
+//
+//ctest_return_t testEquality(ctest_t *test, void *arg) {
+//    puts("testEquality execution\n");
+//    int a = 5, b = 9;
+//    CTAssertEqual(test, a, b, "testEquality failed: %d and %d are not equal\n", a, b)
+//}
+//
+//ctest_return_t testNonEquality(ctest_t *test, void *arg) {
+//    puts("testNonEquality execution\n");
+//    int a = 5, b = 9;
+//    CTAssertNotEqual(test, a, b, "testNonEquality failed: %d and %d are equal\n", a, b)
+//}
+//
+//ctest_return_t testTrue(ctest_t *test, void *arg) {
+//    puts("testTrue execution\n");
+//    int a = 5, b = 9, c = 14;
+//    CTAssertTrue(test, (a + b) == c)
+//}
+//
+//ctest_return_t testFalse(ctest_t *test, void *arg) {
+//    puts("testFalse execution\n");
+//    int a = 5, b = 9, c = 14;
+//    CTAssertFalse(test, (a + b) == c, "testFalse failed: (%d + %d) is equal to %d\n", a, b, c)
+//}
+//
+//ctest_return_t testNull(ctest_t *test, void *arg) {
+//    puts("testNull execution\n");
+//    const char *string = NULL;
+//    CTAssertNull(test, string, "testNull failed: string is not NULL\n")
+//}
+//
+//ctest_return_t testNotNull(ctest_t *test, void *arg) {
+//    puts("testNotNull execution\n");
+//    const char *string = (const char *)malloc(5 * sizeof(char));
+//    CTAssertNotNull(test, string, "testNotNull failed: string is NULL\n")
+//}
+//
+//ctest_return_t testGreaterThan(ctest_t *test, void *arg) {
+//    puts("testGreaterThan execution\n");
+//    int a = 2, b = 10;
+//    CTAssertGreaterThan(test, a, b, "testGreaterThan failed: %d is not greater than %d\n", a, b)
+//}
+//
+//ctest_return_t testGreaterOrEqual(ctest_t *test, void *arg) {
+//    puts("testGreaterOrEqual execution\n");
+//    int a = 9, b = 10;
+//    CTAssertGreaterThanOrEqual(test, a, b, "testGreaterOrEqual failed: %d is not greater or equal to %d\n", a, b)
+//}
+//
+//ctest_return_t testLessThan(ctest_t *test, void *arg) {
+//    puts("testLessThan execution\n");
+//    int a = 2, b = 10;
+//    CTAssertLessThan(test, a, b, "testLessThan failed: %d is not less than %d\n", a, b)
+//}
+//
+//ctest_return_t testLessOrEqual(ctest_t *test, void *arg) {
+//    puts("testLessOrEqual execution\n");
+//    int a = 9, b = 10;
+//    CTAssertLessThanOrEqual(test, a, b, "testLessOrEqual failed: %d is not less or equal to %d\n", a, b)
+//}
+//
+//ctest_return_t testPerformanceNotTooLong(ctest_t *test, void *arg) {
+//    int i = 0;
+//
+//    FILE* debug = fopen("/dev/null", "w");
+//
+//    for (i = 0; i < 10000; i++) {
+//        fprintf(debug, "%d.", i);
+//    }
+//
+//    puts("testPerformanceNotTooLong finished\n");
+//}
+//
+//ctest_return_t testWithOptionalFunctions() {
+//    puts("testWithOptionalFunctions execution\n");
+//}
+//
+//ctopt_return_t testCaseSetup(void *arg) {
+//    puts("testCaseSetup execution\n");
+//    (*((int *)arg)) += 10;
+//}
+//
+//ctopt_return_t testCaseTeardown(void *arg) {
+//    puts("testCaseTeardown execution\n");
+//}
+//
+//ctopt_return_t testPerformanceSetup(void *arg) {
+//    puts("testPerformanceSetup execution\n");
+//}
+//
+//ctopt_return_t testPerformanceTeardown(void *arg) {
+//    puts("testPerformanceTeardown execution\n");
+//}
+//
+//ctest_return_t testPerformanceTooLong(ctest_t *test, void *arg) {
+//    int i = 0;
+//
+//    FILE* debug = fopen("/dev/null", "w");
+//
+//    for (i = 0; i < 10000; i++) {
+//        fprintf(debug, "%d.", i);
+//    }
+//
+//    puts("testPerformanceTooLong finished\n");
+//}
+//
+//void *testThread(void *arg) {
+//    sleep(3);
+//    fulfill((ctexpect_t *)arg);
+//
+//    pthread_exit(NULL);
+//}
+//
+//ctest_return_t testExpectation(ctest_t *test, void *arg) {
+//
+//    ctexpect_t *expect = ctexpectwdesc(test, "Test expectation");
+//
+//    pthread_t thread;
+//
+//    if (pthread_create(&thread, NULL, testThread, (void *)expect) != 0) {
+//        puts("Couldn't create thread (main)\n");
+//    }
+//
+//    ctexpectwait(test, 5);
+//}
 
 int main(int argc, const char * argv[]) {
     
@@ -201,15 +203,19 @@ int main(int argc, const char * argv[]) {
 //    ctsrun(suite);
 //    ctsrun(suite2);
     
-    ctsuite_t *suite = ctsuite("Test expect");
+//    ctsuite_t *suite = ctsuite("Test expect");
+//
+//    ctcase_t *tcase0 = ctcase("Failing");
+//
+//    ctestadd(tcase0, ctest("testExpectation", testExpectation, NULL));
+//
+//    ctsaddtc(suite, tcase0);
+//
+//    ctsrun(suite);
     
-    ctcase_t *tcase0 = ctcase("Failing");
+    puts("Starts 'unit' testing'\n");
     
-    ctestadd(tcase0, ctest("testExpectation", testExpectation, NULL));
-    
-    ctsaddtc(suite, tcase0);
-    
-    ctsrun(suite);
+    ctest_tests();
     
     return 0;
 }
