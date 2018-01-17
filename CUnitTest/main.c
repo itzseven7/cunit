@@ -13,6 +13,7 @@
 #include <pthread.h>
 
 #include "ctest_tests.h"
+#include "ctexpect_tests.h"
 
 //#pragma mark - Test assertions
 //
@@ -216,6 +217,7 @@ int main(int argc, const char * argv[]) {
     puts("Starts 'unit' testing'\n");
     
     ctest_tests();
+    ctexpect_tests();
     
     return 0;
 }

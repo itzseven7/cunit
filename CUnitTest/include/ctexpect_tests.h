@@ -9,6 +9,6 @@
 #ifndef ctexpect_tests_h
 #define ctexpect_tests_h
 
-#include <stdio.h>
+void ctexpect_tests(void);
 
 #endif /* ctexpect_tests_h */

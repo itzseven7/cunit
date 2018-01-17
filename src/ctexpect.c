@@ -27,6 +27,10 @@ ctexpect_t *ctexpect(const char *description) {
 void fulfill(ctexpect_t *expectation) {
     ctexpect_int_t *expectInternal = (ctexpect_int_t *)expectation->_internal;
     
+    if (expectInternal->currentFulfillmentCount == 0) {
+        expectInternal->fulfilled = expectation->inverted;
+    }
+    
     if (expectation->inverted) {
         expectInternal->fulfilled = false;
     } else {
