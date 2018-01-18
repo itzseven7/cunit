@@ -7,11 +7,13 @@
 //
 
 #include "ctcase.h"
+#include "ctperf.h"
 #include "_ctcase.h"
 #include "_ctest.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
+#include <unistd.h>
+#include <sys/time.h>
 
 #pragma mark - Test list
 
@@ -23,14 +25,6 @@ ctestlist_t *ctestlist(ctest_t *test) {
 }
 
 #pragma mark - Test performance list
-
-ctperf_t *ctperf(ctest_t *test, double time) {
-    ctperf_t *perf = malloc(sizeof(ctperf_t));
-    perf->test = test;
-    perf->time = time;
-    
-    return perf;
-}
 
 ctperflist_t *ctperflist(ctperf_t *testPerf) {
     ctperflist_t *list = malloc(sizeof(ctperflist_t));
@@ -130,21 +124,30 @@ void _tcrunperf(ctcase_t *tcase, ctperf_t *perf) {
         test->setup(test->arg);
     }
     
-    clock_t begin = clock();
+    // Time precision : ms
+    
+    long start, end;
+    struct timeval timecheck;
+    
+    gettimeofday(&timecheck, NULL);
+    start = (long)timecheck.tv_sec * 1000 + (long)timecheck.tv_usec / 1000;
+    
     test->inv(test, test->arg);
-    clock_t end = clock();
+    
+    gettimeofday(&timecheck, NULL);
+    end = (long)timecheck.tv_sec * 1000 + (long)timecheck.tv_usec / 1000;
     
     if (test->tdown != NULL) {
         test->tdown(test->arg);
     }
     
-    clock_t time = end - begin;
-    clock_t expected = (clock_t)(perf->time * CLOCKS_PER_SEC);
+    long time = end - start;
+    long expected = (long)(perf->time * 1000);
     
     if (time <= expected) {
-        printf("Test perf %s succeeded (took %lf seconds, expected %lf)\n", perf->test->name, (double)((double)time / CLOCKS_PER_SEC), perf->time);
+        printf("Test perf %s succeeded (took %lf seconds, expected %lf)\n", perf->test->name, (double)((double)time / 1000), perf->time);
     } else {
-        printf("Test perf %s failed (took %lf seconds, expected %lf)\n", perf->test->name, (double)((double)time / CLOCKS_PER_SEC), perf->time);
+        printf("Test perf %s failed (took %lf seconds, expected %lf)\n", perf->test->name, (double)((double)time / 1000), perf->time);
     }
     
     ((ctcase_int_t *)tcase->_internal)->passed += (time <= expected);

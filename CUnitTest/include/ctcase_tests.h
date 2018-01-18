@@ -9,6 +9,6 @@
 #ifndef ctcase_tests_h
 #define ctcase_tests_h
 
-#include <stdio.h>
+void ctcase_tests(void);
 
 #endif /* ctcase_tests_h */

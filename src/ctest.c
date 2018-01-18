@@ -107,3 +107,7 @@ void ctexpectwait(ctest_t *test, unsigned int timeout) {
         list = list->next;
     }
 }
+
+void ctestfail(ctest_t *test) {
+    ((ctest_int_t *)test->_internal)->failures++;
+}

@@ -21,4 +21,6 @@ typedef struct ctest_int_t {
     unsigned int expectCount;
 }ctest_int_t;
 
+void ctestfail(ctest_t *test);
+
 #endif /* _ctest_h */

@@ -140,6 +140,6 @@
 @discussion This function is for internal usage. If you want to generate a failure unconditionally, please use the defined macro CTFail(...)
  */
 
-void _cfail(const ctest_t *test, const char *expr1, const char *assertion, const char *expr2, const char *filename, unsigned long lineNumber, const char * format, ...);
+void _cfail(ctest_t *test, const char *expr1, const char *assertion, const char *expr2, const char *filename, unsigned long lineNumber, const char * format, ...);
 
 #endif /* ctassert_h */

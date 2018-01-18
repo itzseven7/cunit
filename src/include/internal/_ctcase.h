@@ -9,15 +9,12 @@
 #ifndef _ctcase_h
 #define _ctcase_h
 
+#include "ctperf.h"
+
 typedef struct ctestlist_t {
     ctest_t *test;
     struct ctestlist_t *next;
 }ctestlist_t;
-
-typedef struct ctperf_t {
-    ctest_t *test;
-    double time;
-}ctperf_t;
 
 typedef struct ctperflist_t {
     ctperf_t *tperf;
@@ -34,5 +31,7 @@ typedef struct ctcase_int_t {
 }ctcase_int_t;
 
 void _tcrun(ctcase_t *tcase);
+void _tcruntest(ctcase_t *tcase, ctest_t *test);
+void _tcrunperf(ctcase_t *tcase, ctperf_t *perf);
 
 #endif /* _ctcase_h */
