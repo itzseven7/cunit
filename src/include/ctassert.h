@@ -1,132 +1,145 @@
 //
-//  cassert.h
+//  ctassert.h
 //  cunit
 //
 //  Created by itzseven on 28/11/2017.
 //  Copyright © 2017 itzseven. All rights reserved.
 //
 
-#ifndef cassert_h
-#define cassert_h
+#ifndef ctassert_h
+#define ctassert_h
+
+#include "ctest.h"
 
 /*!
- * @define _CTFailure(assertion, ...)
- * Generates a failure unconditionally (for internal usage, use cfail(...) instead in your code).
+ * @define _CTFailure(test, ...)
+ * Generates a failure unconditionally (for internal usage, use CFail(...) instead in your code).
  */
 
-#define _CTFailure(assertion, ...) return _cfail(assertion, __FILE__, __LINE__, "" __VA_ARGS__);
+#define _CTFailure(test, expr1Str, assertionStr, expr2Str, ...) _cfail(test, expr1Str, assertionStr, expr2Str, __FILE__, __LINE__, "" __VA_ARGS__);
 
 /*!
- * @define CTFail(...)
+ * @define CTFail(test, ...)
  * Generates a failure unconditionally.
+ * @param test The test
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTFail(...) _CTFailure("Assertion", __VA_ARGS__);
+#define CTFail(test, ...) _CTFailure(test, "", "", "", __VA_ARGS__);
 
 /*!
- * @define CTAssertEqual(expression, expression1, ...)
+ * @define CTAssertEqual(expression1, expression2, ...)
  * Generates a failure when ((\a expression1) != (\a expression2)).
+ * @param test The test
  * @param expression1 An expression of C scalar type.
  * @param expression2 An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertEqual(expression, expression1, ...) if ((expression) != (expression1)) { _CTFailure("Equality assertion", __VA_ARGS__) }
+#define CTAssertEqual(test, expression1, expression2, ...) if ((expression1) != (expression2)) { _CTFailure(test, #expression1, "is not equal to", #expression2, __VA_ARGS__) }
 
 /*!
- * @define CTAssertNotEqual(expression, expression1, ...)
+ * @define CTAssertNotEqual(expression1, expression2, ...)
  * Generates a failure when ((\a expression1) == (\a expression2)).
+ * @param test The test
  * @param expression1 An expression of C scalar type.
  * @param expression2 An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertNotEqual(expression, expression1, ...) if ((expression) == (expression1)) { _CTFailure("Non equality assertion", __VA_ARGS__) }
+#define CTAssertNotEqual(test, expression1, expression2, ...) if ((expression1) == (expression2)) { _CTFailure(test, #expression1, "is equal to", #expression2, __VA_ARGS__) }
 
 /*!
  * @define CTAssertTrue(expression, ...)
  * Generates a failure when ((\a expression) != true).
+ * @param test The test
  * @param expression An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertTrue(expression, ...) if (!(expression)) { _CTFailure("Truth assertion", __VA_ARGS__) }
+#define CTAssertTrue(test, expression, ...) if (!(expression)) { _CTFailure(test, #expression, "is not true", "", __VA_ARGS__) }
 
 /*!
  * @define CTAssertFalse(expression, ...)
  * Generates a failure when ((\a expression) != false).
+ * @param test The test
  * @param expression An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertFalse(expression, ...) if ((expression)) { _CTFailure("Non truth assertion", __VA_ARGS__) }
+#define CTAssertFalse(test, expression, ...) if ((expression)) { _CTFailure(test, #expression, "is not false", "", __VA_ARGS__) }
 
 /*!
  * @define CTAssertNull(expression, ...)
  * Generates a failure when ((\a expression) != NULL).
+ * @param test The test
  * @param expression An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertNull(expression, ...) if ((expression) != NULL) { _CTFailure("Nullity assertion", __VA_ARGS__) }
+#define CTAssertNull(test, expression, ...) if ((expression) != NULL) { _CTFailure(test, #expression, "is not null", "", __VA_ARGS__) }
 
 /*!
  * @define CTAssertNotNull(expression, ...)
  * Generates a failure when ((\a expression) == NULL).
+ * @param test The test
  * @param expression An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertNotNull(expression, ...) if ((expression) == NULL) { _CTFailure("Non nullity assertion", __VA_ARGS__) }
+#define CTAssertNotNull(test, expression, ...) if ((expression) == NULL) { _CTFailure(test, #expression, "is null", "", __VA_ARGS__) }
 
 /*!
  * @define CTAssertGreaterThan(expression1, expression2, ...)
  * Generates a failure when ((\a expression1) <= (\a expression2)).
+ * @param test The test
  * @param expression1 An expression of C scalar type.
  * @param expression2 An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertGreaterThan(expression1, expression2, ...) if ((expression1) <= (expression2)) { _CTFailure("Greather than assertion", __VA_ARGS__) }
+#define CTAssertGreaterThan(test, expression1, expression2, ...) if ((expression1) <= (expression2)) { _CTFailure(test, #expression1, "is not greater than", #expression2, __VA_ARGS__) }
 
 /*!
  * @define CTAssertGreaterThanOrEqual(expression1, expression2, ...)
  * Generates a failure when ((\a expression1) < (\a expression2)).
+ * @param test The test
  * @param expression1 An expression of C scalar type.
  * @param expression2 An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertGreaterThanOrEqual(expression1, expression2, ...) if ((expression1) < (expression2)) { _CTFailure("Greater than or equal assertion", __VA_ARGS__) }
+#define CTAssertGreaterThanOrEqual(test, expression1, expression2, ...) if ((expression1) < (expression2)) { _CTFailure(test, #expression1, "is not greater than or equal to", #expression2, __VA_ARGS__) }
 
 /*!
  * @define CTAssertLessThan(expression1, expression2, ...)
  * Generates a failure when ((\a expression1) >= (\a expression2)).
+ * @param test The test
  * @param expression1 An expression of C scalar type.
  * @param expression2 An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertLessThan(expression1, expression2, ...) if ((expression1) >= (expression2)) { _CTFailure("Less than assertion", __VA_ARGS__) }
+#define CTAssertLessThan(test, expression1, expression2, ...) if ((expression1) >= (expression2)) { _CTFailure(test, #expression1, "is not lesser than", #expression2, __VA_ARGS__) }
 
 /*!
  * @define CTAssertLessThanOrEqual(expression1, expression2, ...)
  * Generates a failure when ((\a expression1) > (\a expression2)).
+ * @param test The test
  * @param expression1 An expression of C scalar type.
  * @param expression2 An expression of C scalar type.
  * @param ... An optional supplementary description of the failure. A literal string, optionally with format specifiers. This parameter can be completely omitted.
  */
 
-#define CTAssertLessThanOrEqual(expression1, expression2, ...) if ((expression1) > (expression2)) { _CTFailure("Less than or equal assertion", __VA_ARGS__) }
+#define CTAssertLessThanOrEqual(test, expression1, expression2, ...) if ((expression1) > (expression2)) { _CTFailure(test, #expression1, "is not less or equal to", #expression2, __VA_ARGS__) }
 
 /*!
  @function   _cfail
  @abstract   Generates a failure unconditionally.
  
-@discussion This function is for internal usage. If you want to generate a failure unconditionally, please use the defined macro CTFail(...)
+@discussion This function is for internal usage. If you want to generate a failure unconditionally, please use the defined macro CTFail(test, ...)
  */
 
-int _cfail(const char *assertion, const char *filename, unsigned long lineNumber, const char * format, ...);
+void _cfail(ctest_t *test, const char *expr1, const char *assertion, const char *expr2, const char *filename, unsigned long lineNumber, const char * format, ...);
 
-#endif /* cassert_h */
+#endif /* ctassert_h */

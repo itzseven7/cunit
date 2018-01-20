@@ -7,10 +7,24 @@
 //
 
 #include "ctsuite.h"
+#include "_ctsuite.h"
+#include "_ctcase.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-#include <float.h>
+
+ctcaselist_t *ctcaselist(const ctcase_t *tcase) {
+    ctcaselist_t *list = malloc(sizeof(ctcaselist_t));
+    list->tcase = (ctcase_t *)tcase;
+    list->next = NULL;
+    return list;
+}
+
+ctsuite_int_t *ctsuite_int() {
+    ctsuite_int_t *tsuite_int = malloc(sizeof(ctsuite_int_t));
+    tsuite_int->tcases = NULL;
+    tsuite_int->tcaseCount = 0;
+    return tsuite_int;
+}
 
 ctsuite_t *ctsuite(const char *name) {
     if (name == NULL) {
@@ -22,123 +36,66 @@ ctsuite_t *ctsuite(const char *name) {
     tsuite->count = 0;
     tsuite->passed = 0;
     tsuite->failed = 0;
-    tsuite->tcaselist = NULL;
-    tsuite->tperflist = NULL;
+    tsuite->_internal = ctsuite_int();
     
     return tsuite;
 }
 
-void ctsaddtc(ctcase_t *tcase, ctsuite_t *tsuite) {
-    ctcaselist_t *tcaselist = (ctcaselist_t *)malloc(sizeof(ctcaselist_t));
-    tcaselist->tcase = tcase;
-    tcaselist->next = NULL;
+void ctscaseadd(ctsuite_t *tsuite, const ctcase_t *tcase) {
+    ctsuite_int_t *suiteInternal = (ctsuite_int_t *)tsuite->_internal;
+    ctcase_int_t *caseInternal = (ctcase_int_t *)tcase->_internal;
     
-    if (tsuite->tcaselist == NULL) {
-        tsuite->tcaselist = tcaselist;
+    if (suiteInternal->tcases == NULL) {
+        suiteInternal->tcases = ctcaselist(tcase);
     } else {
-        ctcaselist_t *tcurrentList = tsuite->tcaselist;
+        ctcaselist_t *tcurrentList = suiteInternal->tcases;
         
         while (tcurrentList->next != NULL) {
             tcurrentList = tcurrentList->next;
         }
         
-        tcurrentList->next = tcaselist;
+        tcurrentList->next = ctcaselist(tcase);
     }
     
-    tsuite->count += 1;
-}
-
-void ctsaddtp(ctperf_t *tperf, ctsuite_t *tsuite) {
-    ctperflist_t *tperflist = (ctperflist_t *)malloc(sizeof(ctperflist_t));
-    tperflist->tperf = tperf;
-    tperflist->next = NULL;
-    
-    if (tsuite->tperflist == NULL) {
-        tsuite->tperflist = tperflist;
-    } else {
-        ctperflist_t *tcurrentList = tsuite->tperflist;
-        
-        while (tcurrentList->next != NULL) {
-            tcurrentList = tcurrentList->next;
-        }
-        
-        tcurrentList->next = tperflist;
-    }
-    
-    tsuite->count += 1;
-}
-
-void _tsruncases(ctsuite_t *tsuite) {
-    ctcaselist_t *tcurrentList = tsuite->tcaselist;
-    
-    while (tcurrentList != NULL) {
-        
-        printf("Starting %s test case\n", tcurrentList->tcase->name);
-        
-        if (tcurrentList->tcase->setup != NULL) {
-            tcurrentList->tcase->setup();
-        }
-        
-        int result = tcurrentList->tcase->inv();
-        
-        if (tcurrentList->tcase->tdown != NULL) {
-            tcurrentList->tcase->tdown();
-        }
-        
-        tsuite->failed += result != 0;
-        tsuite->passed += result == 0;
-        
-        if (!result) {
-            printf("Test case %s succeeded\n", tcurrentList->tcase->name);
-        } else {
-            printf("Test case %s failed\n", tcurrentList->tcase->name);
-        }
-        
-        tcurrentList = tcurrentList->next;
-    }
-}
-
-void _tsrunperf(ctsuite_t *tsuite) {
-    ctperflist_t *tcurrentList = tsuite->tperflist;
-    
-    while (tcurrentList != NULL) {
-        
-        printf("Starting %s test perf\n", tcurrentList->tperf->name);
-        
-        if (tcurrentList->tperf->setup != NULL) {
-            tcurrentList->tperf->setup();
-        }
-        
-        clock_t begin = clock();
-        tcurrentList->tperf->inv();
-        clock_t end = clock();
-        
-        if (tcurrentList->tperf->tdown != NULL) {
-            tcurrentList->tperf->tdown();
-        }
-        
-        clock_t time = end - begin;
-        clock_t expected = (clock_t)(tcurrentList->tperf->time * CLOCKS_PER_SEC);
-        
-        tsuite->failed += time > expected;
-        tsuite->passed += time <= expected;
-        
-        if (time <= expected) {
-            printf("Test perf %s succeeded (took %lf seconds, expected %lf)\n", tcurrentList->tperf->name, (double)((double)time / CLOCKS_PER_SEC), tcurrentList->tperf->time);
-        } else {
-            printf("Test perf %s failed (took %lf seconds, expected %lf)\n", tcurrentList->tperf->name, (double)((double)time / CLOCKS_PER_SEC), tcurrentList->tperf->time);
-        }
-        
-        tcurrentList = tcurrentList->next;
-    }
+    suiteInternal->tcaseCount++;
+    tsuite->count += (caseInternal->testCount + caseInternal->perfTestCount);
 }
 
 void ctsrun(ctsuite_t *tsuite) {
     printf("Starting %s test suite\n", tsuite->name);
     
-    _tsruncases(tsuite);
-    _tsrunperf(tsuite);
+    ctsuite_int_t *suiteInternal = (ctsuite_int_t *)tsuite->_internal;
+    ctcaselist_t *caseList = suiteInternal->tcases;
+    
+    while (caseList != NULL) {
+        printf("Starting %s test case\n", caseList->tcase->name);
+        
+        ctcase_int_t *caseInternal = (ctcase_int_t *)caseList->tcase->_internal;
+        
+        _ctcrun(caseList->tcase);
+        
+        printf("Finished %s test case\n", caseList->tcase->name);
+        
+        tsuite->passed += caseInternal->passed;
+        tsuite->failed += caseInternal->failed;
+        
+        caseList = caseList->next;
+    }
     
     printf("Finished %s test suite (%d passed, %d failed on %d tests)\n", tsuite->name, tsuite->passed, tsuite->failed, tsuite->count);
     puts("\n-----------------------------------------------------------------------------------------------\n");
+}
+
+void ctsfree(ctsuite_t *tsuite) {
+    ctsuite_int_t *suiteInternal = (ctsuite_int_t *)tsuite->_internal;
+    
+    ctcaselist_t *caseList = suiteInternal->tcases;
+    
+    while (caseList != NULL) {
+        ctcfree(caseList->tcase);
+        caseList = caseList->next;
+    }
+    
+    free(suiteInternal);
+    free(tsuite);
 }

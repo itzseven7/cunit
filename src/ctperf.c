@@ -2,24 +2,22 @@
 //  ctperf.c
 //  cunit
 //
-//  Created by itzseven on 28/11/2017.
-//  Copyright © 2017 itzseven. All rights reserved.
+//  Created by itzseven on 18/01/2018.
+//  Copyright © 2018 itzseven. All rights reserved.
 //
 
 #include "ctperf.h"
 #include <stdlib.h>
 
-ctperf_t *ctperf(const char *name, ctperf_inv_ptr_t inv, double expectedTime) {
-    if (name == NULL || inv == NULL) {
-        return NULL;
-    }
+ctperf_t *ctperf(ctest_t *test, double time) {
+    ctperf_t *perf = malloc(sizeof(ctperf_t));
+    perf->test = test;
+    perf->time = time;
     
-    ctperf_t *tperf = (ctperf_t *)malloc(sizeof(ctperf_t));
-    tperf->name = name;
-    tperf->inv = inv;
-    tperf->time = expectedTime;
-    tperf->setup = NULL;
-    tperf->tdown = NULL;
-    
-    return tperf;
+    return perf;
+}
+
+void ctpfree(ctperf_t *tperf) {
+    ctfree(tperf->test);
+    free(tperf);
 }

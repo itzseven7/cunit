@@ -10,106 +10,52 @@
 #define ctsuite_h
 
 #include "ctcase.h"
-#include "ctperf.h"
-
-typedef struct ctcaselist_t {
-    ctcase_t *tcase;
-    struct ctcaselist_t *next;
-}ctcaselist_t;
-
-typedef struct ctperflist_t {
-    ctperf_t *tperf;
-    struct ctperflist_t *next;
-}ctperflist_t;
 
 /*!
- * @struct ctsuite_t
- * @abstract Represents a test suite
- * @discussion The test suite is the core of unit testing. Adds test cases or performance tests and run them together to ensure that your code works as expected.
+ * @brief The object for defining a test suite.
  */
 
 typedef struct ctsuite_t {
-    
-    /*!
-     *  @brief The name of the test suite
-     */
-    
+    /// Name of the test suite
     const char *name;
-    
-    /*!
-     *  @brief The test count in the suite
-     *  @discussion This value includes test cases and performance.
-     */
-    
-    int count;
-    
-    /*!
-     *  @brief The passed test count
-     *  @discussion This value includes test cases and performance.
-     */
-    
-    int passed;
-    
-    /*!
-     *  @brief The failed test count
-     *  @discussion This value includes test cases and performance.
-     */
-    
-    int failed;
-    
-    /*!
-     *  @brief The list of test cases
-     */
-    
-    ctcaselist_t *tcaselist;
-    
-    /*!
-     *  @brief The list of test performances
-     */
-    
-    ctperflist_t *tperflist;
+    /// The number of tests
+    unsigned int count;
+    /// The number of passed tests
+    unsigned int passed;
+    /// The number of failed tests
+    unsigned int failed;
+    /// Internal usage
+    void *_internal;
 }ctsuite_t;
 
 /*!
- @function   ctsuite
- @abstract   Creates a test suite.
- 
- @param      name      The name of the test suite.
- 
- @result     Returns an allocated test suite or NULL if name is not valid.
+ * @discussion Creates a test suite
+ * @param name the name of the test suite
+ * @return a test suite
  */
 
 ctsuite_t *ctsuite(const char *name);
 
 /*!
- @function   ctsaddtc
- @abstract   Adds a test case to the suite.
- 
- @param      tcase      The test case to add.
- @param      tsuite      The destination test suite.
+ * @discussion Adds a test case to the suite
+ * @param tsuite the test suite
+ * @param tcase the test case to add
  */
 
-void ctsaddtc(ctcase_t *tcase, ctsuite_t *tsuite);
+void ctscaseadd(ctsuite_t *tsuite, const ctcase_t *tcase);
 
 /*!
- @function   ctsaddtp
- @abstract   Adds a test performance to the suite.
- 
- @param      tperf      The test performance to add.
- @param      tsuite      The destination test suite.
- */
-
-void ctsaddtp(ctperf_t *tperf, ctsuite_t *tsuite);
-
-/*!
- @function   ctsrun
- @abstract   Runs the test suite.
- 
- @param      tsuite      The test suite to run.
- 
- @discussion This function will start by executing all test cases and terminate by test performances.
+ * @discussion Runs the test suite
+ * @param tsuite the test suite
  */
 
 void ctsrun(ctsuite_t *tsuite);
+
+/*!
+ * @discussion Frees the memory used by the test suite
+ * @param tsuite the test suite
+ */
+
+void ctsfree(ctsuite_t *tsuite);
 
 #endif /* ctsuite_h */
