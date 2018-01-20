@@ -2,7 +2,7 @@
 
 A C library for creating unit tests (inspired by Apple's **XCTest** framework).
 
-Current release : 1.0
+Current release : 1.1
 
 The library provides the following features :
 
@@ -124,13 +124,81 @@ Once everything is configured, you run the tests like this
 
 ### Assertions and expectations
 
-You use assertions and expectations to ensure that your code is behaving as expected.
+You use **assertions** and **expectations** to ensure that your code is behaving as expected. 
+
+A **failed** assertion/unfulfilled expectation will count as a failure for your test.
 
 #### Assertions
+
+Assertions are macros that take in parameter :
+
+* the current test
+* expression(s) to assert/to compare
+* optional supplementary description of the failure
+
+##### Equality
+
+    ctest_return_t testExample(ctest_t *test, void *arg) {
+    	int a = 5, b = 9, c = 7, d = 14;
+    	
+    	CTAssertEqual(test, a + b, d, "%d + %d is not equal to %d", a, b, d)
+    	
+    	CTAssertNotEqual(test, d - c, b, "%d - %d is equal to %d", d, c, b)
+    }
+    
+##### Inequality
+
+    ctest_return_t testExample(ctest_t *test, void *arg) {
+    	int a = 5, b = 9, c = 7, d = 14;
+    	
+    	CTAssertGreaterThan(test, b + c, d, "%d is not greather than %d", b + c, d)
+    	
+    	CTAssertLessThan(test, b - c, a, "%d is not lesser than %d", b - c, a)
+    	
+    	CTAssertGreaterThanOrEqual(test, d - b, a, "%d is not greather than or equal to %d", d - b, a)
+    	
+    	CTAssertLessThanOrEqual(test, b - a, c, "%d is not lesser or equal to %d", b - a, c)
+    }
+
+##### Truth
+
+    ctest_return_t testExample(ctest_t *test, void *arg) {
+    	int a = 5, b = 9, c = 7, d = 14;
+    	
+    	CTAssertTrue(test, ((a + b) == d), "Expression is not true")
+    	
+    	CTAssertFalse(test, ((d - b) == c), "Expression is not false")
+    }
+    
+##### Nullability
+
+    ctest_return_t testExample(ctest_t *test, void *arg) {
+    	void *ptr = NULL;
+    	
+    	CTAssertNull(test, ptr, "ptr is not NULL")
+    	
+    	ptr = malloc(1);
+    	
+    	CTAssertNotNull(test, ptr, "ptr is NULL")
+    	
+    	free(ptr);
+    }
+
+##### Unconditional failure
+
+	ctest_return_t testExample(ctest_t *test, void *arg) {
+	
+		int val = *((int *)arg);
+    	
+    	if (val <= 0) {
+    		CTFail("Test argument is not strictly positive")
+    	}
+    }
 
 #### Expectations
 
 ## Changelog
 
+* v1.1 : 
 * v1.0.1 : rename assertion macros
 * v1.0 : Initial release
