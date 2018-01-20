@@ -14,4 +14,6 @@ typedef struct ctexpect_int_t {
     bool fulfilled;
 }ctexpect_int_t;
 
+ctexpect_t *_ctexpect(const char *description);
+
 #endif /* _ctexpect_h */

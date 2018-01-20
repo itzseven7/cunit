@@ -7,14 +7,10 @@
 //
 
 #include "ctsuite.h"
+#include "_ctsuite.h"
 #include "_ctcase.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct ctcaselist_t {
-    ctcase_t *tcase;
-    struct ctcaselist_t *next;
-}ctcaselist_t;
 
 ctcaselist_t *ctcaselist(ctcase_t *tcase) {
     ctcaselist_t *list = malloc(sizeof(ctcaselist_t));
@@ -22,11 +18,6 @@ ctcaselist_t *ctcaselist(ctcase_t *tcase) {
     list->next = NULL;
     return list;
 }
-
-typedef struct ctsuite_int_t {
-    ctcaselist_t *tcases;
-    unsigned int tcaseCount;
-}ctsuite_int_t;
 
 ctsuite_int_t *ctsuite_int() {
     ctsuite_int_t *tsuite_int = malloc(sizeof(ctsuite_int_t));
@@ -50,7 +41,7 @@ ctsuite_t *ctsuite(const char *name) {
     return tsuite;
 }
 
-void ctsaddtc(ctsuite_t *tsuite, ctcase_t *tcase) {
+void ctscaseadd(ctsuite_t *tsuite, ctcase_t *tcase) {
     ctsuite_int_t *suiteInternal = (ctsuite_int_t *)tsuite->_internal;
     ctcase_int_t *caseInternal = (ctcase_int_t *)tcase->_internal;
     
@@ -81,7 +72,7 @@ void ctsrun(ctsuite_t *tsuite) {
         
         ctcase_int_t *caseInternal = (ctcase_int_t *)caseList->tcase->_internal;
         
-        _tcrun(caseList->tcase);
+        _ctcrun(caseList->tcase);
         
         printf("Finished %s test case\n", caseList->tcase->name);
         
@@ -95,13 +86,13 @@ void ctsrun(ctsuite_t *tsuite) {
     puts("\n-----------------------------------------------------------------------------------------------\n");
 }
 
-void freectsuite(ctsuite_t *tsuite) {
+void ctsfree(ctsuite_t *tsuite) {
     ctsuite_int_t *suiteInternal = (ctsuite_int_t *)tsuite->_internal;
     
     ctcaselist_t *caseList = suiteInternal->tcases;
     
     while (caseList != NULL) {
-        freectcase(caseList->tcase);
+        ctcfree(caseList->tcase);
         caseList = caseList->next;
     }
     

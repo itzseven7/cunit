@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-ctexpect_t *ctexpect(const char *description) {
+ctexpect_t *_ctexpect(const char *description) {
     ctexpect_t *expectation = malloc(sizeof(ctexpect_t));
     expectation->desc = description;
     expectation->inverted = false;
@@ -26,6 +26,10 @@ ctexpect_t *ctexpect(const char *description) {
 
 void fulfill(ctexpect_t *expectation) {
     ctexpect_int_t *expectInternal = (ctexpect_int_t *)expectation->_internal;
+    
+    if (expectInternal->currentFulfillmentCount == 0) {
+        expectInternal->fulfilled = expectation->inverted;
+    }
     
     if (expectation->inverted) {
         expectInternal->fulfilled = false;
