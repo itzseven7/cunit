@@ -197,8 +197,33 @@ Assertions are macros that take in parameter :
 
 #### Expectations
 
+An **expectation** can be used when your tested code is being executed asynchronously.
+
+When your code has behaved as expected, you **fulfill** the expectation.
+
+In your test, once your expectations have been created, you wait for them by specifying a timeout value : if one or several expectations are not fulfilled after the timeout, the test will fail.
+
+Here is an example using a thread.
+
+	void *testAsynchronousTask(void *arg) {
+    	sleep(5);
+    	fulfill((ctexpect_t *)arg);
+    	pthread_exit(NULL);
+	}
+
+	ctest_return_t testExample(ctest_t *test, void *arg) {		ctexpect_t *expect = ctexpect(test, "test expectation");
+    
+    	pthread_t thread;
+    
+    	if (pthread_create(&thread, NULL, testAsynchronousTask, (void *)expect) != 0) {
+       	puts("Couldn't create thread\n");
+    	}
+    
+    	ctexpectwait(test, 10);
+	}
+
 ## Changelog
 
-* v1.1 : 
+* v1.1 : Complete rewrite + expectations
 * v1.0.1 : rename assertion macros
 * v1.0 : Initial release
