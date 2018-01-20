@@ -45,7 +45,7 @@ You can also pass an argument at the test creation :
     }
     
     int main(int argc, const char * argv[]) {
-    	unsigned int a = 5;
+    	unsigned int arg = 5;
     
 	 	ctest_t *test = ctest("test example", testExample, (void *)&arg);
     }
@@ -69,7 +69,7 @@ You may want to do some processing **before** and/or **after** the invocation of
     int main(int argc, const char * argv[]) {
     	ctest_t *test = ctest("test example", testExample, NULL);
     	test->setup = testSetupExample;
-    	test-> tdown = testTearDownExample;
+    	test->tdown = testTearDownExample;
     }
     
 Your optional function must have the following signature :
@@ -191,7 +191,7 @@ Assertions are macros that take in parameter :
 		int val = *((int *)arg);
     	
     	if (val <= 0) {
-    		CTFail("Test argument is not strictly positive")
+    		CTFail(test, "Test argument is not strictly positive\n")
     	}
     }
 
@@ -214,6 +214,8 @@ Here is an example using a thread.
 	ctest_return_t testExample(ctest_t *test, void *arg) {		ctexpect_t *expect = ctexpect(test, "test expectation");
     
     	pthread_t thread;
+    	
+    	ctexpect_t *expect = ctexpect(test, "test expectation");
     
     	if (pthread_create(&thread, NULL, testAsynchronousTask, (void *)expect) != 0) {
        	puts("Couldn't create thread\n");
