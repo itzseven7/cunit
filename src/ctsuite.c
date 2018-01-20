@@ -12,9 +12,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-ctcaselist_t *ctcaselist(ctcase_t *tcase) {
+ctcaselist_t *ctcaselist(const ctcase_t *tcase) {
     ctcaselist_t *list = malloc(sizeof(ctcaselist_t));
-    list->tcase = tcase;
+    list->tcase = (ctcase_t *)tcase;
     list->next = NULL;
     return list;
 }
@@ -41,7 +41,7 @@ ctsuite_t *ctsuite(const char *name) {
     return tsuite;
 }
 
-void ctscaseadd(ctsuite_t *tsuite, ctcase_t *tcase) {
+void ctscaseadd(ctsuite_t *tsuite, const ctcase_t *tcase) {
     ctsuite_int_t *suiteInternal = (ctsuite_int_t *)tsuite->_internal;
     ctcase_int_t *caseInternal = (ctcase_int_t *)tcase->_internal;
     
