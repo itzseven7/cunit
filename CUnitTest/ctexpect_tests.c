@@ -13,7 +13,7 @@
 #include <string.h>
 
 void ctexpect_test_creation() {
-    ctexpect_t *expectation = ctexpect("Test expectation");
+    ctexpect_t *expectation = _ctexpect("Test expectation");
     
     assert(strcmp(expectation->desc, "Test expectation") == 0);
     assert(expectation->inverted == false);
@@ -27,7 +27,7 @@ void ctexpect_test_creation() {
 }
 
 void ctexpect_test_fulfill_normal() {
-    ctexpect_t *expectation = ctexpect("Test expectation");
+    ctexpect_t *expectation = _ctexpect("Test expectation");
     
     fulfill(expectation);
     
@@ -37,7 +37,7 @@ void ctexpect_test_fulfill_normal() {
 }
 
 void ctexpect_test_fulfill_inverted() {
-    ctexpect_t *expectation = ctexpect("Test expectation");
+    ctexpect_t *expectation = _ctexpect("Test expectation");
     expectation->inverted = true;
     
     fulfill(expectation);
@@ -47,7 +47,7 @@ void ctexpect_test_fulfill_inverted() {
 }
 
 void ctexpect_test_fulfill_expected_fulfillment_count() {
-    ctexpect_t *expectation = ctexpect("Test expectation");
+    ctexpect_t *expectation = _ctexpect("Test expectation");
     expectation->expectedFulfillmentCount = 3;
     
     fulfill(expectation);
@@ -61,7 +61,7 @@ void ctexpect_test_fulfill_expected_fulfillment_count() {
 }
 
 void ctexpect_test_fulfill_assert_over_fulfill() {
-    ctexpect_t *expectation = ctexpect("Test expectation");
+    ctexpect_t *expectation = _ctexpect("Test expectation");
     expectation->assertForOverFulfill = true;
     
     fulfill(expectation);

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0414536F2013453500FB1FDC /* _ctsuite.h in Headers */ = {isa = PBXBuildFile; fileRef = 0414536E201344BA00FB1FDC /* _ctsuite.h */; };
+		041453722013529800FB1FDC /* libcunit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CBDDA01FCDF3F500AFD45D /* libcunit.a */; };
 		041C483F200D477100EBFE37 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 04832449200A65CA006DC3FF /* main.c */; };
 		044A29AA200BB3F7005CC2F4 /* ctexpect.h in Headers */ = {isa = PBXBuildFile; fileRef = 044A29A8200BB3F7005CC2F4 /* ctexpect.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		044A29AB200BB3F7005CC2F4 /* ctexpect.c in Sources */ = {isa = PBXBuildFile; fileRef = 044A29A9200BB3F7005CC2F4 /* ctexpect.c */; };
@@ -17,12 +19,6 @@
 		04528A27201131A3004EED31 /* ctperf.c in Sources */ = {isa = PBXBuildFile; fileRef = 04528A24201131A3004EED31 /* ctperf.c */; };
 		04528A2A20113240004EED31 /* ctperf_tests.c in Sources */ = {isa = PBXBuildFile; fileRef = 04528A2920113240004EED31 /* ctperf_tests.c */; };
 		04528A32201132E7004EED31 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 04528A31201132E7004EED31 /* main.c */; };
-		04528A362011339A004EED31 /* ctcase.c in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDA81FCDF41900AFD45D /* ctcase.c */; };
-		04528A372011339A004EED31 /* ctsuite.c in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDA91FCDF41900AFD45D /* ctsuite.c */; };
-		04528A382011339A004EED31 /* ctassert.c in Sources */ = {isa = PBXBuildFile; fileRef = BD4A7ACD1FD00F000044404B /* ctassert.c */; };
-		04528A392011339A004EED31 /* ctest.c in Sources */ = {isa = PBXBuildFile; fileRef = 04DF699A200A6E9C00238AB2 /* ctest.c */; };
-		04528A3A2011339A004EED31 /* ctexpect.c in Sources */ = {isa = PBXBuildFile; fileRef = 044A29A9200BB3F7005CC2F4 /* ctexpect.c */; };
-		04528A3B2011339A004EED31 /* ctperf.c in Sources */ = {isa = PBXBuildFile; fileRef = 04528A24201131A3004EED31 /* ctperf.c */; };
 		0483244F200A6692006DC3FF /* ctcase.c in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDA81FCDF41900AFD45D /* ctcase.c */; };
 		04832450200A6692006DC3FF /* ctsuite.c in Sources */ = {isa = PBXBuildFile; fileRef = 04CBDDA91FCDF41900AFD45D /* ctsuite.c */; };
 		04832451200A6692006DC3FF /* ctassert.c in Sources */ = {isa = PBXBuildFile; fileRef = BD4A7ACD1FD00F000044404B /* ctassert.c */; };
@@ -44,6 +40,16 @@
 		04DF69A2200A8B7D00238AB2 /* _ctest.h in Headers */ = {isa = PBXBuildFile; fileRef = 04DF69A0200A7D6100238AB2 /* _ctest.h */; };
 		BD4A7ACE1FD00F000044404B /* ctassert.c in Sources */ = {isa = PBXBuildFile; fileRef = BD4A7ACD1FD00F000044404B /* ctassert.c */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		041453702013529000FB1FDC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04CBDD981FCDF3F500AFD45D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 04CBDD9F1FCDF3F500AFD45D;
+			remoteInfo = cunit;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		04528A2D201132E7004EED31 /* CopyFiles */ = {
@@ -67,6 +73,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0414536E201344BA00FB1FDC /* _ctsuite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _ctsuite.h; sourceTree = "<group>"; };
 		044A29A8200BB3F7005CC2F4 /* ctexpect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ctexpect.h; sourceTree = "<group>"; };
 		044A29A9200BB3F7005CC2F4 /* ctexpect.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ctexpect.c; sourceTree = "<group>"; };
 		044A29AD200BB5D2005CC2F4 /* _ctexpect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _ctexpect.h; sourceTree = "<group>"; };
@@ -107,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				041453722013529800FB1FDC /* libcunit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +234,7 @@
 				04DF699E200A789600238AB2 /* _ctcase.h */,
 				04DF69A0200A7D6100238AB2 /* _ctest.h */,
 				044A29AD200BB5D2005CC2F4 /* _ctexpect.h */,
+				0414536E201344BA00FB1FDC /* _ctsuite.h */,
 			);
 			path = internal;
 			sourceTree = "<group>";
@@ -243,6 +252,7 @@
 				04DF699B200A6E9C00238AB2 /* ctest.h in Headers */,
 				04CBDDC81FCE01FC00AFD45D /* ctassert.h in Headers */,
 				04CBDDB11FCDF45100AFD45D /* cunit.h in Headers */,
+				0414536F2013453500FB1FDC /* _ctsuite.h in Headers */,
 				04CBDDAE1FCDF41900AFD45D /* ctsuite.h in Headers */,
 				04CBDDAF1FCDF41900AFD45D /* ctcase.h in Headers */,
 				04DF69A1200A8B7D00238AB2 /* _ctcase.h in Headers */,
@@ -264,6 +274,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				041453712013529000FB1FDC /* PBXTargetDependency */,
 			);
 			name = CUnitExample;
 			productName = CUnitExample;
@@ -351,12 +362,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04528A362011339A004EED31 /* ctcase.c in Sources */,
-				04528A372011339A004EED31 /* ctsuite.c in Sources */,
-				04528A382011339A004EED31 /* ctassert.c in Sources */,
-				04528A392011339A004EED31 /* ctest.c in Sources */,
-				04528A3A2011339A004EED31 /* ctexpect.c in Sources */,
-				04528A3B2011339A004EED31 /* ctperf.c in Sources */,
 				04528A32201132E7004EED31 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -395,6 +400,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		041453712013529000FB1FDC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 04CBDD9F1FCDF3F500AFD45D /* cunit */;
+			targetProxy = 041453702013529000FB1FDC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		04528A34201132E7004EED31 /* Debug */ = {

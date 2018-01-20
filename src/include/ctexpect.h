@@ -19,7 +19,6 @@ typedef struct ctexpect_t {
     void *_internal;
 }ctexpect_t;
 
-ctexpect_t *ctexpect(const char *description);
 void fulfill(ctexpect_t *expectation);
 
 #endif /* ctexpect_h */

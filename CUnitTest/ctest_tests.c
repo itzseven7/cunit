@@ -41,7 +41,7 @@ void ctest_test_creation() {
 void ctest_test_add_expectation() {
     ctest_t *test = ctest("testExample", NULL, NULL);
     
-    ctexpectwdesc(test, "testExpectation");
+    ctexpect(test, "testExpectation");
     
     ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
     
@@ -63,7 +63,7 @@ void *testWaitTooLongThread(void *arg) {
 }
 
 ctest_return_t ctest_test_wait_expectation_valid_inv(ctest_t *test, void *arg) {
-    ctexpect_t *expect = ctexpectwdesc(test, "Test expectation");
+    ctexpect_t *expect = ctexpect(test, "Test expectation");
     
     pthread_t thread;
     
@@ -75,7 +75,7 @@ ctest_return_t ctest_test_wait_expectation_valid_inv(ctest_t *test, void *arg) {
 }
 
 ctest_return_t ctest_test_wait_expectation_too_long_inv(ctest_t *test, void *arg) {
-    ctexpect_t *expect = ctexpectwdesc(test, "Test expectation too long");
+    ctexpect_t *expect = ctexpect(test, "Test expectation too long");
     
     pthread_t thread;
     

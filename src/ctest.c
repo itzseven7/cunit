@@ -43,14 +43,14 @@ ctest_t *ctest(const char *name, ctinv_ptr_t inv, void *arg) {
     return test;
 }
 
-void freectest(ctest_t *test) {
+void ctfree(ctest_t *test) {
     free(test->_internal);
     free(test);
 }
 
-ctexpect_t *ctexpectwdesc(ctest_t *test, const char *desc) {
+ctexpect_t *ctexpect(ctest_t *test, const char *desc) {
     ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
-    ctexpect_t *expect = ctexpect(desc);
+    ctexpect_t *expect = _ctexpect(desc);
     
     if (testInternal->expectations == NULL) {
         testInternal->expectations = ctexpectlist(expect);
@@ -69,7 +69,7 @@ ctexpect_t *ctexpectwdesc(ctest_t *test, const char *desc) {
     return expect;
 }
 
-void *waitThread(void *arg) {
+void *ctthreadwait(void *arg) {
     unsigned int timeout = *((int *)arg);
     sleep(timeout);
     pthread_exit(NULL);
@@ -82,7 +82,7 @@ void ctexpectwait(ctest_t *test, unsigned int timeout) {
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     
-    if (pthread_create(&thread, NULL, waitThread, (void *)&timeout) != 0) {
+    if (pthread_create(&thread, NULL, ctthreadwait, (void *)&timeout) != 0) {
         puts("Couldn't create thread\n");
     }
     

@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-ctexpect_t *ctexpect(const char *description) {
+ctexpect_t *_ctexpect(const char *description) {
     ctexpect_t *expectation = malloc(sizeof(ctexpect_t));
     expectation->desc = description;
     expectation->inverted = false;

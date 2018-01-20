@@ -9,6 +9,6 @@
 #ifndef ctsuite_tests_h
 #define ctsuite_tests_h
 
-#include <stdio.h>
+void ctsuite_tests(void);
 
 #endif /* ctsuite_tests_h */

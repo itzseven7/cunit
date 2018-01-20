@@ -57,7 +57,7 @@ ctcase_t *ctcase(const char *name) {
     return tcase;
 }
 
-void ctestadd(ctcase_t *tcase, ctest_t *ctest) {
+void ctctestadd(ctcase_t *tcase, ctest_t *ctest) {
     ctcase_int_t *caseInternal = (ctcase_int_t *)tcase->_internal;
     
     if (caseInternal->tests == NULL) {
@@ -75,7 +75,7 @@ void ctestadd(ctcase_t *tcase, ctest_t *ctest) {
     caseInternal->testCount++;
 }
 
-void ctestperfadd(ctcase_t *tcase, ctest_t *test, double time) {
+void ctcperfadd(ctcase_t *tcase, ctest_t *test, double time) {
     ctcase_int_t *caseInternal = (ctcase_int_t *)tcase->_internal;
     ctperf_t * perf = ctperf(test, time);
     
@@ -94,7 +94,7 @@ void ctestperfadd(ctcase_t *tcase, ctest_t *test, double time) {
     caseInternal->perfTestCount++;
 }
 
-void _tcruntest(ctcase_t *tcase, ctest_t *test) {
+void _ctcruntest(ctcase_t *tcase, ctest_t *test) {
     if (test->setup != NULL) {
         test->setup(test->arg);
     }
@@ -117,51 +117,51 @@ void _tcruntest(ctcase_t *tcase, ctest_t *test) {
     ((ctcase_int_t *)tcase->_internal)->failed += (testInternal->failures > 0) || (testInternal->unfulfilledExpectations > 0);
 }
 
-void _tcrunperf(ctcase_t *tcase, ctperf_t *perf) {
+void _ctcrunperf(ctcase_t *tcase, ctperf_t *perf) {
     ctest_t *test = perf->test;
     
     if (test->setup != NULL) {
         test->setup(test->arg);
     }
     
-    // Time precision : ms
+    // Time precision : us
     
     long start, end;
     struct timeval timecheck;
     
     gettimeofday(&timecheck, NULL);
-    start = (long)timecheck.tv_sec * 1000 + (long)timecheck.tv_usec / 1000;
+    start = (long)timecheck.tv_sec * 1000000 + (long)timecheck.tv_usec;
     
     test->inv(test, test->arg);
     
     gettimeofday(&timecheck, NULL);
-    end = (long)timecheck.tv_sec * 1000 + (long)timecheck.tv_usec / 1000;
+    end = (long)timecheck.tv_sec * 1000000 + (long)timecheck.tv_usec;
     
     if (test->tdown != NULL) {
         test->tdown(test->arg);
     }
     
     long time = end - start;
-    long expected = (long)(perf->time * 1000);
+    long expected = (long)(perf->time * 1000000);
     
     if (time <= expected) {
-        printf("Test perf %s succeeded (took %lf seconds, expected %lf)\n", perf->test->name, (double)((double)time / 1000), perf->time);
+        printf("Test perf %s succeeded (took %lf seconds, expected %lf)\n", perf->test->name, (double)((double)time / 1000000), perf->time);
     } else {
-        printf("Test perf %s failed (took %lf seconds, expected %lf)\n", perf->test->name, (double)((double)time / 1000), perf->time);
+        printf("Test perf %s failed (took %lf seconds, expected %lf)\n", perf->test->name, (double)((double)time / 1000000), perf->time);
     }
     
     ((ctcase_int_t *)tcase->_internal)->passed += (time <= expected);
     ((ctcase_int_t *)tcase->_internal)->failed += (time > expected);
 }
 
-void _tcrun(ctcase_t *tcase) {
+void _ctcrun(ctcase_t *tcase) {
     ctcase_int_t *caseInternal = (ctcase_int_t *)tcase->_internal;
     
     ctestlist_t *testList = caseInternal->tests;
     
     while (testList != NULL) {
         printf("Invoking %s test\n", testList->test->name);
-        _tcruntest(tcase, testList->test);
+        _ctcruntest(tcase, testList->test);
         printf("Finished %s test\n", testList->test->name);
         testList = testList->next;
     }
@@ -170,27 +170,26 @@ void _tcrun(ctcase_t *tcase) {
     
     while (perfList != NULL) {
         printf("Invoking %s performance test\n", perfList->tperf->test->name);
-        _tcrunperf(tcase, perfList->tperf);
+        _ctcrunperf(tcase, perfList->tperf);
         printf("Finished %s test\n", perfList->tperf->test->name);
         perfList = perfList->next;
     }
 }
 
-void freectcase(ctcase_t *tcase) {
+void ctcfree(ctcase_t *tcase) {
     ctcase_int_t *caseInternal = (ctcase_int_t *)tcase->_internal;
     
     ctestlist_t *testList = caseInternal->tests;
     
     while (testList != NULL) {
-        freectest(testList->test);
+        ctfree(testList->test);
         testList = testList->next;
     }
     
     ctperflist_t *perfList = caseInternal->perfTests;
     
     while (perfList != NULL) {
-        freectest(perfList->tperf->test);
-        free(perfList->tperf);
+        ctpfree(perfList->tperf);
         perfList = perfList->next;
     }
     

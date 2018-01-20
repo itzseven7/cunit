@@ -13,5 +13,6 @@
 #include "ctcase.h"
 #include "ctsuite.h"
 #include "ctassert.h"
+#include "ctexpect.h"
 
 #endif /* cunit_h */

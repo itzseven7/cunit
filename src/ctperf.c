@@ -16,3 +16,8 @@ ctperf_t *ctperf(ctest_t *test, double time) {
     
     return perf;
 }
+
+void ctpfree(ctperf_t *tperf) {
+    ctfree(tperf->test);
+    free(tperf);
+}

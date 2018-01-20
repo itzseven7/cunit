@@ -30,8 +30,8 @@ typedef struct ctcase_int_t {
     unsigned int failed;
 }ctcase_int_t;
 
-void _tcrun(ctcase_t *tcase);
-void _tcruntest(ctcase_t *tcase, ctest_t *test);
-void _tcrunperf(ctcase_t *tcase, ctperf_t *perf);
+void _ctcrun(ctcase_t *tcase);
+void _ctcruntest(ctcase_t *tcase, ctest_t *test);
+void _ctcrunperf(ctcase_t *tcase, ctperf_t *perf);
 
 #endif /* _ctcase_h */

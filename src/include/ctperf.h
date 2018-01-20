@@ -17,5 +17,6 @@ typedef struct ctperf_t {
 }ctperf_t;
 
 ctperf_t *ctperf(ctest_t *test, double time);
+void ctpfree(ctperf_t *tperf);
 
 #endif /* ctperf_h */

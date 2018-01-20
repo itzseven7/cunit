@@ -9,6 +9,6 @@
 #ifndef ctassert_tests_h
 #define ctassert_tests_h
 
-#include <stdio.h>
+void ctassert_tests(void);
 
 #endif /* ctassert_tests_h */
