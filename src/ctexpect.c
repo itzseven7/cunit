@@ -24,22 +24,22 @@ ctexpect_t *_ctexpect(const char *description) {
     return expectation;
 }
 
-void fulfill(ctexpect_t *expectation) {
-    ctexpect_int_t *expectInternal = (ctexpect_int_t *)expectation->_internal;
+void fulfill(ctexpect_t *texpect) {
+    ctexpect_int_t *expectInternal = (ctexpect_int_t *)texpect->_internal;
     
     if (expectInternal->currentFulfillmentCount == 0) {
-        expectInternal->fulfilled = expectation->inverted;
+        expectInternal->fulfilled = texpect->inverted;
     }
     
-    if (expectation->inverted) {
+    if (texpect->inverted) {
         expectInternal->fulfilled = false;
     } else {
         expectInternal->currentFulfillmentCount++;
         
-        if (expectInternal->currentFulfillmentCount == expectation->expectedFulfillmentCount) {
+        if (expectInternal->currentFulfillmentCount == texpect->expectedFulfillmentCount) {
             expectInternal->fulfilled = true;
-        } else if ((expectInternal->currentFulfillmentCount > expectation->expectedFulfillmentCount)) {
-            expectInternal->fulfilled = !expectation->assertForOverFulfill;
+        } else if ((expectInternal->currentFulfillmentCount > texpect->expectedFulfillmentCount)) {
+            expectInternal->fulfilled = !texpect->assertForOverFulfill;
         } else {
             expectInternal->fulfilled = false;
         }

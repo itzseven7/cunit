@@ -1,22 +1,20 @@
 # cunit
 
-A C library for creating unit tests (inspired by Apple's **XCTest** framework).
+A C unit testing library (inspired by Apple's XCTest framework).
 
 Current release : 1.1
 
 The library provides the following features :
 
-* Standard and performance test
-* Test cases
-* Test suites
-* Test assertions
-* Test expectations
+* Basic assertions
+* Performance measurement
+* Asynchronous testing
 
 ## Usage
 
 ### Create a test
 
-A **test** is an entity which will invoke the code you want to check.
+A **test** is an entity which will execute an individual unit of your source code.
 
 You create a standard test like this :
 
@@ -33,8 +31,8 @@ You create a standard test like this :
 Your test function must have the following signature :
 
 * Return type is `ctest_return_t`
-* First parameter with `ctest_t` pointer
-* Second parameter with `void` pointer
+* First parameter is a `ctest_t` pointer
+* Second parameter is a `void` pointer
 
 #### Test argument
 
@@ -45,7 +43,7 @@ You can also pass an argument at the test creation :
     }
     
     int main(int argc, const char * argv[]) {
-    	unsigned int a = 5;
+    	unsigned int arg = 5;
     
 	 	ctest_t *test = ctest("test example", testExample, (void *)&arg);
     }
@@ -69,15 +67,15 @@ You may want to do some processing **before** and/or **after** the invocation of
     int main(int argc, const char * argv[]) {
     	ctest_t *test = ctest("test example", testExample, NULL);
     	test->setup = testSetupExample;
-    	test-> tdown = testTearDownExample;
+    	test->tdown = testTearDownExample;
     }
     
 Your optional function must have the following signature :
 
 * Return type is `ctopt_return_t`
-* Second parameter with `void` pointer
+* Second parameter is a `void` pointer
 
-*Note* : the `void` pointer used in the optional functions is the same than the one passed to your invocation.
+*Note* : the `void` pointer used in the optional functions is the same than the one passed to your test invocation.
     
 ### Create a test case
 
@@ -87,38 +85,37 @@ A **test case** is a collection of tests that you create like this.
     
 You can add two types of tests :
 
-* a **standard** test where only the logic will be tested
+* a **standard** test where only the behavior will be tested
 * a **performance** test where only the execution time matters
     
 #### Add a standard test
     
     ctcase_t *testCase = ctcase("test case example");
-    ctest_t *test = ctest("test example", testExample, NULL);
+    ctest_t *test = ctest("standard test example", testExample, NULL);
     
     ctctestadd(testCase, test);
         
 #### Add a performance test
 
     ctcase_t *testCase = ctcase("test case example");
-    ctest_t *test = ctest("test example", testExample, NULL);
+    ctest_t *test = ctest("performance test example", testExample, NULL);
     
     ctcperfadd(testCase, test, 0.005);
 
 ### Create and run a test suite
 
-A **test suite** is a collection test cases that you create like this.
+A **test suite** is a collection of test cases that you create like this.
 
     ctsuite_t *suite = ctsuite("test suite example");
     
-You add a test case to your suite like this
+You add a test case to your suite like this.
 
     ctsuite_t *suite = ctsuite("test suite example");
     ctcase_t *testCase = ctcase("test case example");
-    ...
 
     ctscaseadd(suite, testCase);
     
-Once everything is configured, you run the tests like this
+Once everything is configured, you run the tests like this.
 
     ctsrun(suite);
 
@@ -126,7 +123,7 @@ Once everything is configured, you run the tests like this
 
 You use **assertions** and **expectations** to ensure that your code is behaving as expected. 
 
-A **failed** assertion/unfulfilled expectation will count as a failure for your test.
+A **failed assertion** or an **unfulfilled expectation** will be interpreted as a failure for your test.
 
 #### Assertions
 
@@ -191,7 +188,7 @@ Assertions are macros that take in parameter :
 		int val = *((int *)arg);
     	
     	if (val <= 0) {
-    		CTFail("Test argument is not strictly positive")
+    		CTFail(test, "Test argument is not strictly positive\n")
     	}
     }
 
@@ -199,7 +196,7 @@ Assertions are macros that take in parameter :
 
 An **expectation** can be used when your tested code is being executed asynchronously.
 
-When your code has behaved as expected, you **fulfill** the expectation.
+You create an expectation and **fulfill** it when your code has finished the task and behaved as expected.
 
 In your test, once your expectations have been created, you wait for them by specifying a timeout value : if one or several expectations are not fulfilled after the timeout, the test will fail.
 
@@ -214,6 +211,8 @@ Here is an example using a thread.
 	ctest_return_t testExample(ctest_t *test, void *arg) {		ctexpect_t *expect = ctexpect(test, "test expectation");
     
     	pthread_t thread;
+    	
+    	ctexpect_t *expect = ctexpect(test, "test expectation");
     
     	if (pthread_create(&thread, NULL, testAsynchronousTask, (void *)expect) != 0) {
        	puts("Couldn't create thread\n");
