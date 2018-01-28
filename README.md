@@ -208,7 +208,7 @@ Here is an example using a thread.
     	pthread_exit(NULL);
 	}
 
-	ctest_return_t testExample(ctest_t *test, void *arg) {		ctexpect_t *expect = ctexpect(test, "test expectation");
+	ctest_return_t testExample(ctest_t *test, void *arg) {
     
     	pthread_t thread;
     	
