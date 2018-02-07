@@ -36,6 +36,8 @@ void ctest_test_creation() {
     assert(testInternal->expectCount == 0);
     assert(testInternal->failures == 0);
     assert(testInternal->unfulfilledExpectations == 0);
+    
+    ctfree(test);
 }
 
 void ctest_test_add_expectation() {
@@ -47,6 +49,8 @@ void ctest_test_add_expectation() {
     
     assert(testInternal->expectations != NULL);
     assert(testInternal->expectCount == 1);
+    
+    ctfree(test);
 }
 
 void *testWaitThread(void *arg) {
@@ -92,6 +96,8 @@ void ctest_test_wait_expectation_valid() {
     
     ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
     assert(testInternal->unfulfilledExpectations == 0);
+    
+    ctfree(test);
 }
 
 void ctest_test_wait_expectation_too_long() {
@@ -100,6 +106,8 @@ void ctest_test_wait_expectation_too_long() {
     
     ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
     assert(testInternal->unfulfilledExpectations == 1);
+    
+    ctfree(test);
 }
 
 void ctest_tests() {

@@ -183,14 +183,18 @@ void ctcfree(ctcase_t *tcase) {
     
     while (testList != NULL) {
         ctfree(testList->test);
-        testList = testList->next;
+        ctestlist_t *nextTest = testList->next;
+        free(testList);
+        testList = nextTest;
     }
     
     ctperflist_t *perfList = caseInternal->perfTests;
     
     while (perfList != NULL) {
         ctpfree(perfList->tperf);
-        perfList = perfList->next;
+        ctperflist_t *nextPerf = perfList->next;
+        free(perfList);
+        perfList = nextPerf;
     }
     
     free(caseInternal);

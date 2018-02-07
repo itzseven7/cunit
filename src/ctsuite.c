@@ -93,7 +93,9 @@ void ctsfree(ctsuite_t *tsuite) {
     
     while (caseList != NULL) {
         ctcfree(caseList->tcase);
-        caseList = caseList->next;
+        ctcaselist_t *nextCaseList = caseList->next;
+        free(caseList);
+        caseList = nextCaseList;
     }
     
     free(suiteInternal);

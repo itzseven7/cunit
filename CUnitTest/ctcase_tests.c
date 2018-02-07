@@ -107,15 +107,16 @@ ctest_return_t ctcase_test_run_perf_pass_inv(ctest_t *test, void *arg) {
 void ctcase_test_run_perf_pass() {
     ctcase_t *tcase = ctcase("Test case");
     
-    ctperf_t *tperf = ctperf(ctest("Test", ctcase_test_run_perf_pass_inv, NULL), 5);
+    ctest_t *test = ctest("Test", ctcase_test_run_perf_pass_inv, NULL);
+    ctperf_t *tperf = ctperf(test, 5);
     
     _ctcrunperf(tcase, tperf);
     
     ctcase_int_t *caseInternal = (ctcase_int_t *)tcase->_internal;
     assert(caseInternal->passed == 1);
     
-    ctcfree(tcase);
     ctpfree(tperf);
+    ctcfree(tcase);
 }
 
 ctest_return_t ctcase_test_run_perf_fail_inv(ctest_t *test, void *arg) {
@@ -126,13 +127,15 @@ ctest_return_t ctcase_test_run_perf_fail_inv(ctest_t *test, void *arg) {
 void ctcase_test_run_perf_fail() {
     ctcase_t *tcase = ctcase("Test case");
     
-    ctperf_t *tperf = ctperf(ctest("Test", ctcase_test_run_perf_fail_inv, NULL), 3);
+    ctest_t *test = ctest("Test", ctcase_test_run_perf_fail_inv, NULL);
+    ctperf_t *tperf = ctperf(test, 3);
     
     _ctcrunperf(tcase, tperf);
     
     ctcase_int_t *caseInternal = (ctcase_int_t *)tcase->_internal;
     assert(caseInternal->failed == 1);
     
+    ctfree(test);
     ctcfree(tcase);
     ctpfree(tperf);
 }
