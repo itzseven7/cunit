@@ -223,6 +223,7 @@ Here is an example using a thread.
 
 ## Changelog
 
+* v1.1.1 : Fix memory leaks + improve logging
 * v1.1 : Complete rewrite + expectations
 * v1.0.1 : rename assertion macros
 * v1.0 : Initial release
