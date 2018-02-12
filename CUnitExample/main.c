@@ -52,8 +52,9 @@ ctest_return_t testNull(ctest_t *test, void *arg) {
 
 ctest_return_t testNotNull(ctest_t *test, void *arg) {
     puts("testNotNull execution\n");
-    const char *string = (const char *)malloc(5 * sizeof(char));
+    char *string = (char *)malloc(5 * sizeof(char));
     CTAssertNotNull(test, string, "testNotNull failed: string is NULL\n")
+    free(string);
 }
 
 ctest_return_t testGreaterThan(ctest_t *test, void *arg) {
@@ -81,17 +82,7 @@ ctest_return_t testLessOrEqual(ctest_t *test, void *arg) {
 }
 
 ctest_return_t testPerformanceNotTooLong(ctest_t *test, void *arg) {
-    int i = 0;
-
-    FILE* debug = fopen("/dev/null", "w");
-
-    for (i = 0; i < 10000; i++) {
-        fprintf(debug, "%d.", i);
-    }
-
-    puts("testPerformanceNotTooLong finished\n");
-    
-    fclose(debug);
+    usleep(70);
 }
 
 ctest_return_t testWithOptionalFunctions() {
@@ -116,17 +107,7 @@ ctopt_return_t testPerformanceTeardown(void *arg) {
 }
 
 ctest_return_t testPerformanceTooLong(ctest_t *test, void *arg) {
-    int i = 0;
-
-    FILE* debug = fopen("/dev/null", "w");
-
-    for (i = 0; i < 10000; i++) {
-        fprintf(debug, "%d.", i);
-    }
-
-    puts("testPerformanceTooLong finished\n");
-    
-    fclose(debug);
+    usleep(800);
 }
 
 void *testThread(void *arg) {
@@ -147,6 +128,10 @@ ctest_return_t testExpectation(ctest_t *test, void *arg) {
     }
 
     ctexpectwait(test, 5);
+    
+    if (pthread_join(thread, NULL) != 0) {
+        puts("Couldn't join thread\n");
+    }
 }
 
 int main(int argc, const char * argv[]) {
@@ -193,22 +178,18 @@ int main(int argc, const char * argv[]) {
     ctscaseadd(suite, tcase4);
     ctscaseadd(suite, tcase5);
 
-    ctsuite_t *suite2 = ctsuite("Test assertions2");
+    
 
     ctcase_t *tcase6 = ctcase("Performance");
-
     ctcperfadd(tcase6, ctest("testPerformanceNotTooLong", testPerformanceNotTooLong, NULL), 0.005);
     ctcperfadd(tcase6, ctest("testPerformanceTooLong", testPerformanceTooLong, NULL), 0.0005);
 
     ctcase_t *tcase7 = ctcase("Failing");
-    
     ctctestadd(tcase7, ctest("testExpectation", testExpectation, NULL));
     
-    ctscaseadd(suite2, tcase7);
-
+    ctsuite_t *suite2 = ctsuite("Test assertions2");
     ctscaseadd(suite2, tcase6);
-
-
+    ctscaseadd(suite2, tcase7);
 
     ctsrun(suite);
     ctsrun(suite2);

@@ -60,30 +60,12 @@ void *testWaitThread(void *arg) {
     pthread_exit(NULL);
 }
 
-void *testWaitTooLongThread(void *arg) {
-    sleep(5);
-    fulfill((ctexpect_t *)arg);
-    pthread_exit(NULL);
-}
-
 ctest_return_t ctest_test_wait_expectation_valid_inv(ctest_t *test, void *arg) {
     ctexpect_t *expect = ctexpect(test, "Test expectation");
     
     pthread_t thread;
     
     if (pthread_create(&thread, NULL, testWaitThread, (void *)expect) != 0) {
-        puts("Couldn't create thread\n");
-    }
-    
-    ctexpectwait(test, 3);
-}
-
-ctest_return_t ctest_test_wait_expectation_too_long_inv(ctest_t *test, void *arg) {
-    ctexpect_t *expect = ctexpect(test, "Test expectation too long");
-    
-    pthread_t thread;
-    
-    if (pthread_create(&thread, NULL, testWaitTooLongThread, (void *)expect) != 0) {
         puts("Couldn't create thread\n");
     }
     
@@ -98,6 +80,28 @@ void ctest_test_wait_expectation_valid() {
     assert(testInternal->unfulfilledExpectations == 0);
     
     ctfree(test);
+}
+
+void *testWaitTooLongThread(void *arg) {
+    sleep(5);
+    fulfill((ctexpect_t *)arg);
+    pthread_exit(NULL);
+}
+
+ctest_return_t ctest_test_wait_expectation_too_long_inv(ctest_t *test, void *arg) {
+    ctexpect_t *expect = ctexpect(test, "Test expectation too long");
+    
+    pthread_t thread;
+    
+    if (pthread_create(&thread, NULL, testWaitTooLongThread, (void *)expect) != 0) {
+        puts("Couldn't create thread\n");
+    }
+    
+    ctexpectwait(test, 3);
+    
+    if (pthread_join(thread, NULL) != 0) {
+        puts("Couldn't join thread\n");
+    }
 }
 
 void ctest_test_wait_expectation_too_long() {
