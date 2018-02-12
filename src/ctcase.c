@@ -145,9 +145,9 @@ void _ctcrunperf(ctcase_t *tcase, ctperf_t *perf) {
     long expected = (long)(perf->time * 1000000);
     
     if (time <= expected) {
-        printf("Test perf %s succeeded (took %lf seconds, expected %lf)\n", perf->test->name, (double)((double)time / 1000000), perf->time);
+        printf("Test perf %s succeeded (took %0.2f seconds, expected %0.2f)\n", perf->test->name, (float)((float)time / 1000000), perf->time);
     } else {
-        printf("Test perf %s failed (took %lf seconds, expected %lf)\n", perf->test->name, (double)((double)time / 1000000), perf->time);
+        printf("Test perf %s failed (took %0.2f seconds, expected %0.2f)\n", perf->test->name, (float)((float)time / 1000000), perf->time);
     }
     
     ((ctcase_int_t *)tcase->_internal)->passed += (time <= expected);
@@ -183,14 +183,18 @@ void ctcfree(ctcase_t *tcase) {
     
     while (testList != NULL) {
         ctfree(testList->test);
-        testList = testList->next;
+        ctestlist_t *nextTest = testList->next;
+        free(testList);
+        testList = nextTest;
     }
     
     ctperflist_t *perfList = caseInternal->perfTests;
     
     while (perfList != NULL) {
         ctpfree(perfList->tperf);
-        perfList = perfList->next;
+        ctperflist_t *nextPerf = perfList->next;
+        free(perfList);
+        perfList = nextPerf;
     }
     
     free(caseInternal);

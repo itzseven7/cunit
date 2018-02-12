@@ -114,8 +114,8 @@ void ctcase_test_run_perf_pass() {
     ctcase_int_t *caseInternal = (ctcase_int_t *)tcase->_internal;
     assert(caseInternal->passed == 1);
     
-    ctcfree(tcase);
     ctpfree(tperf);
+    ctcfree(tcase);
 }
 
 ctest_return_t ctcase_test_run_perf_fail_inv(ctest_t *test, void *arg) {

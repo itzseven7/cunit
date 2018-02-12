@@ -28,6 +28,7 @@ ctest_int_t *ctest_int() {
     testInternal->unfulfilledExpectations = 0;
     testInternal->expectations = NULL;
     testInternal->expectCount = 0;
+    
     return testInternal;
 }
 
@@ -44,7 +45,18 @@ ctest_t *ctest(const char *name, ctinv_ptr_t inv, void *arg) {
 }
 
 void ctfree(ctest_t *test) {
-    free(test->_internal);
+    ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
+    
+    ctexpectlist_t *expectList = testInternal->expectations;
+    
+    while (expectList != NULL) {
+        ctefree(expectList->expect);
+        ctexpectlist_t *nextExpect = expectList->next;
+        free(expectList);
+        expectList = nextExpect;
+    }
+    
+    free(testInternal);
     free(test);
 }
 

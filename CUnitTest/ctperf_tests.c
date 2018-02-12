@@ -16,6 +16,8 @@ void ctperf_test_creation() {
     ctperf_t *perf = ctperf(ctest("Test perf", NULL, NULL), 20);
     
     assert(perf->time == 20);
+    
+    ctpfree(perf);
 }
 
 void ctperf_tests(void) {
