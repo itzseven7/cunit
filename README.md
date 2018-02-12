@@ -219,11 +219,15 @@ Here is an example using a thread.
     	}
     
     	ctexpectwait(test, 10);
+        
+        if (pthread_join(thread, NULL) != 0) {
+           puts("Couldn't join thread\n");
+        }
 	}
 
 ## Changelog
 
-* v1.1.1 : Fix memory leaks + improve logging
-* v1.1 : Complete rewrite + expectations
+* v1.1.1 : fix memory issues + improve logging
+* v1.1 : complete rewrite + expectations
 * v1.0.1 : rename assertion macros
 * v1.0 : Initial release
