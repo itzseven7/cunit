@@ -220,9 +220,9 @@ Here is an example using a thread.
     
     	ctexpectwait(test, 10);
         
-        if (pthread_join(thread, NULL) != 0) {
-           puts("Couldn't join thread\n");
-        }
+      if (pthread_join(thread, NULL) != 0) {
+          puts("Couldn't join thread\n");
+      }
 	}
 
 ## Changelog
