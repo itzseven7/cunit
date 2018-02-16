@@ -36,6 +36,8 @@ void ctest_test_creation() {
     assert(testInternal->expectCount == 0);
     assert(testInternal->failures == 0);
     assert(testInternal->unfulfilledExpectations == 0);
+    
+    ctfree(test);
 }
 
 void ctest_test_add_expectation() {
@@ -47,18 +49,14 @@ void ctest_test_add_expectation() {
     
     assert(testInternal->expectations != NULL);
     assert(testInternal->expectCount == 1);
+    
+    ctfree(test);
 }
 
 void *testWaitThread(void *arg) {
     sleep(1);
     fulfill((ctexpect_t *)arg);
     
-    pthread_exit(NULL);
-}
-
-void *testWaitTooLongThread(void *arg) {
-    sleep(5);
-    fulfill((ctexpect_t *)arg);
     pthread_exit(NULL);
 }
 
@@ -74,6 +72,22 @@ ctest_return_t ctest_test_wait_expectation_valid_inv(ctest_t *test, void *arg) {
     ctexpectwait(test, 3);
 }
 
+void ctest_test_wait_expectation_valid() {
+    ctest_t *test = ctest("testExample", ctest_test_wait_expectation_valid_inv, NULL);
+    test->inv(test, NULL);
+    
+    ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
+    assert(testInternal->unfulfilledExpectations == 0);
+    
+    ctfree(test);
+}
+
+void *testWaitTooLongThread(void *arg) {
+    sleep(5);
+    fulfill((ctexpect_t *)arg);
+    pthread_exit(NULL);
+}
+
 ctest_return_t ctest_test_wait_expectation_too_long_inv(ctest_t *test, void *arg) {
     ctexpect_t *expect = ctexpect(test, "Test expectation too long");
     
@@ -84,14 +98,10 @@ ctest_return_t ctest_test_wait_expectation_too_long_inv(ctest_t *test, void *arg
     }
     
     ctexpectwait(test, 3);
-}
-
-void ctest_test_wait_expectation_valid() {
-    ctest_t *test = ctest("testExample", ctest_test_wait_expectation_valid_inv, NULL);
-    test->inv(test, NULL);
     
-    ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
-    assert(testInternal->unfulfilledExpectations == 0);
+    if (pthread_join(thread, NULL) != 0) {
+        puts("Couldn't join thread\n");
+    }
 }
 
 void ctest_test_wait_expectation_too_long() {
@@ -100,6 +110,8 @@ void ctest_test_wait_expectation_too_long() {
     
     ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
     assert(testInternal->unfulfilledExpectations == 1);
+    
+    ctfree(test);
 }
 
 void ctest_tests() {

@@ -24,6 +24,8 @@ void ctexpect_test_creation() {
     
     assert(expectationInternal->currentFulfillmentCount == 0);
     assert(expectationInternal->fulfilled == false);
+    
+    ctefree(expectation);
 }
 
 void ctexpect_test_fulfill_normal() {
@@ -34,6 +36,8 @@ void ctexpect_test_fulfill_normal() {
     ctexpect_int_t *expectationInternal = (ctexpect_int_t *)expectation->_internal;
     assert(expectationInternal->currentFulfillmentCount == 1);
     assert(expectationInternal->fulfilled == true);
+    
+    ctefree(expectation);
 }
 
 void ctexpect_test_fulfill_inverted() {
@@ -44,6 +48,8 @@ void ctexpect_test_fulfill_inverted() {
     
     ctexpect_int_t *expectationInternal = (ctexpect_int_t *)expectation->_internal;
     assert(expectationInternal->fulfilled == false);
+    
+    ctefree(expectation);
 }
 
 void ctexpect_test_fulfill_expected_fulfillment_count() {
@@ -58,6 +64,8 @@ void ctexpect_test_fulfill_expected_fulfillment_count() {
     fulfill(expectation);
     fulfill(expectation);
     assert(expectationInternal->fulfilled == true);
+    
+    ctefree(expectation);
 }
 
 void ctexpect_test_fulfill_assert_over_fulfill() {
@@ -69,6 +77,8 @@ void ctexpect_test_fulfill_assert_over_fulfill() {
     
     ctexpect_int_t *expectationInternal = (ctexpect_int_t *)expectation->_internal;
     assert(expectationInternal->fulfilled == false);
+    
+    ctefree(expectation);
 }
 
 void ctexpect_tests() {

@@ -108,9 +108,9 @@ void _ctcruntest(ctcase_t *tcase, ctest_t *test) {
     ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
     
     if ((testInternal->failures == 0) && (testInternal->unfulfilledExpectations == 0)) {
-        printf("Test %s succeeded\n", test->name);
+        printf("--- Test %s succeeded\n", test->name);
     } else {
-        printf("Test %s failed (%d failures, %d unfulfilled expectations)\n", test->name, testInternal->failures, testInternal->unfulfilledExpectations);
+        printf("--- Test %s failed (%d failure(s), %d unfulfilled expectation(s))\n", test->name, testInternal->failures, testInternal->unfulfilledExpectations);
     }
     
     ((ctcase_int_t *)tcase->_internal)->passed += (testInternal->failures == 0) && (testInternal->unfulfilledExpectations == 0);
@@ -145,9 +145,9 @@ void _ctcrunperf(ctcase_t *tcase, ctperf_t *perf) {
     long expected = (long)(perf->time * 1000000);
     
     if (time <= expected) {
-        printf("Test perf %s succeeded (took %lf seconds, expected %lf)\n", perf->test->name, (double)((double)time / 1000000), perf->time);
+        printf("--- Test perf %s succeeded (took %0.2f seconds, expected %0.2f)\n", perf->test->name, (float)((float)time / 1000000), perf->time);
     } else {
-        printf("Test perf %s failed (took %lf seconds, expected %lf)\n", perf->test->name, (double)((double)time / 1000000), perf->time);
+        printf("--- Test perf %s failed (took %0.2f seconds, expected %0.2f)\n", perf->test->name, (float)((float)time / 1000000), perf->time);
     }
     
     ((ctcase_int_t *)tcase->_internal)->passed += (time <= expected);
@@ -160,18 +160,18 @@ void _ctcrun(ctcase_t *tcase) {
     ctestlist_t *testList = caseInternal->tests;
     
     while (testList != NULL) {
-        printf("Invoking %s test\n", testList->test->name);
+        printf("-- Invoking %s test\n", testList->test->name);
         _ctcruntest(tcase, testList->test);
-        printf("Finished %s test\n", testList->test->name);
+        printf("-- Finished %s test\n\n", testList->test->name);
         testList = testList->next;
     }
     
     ctperflist_t *perfList = caseInternal->perfTests;
     
     while (perfList != NULL) {
-        printf("Invoking %s performance test\n", perfList->tperf->test->name);
+        printf("-- Invoking %s performance test\n", perfList->tperf->test->name);
         _ctcrunperf(tcase, perfList->tperf);
-        printf("Finished %s test\n", perfList->tperf->test->name);
+        printf("-- Finished %s test\n\n", perfList->tperf->test->name);
         perfList = perfList->next;
     }
 }
@@ -183,14 +183,18 @@ void ctcfree(ctcase_t *tcase) {
     
     while (testList != NULL) {
         ctfree(testList->test);
-        testList = testList->next;
+        ctestlist_t *nextTest = testList->next;
+        free(testList);
+        testList = nextTest;
     }
     
     ctperflist_t *perfList = caseInternal->perfTests;
     
     while (perfList != NULL) {
         ctpfree(perfList->tperf);
-        perfList = perfList->next;
+        ctperflist_t *nextPerf = perfList->next;
+        free(perfList);
+        perfList = nextPerf;
     }
     
     free(caseInternal);
