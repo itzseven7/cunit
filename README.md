@@ -22,11 +22,11 @@ You create a standard test like this :
 #include <cunit.h>
 
 ctest_return_t testExample(ctest_t *test, void *arg) {
-	puts("Hello this is a test\n");
+    puts("Hello this is a test\n");
 }
     
 int main(int argc, const char * argv[]) {
-	ctest_t *test = ctest("test example", testExample, NULL);
+    ctest_t *test = ctest("test example", testExample, NULL);
 }
 ```
 
