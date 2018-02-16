@@ -62,19 +62,19 @@ void ctscaseadd(ctsuite_t *tsuite, const ctcase_t *tcase) {
 }
 
 void ctsrun(ctsuite_t *tsuite) {
-    printf("Starting %s test suite\n", tsuite->name);
+    printf("Starting %s test suite\n\n", tsuite->name);
     
     ctsuite_int_t *suiteInternal = (ctsuite_int_t *)tsuite->_internal;
     ctcaselist_t *caseList = suiteInternal->tcases;
     
     while (caseList != NULL) {
-        printf("Starting %s test case\n", caseList->tcase->name);
+        printf("- Starting %s test case\n\n", caseList->tcase->name);
         
         ctcase_int_t *caseInternal = (ctcase_int_t *)caseList->tcase->_internal;
         
         _ctcrun(caseList->tcase);
         
-        printf("Finished %s test case\n", caseList->tcase->name);
+        printf("- Finished %s test case\n\n", caseList->tcase->name);
         
         tsuite->passed += caseInternal->passed;
         tsuite->failed += caseInternal->failed;
@@ -82,7 +82,7 @@ void ctsrun(ctsuite_t *tsuite) {
         caseList = caseList->next;
     }
     
-    printf("Finished %s test suite (%d passed, %d failed on %d tests)\n", tsuite->name, tsuite->passed, tsuite->failed, tsuite->count);
+    printf("\nFinished %s test suite (%d passed, %d failed on %d tests)\n", tsuite->name, tsuite->passed, tsuite->failed, tsuite->count);
     puts("\n-----------------------------------------------------------------------------------------------\n");
 }
 
@@ -93,7 +93,9 @@ void ctsfree(ctsuite_t *tsuite) {
     
     while (caseList != NULL) {
         ctcfree(caseList->tcase);
-        caseList = caseList->next;
+        ctcaselist_t *nextCaseList = caseList->next;
+        free(caseList);
+        caseList = nextCaseList;
     }
     
     free(suiteInternal);
