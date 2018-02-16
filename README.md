@@ -18,16 +18,18 @@ A **test** is an entity which will execute an individual unit of your source cod
 
 You create a standard test like this :
 
-    #include <cunit.h>
+```c
+#include <cunit.h>
 
-    ctest_return_t testExample(ctest_t *test, void *arg) {
-    	puts("Hello this is a test\n");
-    }
+ctest_return_t testExample(ctest_t *test, void *arg) {
+    puts("Hello this is a test\n");
+}
     
-    int main(int argc, const char * argv[]) {
-    	ctest_t *test = ctest("test example", testExample, NULL);
-    }
-    
+int main(int argc, const char * argv[]) {
+    ctest_t *test = ctest("test example", testExample, NULL);
+}
+```
+
 Your test function must have the following signature :
 
 * Return type is `ctest_return_t`
@@ -38,37 +40,41 @@ Your test function must have the following signature :
 
 You can also pass an argument at the test creation :
 
-    ctest_return_t testExample(ctest_t *test, void *arg) {
-    	printf("Hello this is a test with argument %d\n", *((int *)arg));
-    }
+```c
+ctest_return_t testExample(ctest_t *test, void *arg) {
+    printf("Hello this is a test with argument %d\n", *((int *)arg));
+}
     
-    int main(int argc, const char * argv[]) {
-    	unsigned int arg = 5;
+int main(int argc, const char * argv[]) {
+    unsigned int arg = 5;
     
-	 	ctest_t *test = ctest("test example", testExample, (void *)&arg);
-    }
+    ctest_t *test = ctest("test example", testExample, (void *)&arg);
+}
+```
     
 #### Optional function : setup and tear down
 
 You may want to do some processing **before** and/or **after** the invocation of your test.
 
-    ctopt_return_t testSetupExample(void *arg) {
-    	puts("Hello this is a setup\n");
-    }
+```c
+ctopt_return_t testSetupExample(void *arg) {
+    puts("Hello this is a setup\n");
+}
 
-    ctopt_return_t testTearDownExample(void *arg) {
-    	puts("Hello this is a tear down\n");
-    }
+ctopt_return_t testTearDownExample(void *arg) {
+    puts("Hello this is a tear down\n");
+}
     
-    ctest_return_t testExample(ctest_t *test, void *arg) {
-    	puts("Hello this is a test\n");
-    }
+ctest_return_t testExample(ctest_t *test, void *arg) {
+    puts("Hello this is a test\n");
+}
     
-    int main(int argc, const char * argv[]) {
-    	ctest_t *test = ctest("test example", testExample, NULL);
-    	test->setup = testSetupExample;
-    	test->tdown = testTearDownExample;
-    }
+int main(int argc, const char * argv[]) {
+    ctest_t *test = ctest("test example", testExample, NULL);
+    test->setup = testSetupExample;
+    test->tdown = testTearDownExample;
+}
+```
     
 Your optional function must have the following signature :
 
@@ -81,7 +87,9 @@ Your optional function must have the following signature :
 
 A **test case** is a collection of tests that you create like this.
 
-    ctcase_t *testCase = ctcase("test case example");
+```c
+ctcase_t *testCase = ctcase("test case example");
+```
     
 You can add two types of tests :
 
@@ -89,35 +97,45 @@ You can add two types of tests :
 * a **performance** test where only the execution time matters
     
 #### Add a standard test
+
+```c    
+ctcase_t *testCase = ctcase("test case example");
+ctest_t *test = ctest("standard test example", testExample, NULL);
     
-    ctcase_t *testCase = ctcase("test case example");
-    ctest_t *test = ctest("standard test example", testExample, NULL);
-    
-    ctctestadd(testCase, test);
+ctctestadd(testCase, test);
+```
         
 #### Add a performance test
 
-    ctcase_t *testCase = ctcase("test case example");
-    ctest_t *test = ctest("performance test example", testExample, NULL);
+```c
+ctcase_t *testCase = ctcase("test case example");
+ctest_t *test = ctest("performance test example", testExample, NULL);
     
-    ctcperfadd(testCase, test, 0.005);
+ctcperfadd(testCase, test, 0.005);
+```
 
 ### Create and run a test suite
 
 A **test suite** is a collection of test cases that you create like this.
 
-    ctsuite_t *suite = ctsuite("test suite example");
+```c
+ctsuite_t *suite = ctsuite("test suite example");
+```
     
 You add a test case to your suite like this.
 
-    ctsuite_t *suite = ctsuite("test suite example");
-    ctcase_t *testCase = ctcase("test case example");
+```c
+ctsuite_t *suite = ctsuite("test suite example");
+ctcase_t *testCase = ctcase("test case example");
 
-    ctscaseadd(suite, testCase);
+ctscaseadd(suite, testCase);
+```
     
 Once everything is configured, you run the tests like this.
 
-    ctsrun(suite);
+```c
+ctsrun(suite);
+```
 
 ### Assertions and expectations
 
@@ -135,62 +153,72 @@ Assertions are macros that take in parameter :
 
 ##### Equality
 
-    ctest_return_t testExample(ctest_t *test, void *arg) {
-    	int a = 5, b = 9, c = 7, d = 14;
-    	
-    	CTAssertEqual(test, a + b, d, "%d + %d is not equal to %d", a, b, d)
-    	
-    	CTAssertNotEqual(test, d - c, b, "%d - %d is equal to %d", d, c, b)
-    }
+```c
+ctest_return_t testExample(ctest_t *test, void *arg) {
+    int a = 5, b = 9, c = 7, d = 14;
+	
+    CTAssertEqual(test, a + b, d, "%d + %d is not equal to %d", a, b, d)
+	
+    CTAssertNotEqual(test, d - c, b, "%d - %d is equal to %d", d, c, b)
+}
+```
     
 ##### Inequality
 
-    ctest_return_t testExample(ctest_t *test, void *arg) {
-    	int a = 5, b = 9, c = 7, d = 14;
-    	
-    	CTAssertGreaterThan(test, b + c, d, "%d is not greather than %d", b + c, d)
-    	
-    	CTAssertLessThan(test, b - c, a, "%d is not lesser than %d", b - c, a)
-    	
-    	CTAssertGreaterThanOrEqual(test, d - b, a, "%d is not greather than or equal to %d", d - b, a)
-    	
-    	CTAssertLessThanOrEqual(test, b - a, c, "%d is not lesser or equal to %d", b - a, c)
-    }
+```c
+ctest_return_t testExample(ctest_t *test, void *arg) {
+    int a = 5, b = 9, c = 7, d = 14;
+	
+    CTAssertGreaterThan(test, b + c, d, "%d is not greather than %d", b + c, d)
+	
+    CTAssertLessThan(test, b - c, a, "%d is not lesser than %d", b - c, a)
+	
+    CTAssertGreaterThanOrEqual(test, d - b, a, "%d is not greather than or equal to %d", d - b, a)
+	
+    CTAssertLessThanOrEqual(test, b - a, c, "%d is not lesser or equal to %d", b - a, c)
+}
+```
 
 ##### Truth
 
-    ctest_return_t testExample(ctest_t *test, void *arg) {
-    	int a = 5, b = 9, c = 7, d = 14;
-    	
-    	CTAssertTrue(test, ((a + b) == d), "Expression is not true")
-    	
-    	CTAssertFalse(test, ((d - b) == c), "Expression is not false")
-    }
+```c
+ctest_return_t testExample(ctest_t *test, void *arg) {
+    int a = 5, b = 9, c = 7, d = 14;
+	
+    CTAssertTrue(test, ((a + b) == d), "Expression is not true")
+	
+    CTAssertFalse(test, ((d - b) == c), "Expression is not false")
+}
+```
     
 ##### Nullability
 
-    ctest_return_t testExample(ctest_t *test, void *arg) {
-    	void *ptr = NULL;
-    	
-    	CTAssertNull(test, ptr, "ptr is not NULL")
-    	
-    	ptr = malloc(1);
-    	
-    	CTAssertNotNull(test, ptr, "ptr is NULL")
-    	
-    	free(ptr);
-    }
+```c
+ctest_return_t testExample(ctest_t *test, void *arg) {
+    void *ptr = NULL;
+	
+    CTAssertNull(test, ptr, "ptr is not NULL")
+	
+    ptr = malloc(1);
+	
+    CTAssertNotNull(test, ptr, "ptr is NULL")
+	
+    free(ptr);
+}
+```
 
 ##### Unconditional failure
 
-	ctest_return_t testExample(ctest_t *test, void *arg) {
+```c
+ctest_return_t testExample(ctest_t *test, void *arg) {
 	
-		int val = *((int *)arg);
-    	
-    	if (val <= 0) {
-    		CTFail(test, "Test argument is not strictly positive\n")
-    	}
+    int val = *((int *)arg);
+	
+    if (val <= 0) {
+        CTFail(test, "Test argument is not strictly positive\n")
     }
+}
+```
 
 #### Expectations
 
@@ -202,28 +230,47 @@ In your test, once your expectations have been created, you wait for them by spe
 
 Here is an example using a thread.
 
-	void *testAsynchronousTask(void *arg) {
-    	sleep(5);
-    	fulfill((ctexpect_t *)arg);
-    	pthread_exit(NULL);
-	}
+```c
+void *testAsynchronousTask(void *arg) {
+    sleep(5);
+    fulfill((ctexpect_t *)arg);
+    pthread_exit(NULL);
+}
 
-	ctest_return_t testExample(ctest_t *test, void *arg) {
+ctest_return_t testExample(ctest_t *test, void *arg) {
     
-    	pthread_t thread;
-    	
-    	ctexpect_t *expect = ctexpect(test, "test expectation");
+    pthread_t thread;
+	
+    ctexpect_t *expect = ctexpect(test, "test expectation");
     
-    	if (pthread_create(&thread, NULL, testAsynchronousTask, (void *)expect) != 0) {
-       	puts("Couldn't create thread\n");
-    	}
+    if (pthread_create(&thread, NULL, testAsynchronousTask, (void *)expect) != 0) {
+        puts("Couldn't create thread\n");
+    }
     
-    	ctexpectwait(test, 10);
-	}
+    ctexpectwait(test, 10);
+    
+    if (pthread_join(thread, NULL) != 0) {
+        puts("Couldn't join thread\n");
+    }
+}
+```
+
+### Memory management
+
+The library provides a free function for each kind of object, it frees the object **and** its children :
+
+* the **ctefree** function will only free a `ctexpect_t` object
+* the **ctfree** function will free a `ctest_t` object and its `ctexpect_t` children
+* the **ctcfree** function will free a `ctcase_t` object and its `ctest_t` children
+* the **ctsfree** function will free a `ctsuite_t` object and its `ctcase_t` children
+
+Finally, you just have to free your `ctsuite_t` object and all the associated objects will be freed like a cascade delete.
+
+**Warning : do NOT try to free a child object alone, the library assumes that you will free the parent.**
 
 ## Changelog
 
-* v1.1.1 : Fix memory leaks + improve logging
-* v1.1 : Complete rewrite + expectations
+* v1.1.1 : fix memory issues + improve logging
+* v1.1 : complete rewrite + expectations
 * v1.0.1 : rename assertion macros
 * v1.0 : Initial release
