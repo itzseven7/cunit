@@ -26,7 +26,7 @@ ctest_return_t testExample(ctest_t *test, void *arg) {
 }
     
 int main(int argc, const char * argv[]) {
-    ctest_t *test = ctest("test example", testExample, NULL);
+	ctest_t *test = ctest("test example", testExample, NULL);
 }
 ```
 
@@ -42,13 +42,13 @@ You can also pass an argument at the test creation :
 
 ```c
 ctest_return_t testExample(ctest_t *test, void *arg) {
-	printf("Hello this is a test with argument %d\n", *((int *)arg));
+    printf("Hello this is a test with argument %d\n", *((int *)arg));
 }
     
 int main(int argc, const char * argv[]) {
-	unsigned int arg = 5;
+    unsigned int arg = 5;
     
- 	ctest_t *test = ctest("test example", testExample, (void *)&arg);
+    ctest_t *test = ctest("test example", testExample, (void *)&arg);
 }
 ```
     
@@ -58,21 +58,21 @@ You may want to do some processing **before** and/or **after** the invocation of
 
 ```c
 ctopt_return_t testSetupExample(void *arg) {
-	puts("Hello this is a setup\n");
+    puts("Hello this is a setup\n");
 }
 
 ctopt_return_t testTearDownExample(void *arg) {
-	puts("Hello this is a tear down\n");
+    puts("Hello this is a tear down\n");
 }
     
 ctest_return_t testExample(ctest_t *test, void *arg) {
-	puts("Hello this is a test\n");
+    puts("Hello this is a test\n");
 }
     
 int main(int argc, const char * argv[]) {
-	ctest_t *test = ctest("test example", testExample, NULL);
-	test->setup = testSetupExample;
-	test->tdown = testTearDownExample;
+    ctest_t *test = ctest("test example", testExample, NULL);
+    test->setup = testSetupExample;
+    test->tdown = testTearDownExample;
 }
 ```
     
@@ -155,11 +155,11 @@ Assertions are macros that take in parameter :
 
 ```c
 ctest_return_t testExample(ctest_t *test, void *arg) {
-	int a = 5, b = 9, c = 7, d = 14;
+    int a = 5, b = 9, c = 7, d = 14;
 	
-	CTAssertEqual(test, a + b, d, "%d + %d is not equal to %d", a, b, d)
+    CTAssertEqual(test, a + b, d, "%d + %d is not equal to %d", a, b, d)
 	
-	CTAssertNotEqual(test, d - c, b, "%d - %d is equal to %d", d, c, b)
+    CTAssertNotEqual(test, d - c, b, "%d - %d is equal to %d", d, c, b)
 }
 ```
     
@@ -167,15 +167,15 @@ ctest_return_t testExample(ctest_t *test, void *arg) {
 
 ```c
 ctest_return_t testExample(ctest_t *test, void *arg) {
-	int a = 5, b = 9, c = 7, d = 14;
+    int a = 5, b = 9, c = 7, d = 14;
 	
-	CTAssertGreaterThan(test, b + c, d, "%d is not greather than %d", b + c, d)
+    CTAssertGreaterThan(test, b + c, d, "%d is not greather than %d", b + c, d)
 	
-	CTAssertLessThan(test, b - c, a, "%d is not lesser than %d", b - c, a)
+    CTAssertLessThan(test, b - c, a, "%d is not lesser than %d", b - c, a)
 	
-	CTAssertGreaterThanOrEqual(test, d - b, a, "%d is not greather than or equal to %d", d - b, a)
+    CTAssertGreaterThanOrEqual(test, d - b, a, "%d is not greather than or equal to %d", d - b, a)
 	
-	CTAssertLessThanOrEqual(test, b - a, c, "%d is not lesser or equal to %d", b - a, c)
+    CTAssertLessThanOrEqual(test, b - a, c, "%d is not lesser or equal to %d", b - a, c)
 }
 ```
 
@@ -183,11 +183,11 @@ ctest_return_t testExample(ctest_t *test, void *arg) {
 
 ```c
 ctest_return_t testExample(ctest_t *test, void *arg) {
-	int a = 5, b = 9, c = 7, d = 14;
+    int a = 5, b = 9, c = 7, d = 14;
 	
-	CTAssertTrue(test, ((a + b) == d), "Expression is not true")
+    CTAssertTrue(test, ((a + b) == d), "Expression is not true")
 	
-	CTAssertFalse(test, ((d - b) == c), "Expression is not false")
+    CTAssertFalse(test, ((d - b) == c), "Expression is not false")
 }
 ```
     
@@ -195,15 +195,15 @@ ctest_return_t testExample(ctest_t *test, void *arg) {
 
 ```c
 ctest_return_t testExample(ctest_t *test, void *arg) {
-	void *ptr = NULL;
+    void *ptr = NULL;
 	
-	CTAssertNull(test, ptr, "ptr is not NULL")
+    CTAssertNull(test, ptr, "ptr is not NULL")
 	
-	ptr = malloc(1);
+    ptr = malloc(1);
 	
-	CTAssertNotNull(test, ptr, "ptr is NULL")
+    CTAssertNotNull(test, ptr, "ptr is NULL")
 	
-	free(ptr);
+    free(ptr);
 }
 ```
 
@@ -212,11 +212,11 @@ ctest_return_t testExample(ctest_t *test, void *arg) {
 ```c
 ctest_return_t testExample(ctest_t *test, void *arg) {
 	
-	int val = *((int *)arg);
+    int val = *((int *)arg);
 	
-	if (val <= 0) {
-		CTFail(test, "Test argument is not strictly positive\n")
-	}
+    if (val <= 0) {
+        CTFail(test, "Test argument is not strictly positive\n")
+    }
 }
 ```
 
@@ -232,26 +232,26 @@ Here is an example using a thread.
 
 ```c
 void *testAsynchronousTask(void *arg) {
-	sleep(5);
-	fulfill((ctexpect_t *)arg);
-	pthread_exit(NULL);
+    sleep(5);
+    fulfill((ctexpect_t *)arg);
+    pthread_exit(NULL);
 }
 
 ctest_return_t testExample(ctest_t *test, void *arg) {
     
-	pthread_t thread;
+    pthread_t thread;
 	
-	ctexpect_t *expect = ctexpect(test, "test expectation");
+    ctexpect_t *expect = ctexpect(test, "test expectation");
     
-	if (pthread_create(&thread, NULL, testAsynchronousTask, (void *)expect) != 0) {
-   		puts("Couldn't create thread\n");
-	}
+    if (pthread_create(&thread, NULL, testAsynchronousTask, (void *)expect) != 0) {
+        puts("Couldn't create thread\n");
+    }
     
-	ctexpectwait(test, 10);
+    ctexpectwait(test, 10);
     
     if (pthread_join(thread, NULL) != 0) {
-    	puts("Couldn't join thread\n");
-  	 }
+        puts("Couldn't join thread\n");
+    }
 }
 ```
 
