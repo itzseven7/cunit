@@ -2,7 +2,7 @@
 
 A C unit testing library (inspired by Apple's XCTest framework).
 
-Current release : 1.1
+Current release : 1.1.1
 
 The library provides the following features :
 
