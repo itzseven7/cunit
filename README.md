@@ -2,7 +2,7 @@
 
 A C unit testing library (inspired by Apple's XCTest framework).
 
-Current release : 1.1
+Current release : 1.2
 
 The library provides the following features :
 
@@ -270,6 +270,7 @@ Finally, you just have to free your `ctsuite_t` object and all the associated ob
 
 ## Changelog
 
+* v1.2 : 
 * v1.1.1 : fix memory issues + improve logging
 * v1.1 : complete rewrite + expectations
 * v1.0.1 : rename assertion macros
