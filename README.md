@@ -26,7 +26,7 @@ ctest_return_t testExample(ctest_t *test, void *arg) {
 }
     
 int main(int argc, const char * argv[]) {
-	ctest_t *test = ctest("test example", testExample, NULL);
+    ctest_t *test = ctest("test example", testExample, NULL);
 }
 ```
 
@@ -254,6 +254,19 @@ ctest_return_t testExample(ctest_t *test, void *arg) {
     }
 }
 ```
+
+### Memory management
+
+The library provides a free function for each kind of object, it frees the object **and** its children :
+
+* the **ctefree** function will only free a `ctexpect_t` object
+* the **ctfree** function will free a `ctest_t` object and its `ctexpect_t` children
+* the **ctcfree** function will free a `ctcase_t` object and its `ctest_t` children
+* the **ctsfree** function will free a `ctsuite_t` object and its `ctcase_t` children
+
+Finally, you just have to free your `ctsuite_t` object and all the associated objects will be freed like a cascade delete.
+
+**Warning : do NOT try to free a child object alone, the library assumes that you will free the parent.**
 
 ## Changelog
 
