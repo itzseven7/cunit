@@ -198,6 +198,155 @@ void ctassert_test_less_than_or_equal() {
     ctfree(test);
 }
 
+void ctassert_test_string_equal() {
+    ctest_t *test = ctest("", NULL, NULL);
+    
+    char str1[15] = "Hello there!";
+    char *str2 = malloc((sizeof(str1) * sizeof(char)) + 1);
+    strcpy(str2, str1);
+    char str3[15] = "Hello there! ";
+    
+    CTAssertStringEqual(test, str1, str2)
+    
+    ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
+    
+    assert(testInternal->failures == 0);
+    
+    CTAssertStringEqual(test, str1, str3)
+    
+    assert(testInternal->failures == 1);
+    
+    ctfree(test);
+    
+    free(str2);
+}
+
+void ctassert_test_string_not_equal() {
+    ctest_t *test = ctest("", NULL, NULL);
+    
+    char str1[15] = "Hello there!";
+    char *str2 = malloc((sizeof(str1) * sizeof(char)) + 1);
+    strcpy(str2, str1);
+    char str3[15] = "Hello there! ";
+    
+    CTAssertStringNotEqual(test, str1, str3)
+    
+    ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
+    
+    assert(testInternal->failures == 0);
+    
+    CTAssertStringNotEqual(test, str1, str2)
+    
+    assert(testInternal->failures == 1);
+    
+    ctfree(test);
+    
+    free(str2);
+}
+
+struct ctest_acmp_ex_t {
+    int a;
+    int b;
+};
+
+int intComparison(const void *a, const void *b) {
+    return *((int *)a) - *((int *)b);
+}
+
+int structComparison(const void *a, const void *b) {
+    return (((struct ctest_acmp_ex_t *)a)->a - ((struct ctest_acmp_ex_t *)b)->a) + (((struct ctest_acmp_ex_t *)a)->b - ((struct ctest_acmp_ex_t *)b)->b);
+}
+
+int stringComparison(const void *a, const void *b) {
+    return strcmp(a, b);
+}
+
+void ctassert_test_array_equal() {
+    int *arr1 = calloc(5, sizeof(int)), *arr2 = calloc(5, sizeof(int));
+    arr1[0] = 0;
+    arr2[0] = arr1[1] = 1;
+    arr2[1] = arr1[2] = 2;
+    arr2[2] = arr1[3] = 3;
+    arr2[3] = arr1[4] = 4;
+    arr2[4] = 5;
+    
+    struct ctest_acmp_ex_t *arr3 = malloc(sizeof(struct ctest_acmp_ex_t) * 5), *arr4 = malloc(sizeof(struct ctest_acmp_ex_t) * 5);
+    arr3[0] = (struct ctest_acmp_ex_t){ .a = 3, .b = 4};
+    arr4[0] = arr3[1] = (struct ctest_acmp_ex_t){ .a = 2, .b = 4};
+    arr4[1] = arr3[2] = (struct ctest_acmp_ex_t){ .a = 3, .b = 8};
+    arr4[2] = arr3[3] = (struct ctest_acmp_ex_t){ .a = 7, .b = 4};
+    arr4[3] = arr3[4] = (struct ctest_acmp_ex_t){ .a = 3, .b = 0};
+    arr4[4] = (struct ctest_acmp_ex_t){ .a = 3, .b = 0};
+    
+    const char *arr5[] = {"hello", "how are you", "goodbye"}, *arr6[] = {"hello", "how are you?", "goodbye"};
+    
+    ctest_t *test = ctest("", NULL, NULL);
+    
+    CTAssertArrayEqual(test, arr1, arr1, 5, sizeof(int), intComparison)
+    CTAssertArrayEqual(test, arr3, arr3, 5, sizeof(struct ctest_acmp_ex_t), structComparison)
+    CTAssertArrayEqual(test, arr5, arr5, 3, sizeof(char *), stringComparison)
+    
+    ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
+    
+    assert(testInternal->failures == 0);
+    
+    CTAssertArrayEqual(test, arr1, arr2, 5, sizeof(int), intComparison)
+    CTAssertArrayEqual(test, arr3, arr4, 5, sizeof(struct ctest_acmp_ex_t), structComparison)
+    CTAssertArrayEqual(test, arr5, arr6, 5, sizeof(char *), stringComparison)
+    
+    assert(testInternal->failures == 3);
+    
+    ctfree(test);
+    
+    free(arr1);
+    free(arr2);
+    free(arr3);
+    free(arr4);
+}
+
+void ctassert_test_array_not_equal() {
+    int *arr1 = calloc(5, sizeof(int)), *arr2 = calloc(5, sizeof(int));
+    arr1[0] = 0;
+    arr2[0] = arr1[1] = 1;
+    arr2[1] = arr1[2] = 2;
+    arr2[2] = arr1[3] = 3;
+    arr2[3] = arr1[4] = 4;
+    arr2[4] = 5;
+    
+    struct ctest_acmp_ex_t *arr3 = malloc(sizeof(struct ctest_acmp_ex_t) * 5), *arr4 = malloc(sizeof(struct ctest_acmp_ex_t) * 5);
+    arr3[0] = (struct ctest_acmp_ex_t){ .a = 3, .b = 4};
+    arr4[0] = arr3[1] = (struct ctest_acmp_ex_t){ .a = 2, .b = 4};
+    arr4[1] = arr3[2] = (struct ctest_acmp_ex_t){ .a = 3, .b = 8};
+    arr4[2] = arr3[3] = (struct ctest_acmp_ex_t){ .a = 7, .b = 4};
+    arr4[3] = arr3[4] = (struct ctest_acmp_ex_t){ .a = 3, .b = 0};
+    arr4[4] = (struct ctest_acmp_ex_t){ .a = 3, .b = 0};
+    
+    const char *arr5[] = {"hello", "how are you", "goodbye"}, *arr6[] = {"hello", "how are you?", "goodbye"};
+    
+    ctest_t *test = ctest("", NULL, NULL);
+    
+    CTAssertArrayNotEqual(test, arr1, arr2, 5, sizeof(int), intComparison)
+    CTAssertArrayNotEqual(test, arr3, arr4, 5, sizeof(struct ctest_acmp_ex_t), structComparison)
+    CTAssertArrayNotEqual(test, arr5, arr6, 5, sizeof(char *), stringComparison)
+    
+    ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
+    
+    assert(testInternal->failures == 0);
+    
+    CTAssertArrayNotEqual(test, arr1, arr1, 5, sizeof(int), intComparison)
+    CTAssertArrayNotEqual(test, arr3, arr3, 5, sizeof(struct ctest_acmp_ex_t), structComparison)
+    CTAssertArrayNotEqual(test, arr5, arr5, 3, sizeof(char *), stringComparison)
+    
+    assert(testInternal->failures == 3);
+    
+    ctfree(test);
+    
+    free(arr1);
+    free(arr2);
+    free(arr3);
+    free(arr4);
+}
+
 void ctassert_tests() {
     ctassert_test_fail();
     ctassert_test_equal();
@@ -210,4 +359,8 @@ void ctassert_tests() {
     ctassert_test_greater_than_or_equal();
     ctassert_test_less_than();
     ctassert_test_less_than_or_equal();
+    ctassert_test_string_equal();
+    ctassert_test_string_not_equal();
+    ctassert_test_array_equal();
+    ctassert_test_array_not_equal();
 }

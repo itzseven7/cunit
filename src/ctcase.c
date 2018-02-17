@@ -145,9 +145,9 @@ void _ctcrunperf(ctcase_t *tcase, ctperf_t *perf) {
     long expected = (long)(perf->time * 1000000);
     
     if (time <= expected) {
-        printf("--- Test perf %s succeeded (took %0.2f seconds, expected %0.2f)\n", perf->test->name, (float)((float)time / 1000000), perf->time);
+        printf("--- Test perf %s succeeded (took %f seconds, expected %f)\n", perf->test->name, (float)((float)time / 1000000), perf->time);
     } else {
-        printf("--- Test perf %s failed (took %0.2f seconds, expected %0.2f)\n", perf->test->name, (float)((float)time / 1000000), perf->time);
+        printf("--- Test perf %s failed (took %f seconds, expected %f)\n", perf->test->name, (float)((float)time / 1000000), perf->time);
     }
     
     ((ctcase_int_t *)tcase->_internal)->passed += (time <= expected);
