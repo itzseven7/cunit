@@ -178,6 +178,10 @@ ctest_return_t testExample(ctest_t *test, void *arg) {
 ###### Array equality
 
 ```c
+int testIntComparison(const void *a, const void *b) {
+    return *((int *)a) - *((int *)b);
+}
+
 ctest_return_t testExample(ctest_t *test, void *arg) {
     int arr1[5] = {0, 1, 2, 3 ,4}, arr2[5] = {1, 2, 3, 4 ,5}, arr3[5] = {0, 1, 2, 3 ,4};
     
