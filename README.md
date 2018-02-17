@@ -162,6 +162,34 @@ ctest_return_t testExample(ctest_t *test, void *arg) {
     CTAssertNotEqual(test, d - c, b, "%d - %d is equal to %d", d, c, b)
 }
 ```
+
+###### String equality
+
+```c
+ctest_return_t testExample(ctest_t *test, void *arg) {
+    char string1[15] = "Hello there!", string2[15] = "Hello all!", string3[15] = "Hello there!";
+    
+    CTAssertStringEqual(test, string1, string3, "%s is not equal to %s", string1, string3)
+    
+    CTAssertStringNotEqual(test, string1, string2, "%s is equal to %s", string1, string2)
+}
+```
+
+###### Array equality
+
+```c
+int testIntComparison(const void *a, const void *b) {
+    return *((int *)a) - *((int *)b);
+}
+
+ctest_return_t testExample(ctest_t *test, void *arg) {
+    int arr1[5] = {0, 1, 2, 3 ,4}, arr2[5] = {1, 2, 3, 4 ,5}, arr3[5] = {0, 1, 2, 3 ,4};
+    
+    CTAssertArrayEqual(test, arr1, arr3, 5, sizeof(int), testIntComparison);
+    
+    CTAssertArrayNotEqual(test, arr1, arr2, 5, sizeof(int), testIntComparison);
+}
+```
     
 ##### Inequality
 

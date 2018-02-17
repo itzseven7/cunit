@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include <pthread.h>
 #include <cunit.h>
@@ -30,6 +31,34 @@ ctest_return_t testNonEquality(ctest_t *test, void *arg) {
     puts("testNonEquality execution\n");
     int a = 5, b = 9;
     CTAssertNotEqual(test, a, b, "testNonEquality failed: %d and %d are equal\n", a, b)
+}
+
+ctest_return_t testStringEquality(ctest_t *test, void *arg) {
+    puts("testStringEquality execution\n");
+    char string1[10] = "Hello!", string2[10] = "Goodbye!";
+    CTAssertStringEqual(test, string1, string2, "testStringEquality failed: %s and %s are not equal\n", string1, string2)
+}
+
+ctest_return_t testStringNonEquality(ctest_t *test, void *arg) {
+    puts("testStringNonEquality execution\n");
+    char string1[10] = "Hello!", string2[10] = "Goodbye!";
+    CTAssertStringNotEqual(test, string1, string2, "testStringNonEquality failed: %s and %s are equal\n", string1, string2)
+}
+
+int stringEquality(const void *str1, const void *str2) {
+    return strcmp(str1, str2);
+}
+
+ctest_return_t testArrayEquality(ctest_t *test, void *arg) {
+    const char *array1[] = {"hello", "how are you", "goodbye"}, *array2[] = {"hello", "how are you", "goodbye"};
+    
+    CTAssertArrayEqual(test, array1, array2, 3, sizeof(char *), stringEquality)
+}
+
+ctest_return_t testArrayNonEquality(ctest_t *test, void *arg) {
+    const char *array1[] = {"hello", "how are you", "goodbye"}, *array2[] = {"how are you", "hello", "goodbye"};
+    
+    CTAssertArrayNotEqual(test, array1, array2, 3, sizeof(char *), stringEquality)
 }
 
 ctest_return_t testTrue(ctest_t *test, void *arg) {
@@ -145,6 +174,10 @@ int main(int argc, const char * argv[]) {
 
     ctctestadd(tcase1, ctest("testEquality", testEquality, NULL));
     ctctestadd(tcase1, ctest("testNonEquality", testNonEquality, NULL));
+    ctctestadd(tcase1, ctest("testStringEquality", testStringEquality, NULL));
+    ctctestadd(tcase1, ctest("testStringNonEquality", testStringNonEquality, NULL));
+    ctctestadd(tcase1, ctest("testArrayEquality", testArrayEquality, NULL));
+    ctctestadd(tcase1, ctest("testArrayNonEquality", testArrayNonEquality, NULL));
 
     ctcase_t *tcase2 = ctcase("Boolean");
 
