@@ -296,6 +296,14 @@ Finally, you just have to free your `ctsuite_t` object and all the associated ob
 
 **Warning : do NOT try to free a child object alone, the library assumes that you will free the parent.**
 
+## Installation
+
+Run the following command to install the library:
+
+```
+make install
+```
+
 ## Changelog
 
 * v1.2 : 
