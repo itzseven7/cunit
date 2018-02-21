@@ -145,7 +145,7 @@ A **failed assertion** or an **unfulfilled expectation** will be interpreted as 
 
 #### Assertions
 
-Assertions are macros that take in parameter :
+Assertions are macros that take, at least, the following parameters :
 
 * the current test
 * expression(s) to assert/to compare
@@ -190,6 +190,15 @@ ctest_return_t testExample(ctest_t *test, void *arg) {
     CTAssertArrayNotEqual(test, arr1, arr2, 5, sizeof(int), testIntComparison);
 }
 ```
+
+Array equality assertion takes the following parameters :
+
+* the current test
+* arrays to compare
+* the size of each array (must be the same)
+* the size of an element of the array
+* a function pointer that compares two elements of the array
+* optional supplementary description of the failure
     
 ##### Inequality
 
