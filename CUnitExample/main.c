@@ -24,13 +24,17 @@ ctest_return_t testFail(ctest_t *test, void *arg) {
 ctest_return_t testEquality(ctest_t *test, void *arg) {
     puts("testEquality execution\n");
     int a = 5, b = 9;
-    CTAssertEqual(test, a, b, "testEquality failed: %d and %d are not equal\n", a, b)
+    CTAssertEqual(test, a, b - 4, "testEquality failed: %d and %d are not equal\n", a, b)
+    double c = 9.56, d = 9.560;
+    CTAssertDecimalEqual(test, c, d, 0.001)
 }
 
 ctest_return_t testNonEquality(ctest_t *test, void *arg) {
     puts("testNonEquality execution\n");
     int a = 5, b = 9;
     CTAssertNotEqual(test, a, b, "testNonEquality failed: %d and %d are equal\n", a, b)
+    float c = 9.56, d = 9.561;
+    CTAssertDecimalEqual(test, c, d, 0.001)
 }
 
 ctest_return_t testStringEquality(ctest_t *test, void *arg) {

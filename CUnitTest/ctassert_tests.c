@@ -244,6 +244,48 @@ void ctassert_test_string_not_equal() {
     free(str2);
 }
 
+void ctassert_test_decimal_equal() {
+    ctest_t *test = ctest("", NULL, NULL);
+    
+    float a = 1.15f, b = 1.15f, c = 1.151f;
+    double d = 0.12345678987654321, e = 0.12345678987654321, f = 0.1234567898765432;
+    
+    CTAssertDecimalEqual(test, a, b, 0.001f)
+    CTAssertDecimalEqual(test, d, e, 0.00000000000000001)
+    
+    ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
+    
+    assert(testInternal->failures == 0);
+    
+    CTAssertDecimalEqual(test, a, c, 0.001f)
+    CTAssertDecimalEqual(test, d, f, 0.00000000000000001)
+    
+    assert(testInternal->failures == 2);
+    
+    ctfree(test);
+}
+
+void ctassert_test_decimal_not_equal() {
+    ctest_t *test = ctest("", NULL, NULL);
+    
+    float a = 1.15f, b = 1.15f, c = 1.151f;
+    double d = 0.12345678987654321, e = 0.12345678987654321, f = 0.1234567898765432;
+    
+    CTAssertDecimalNotEqual(test, a, c, 0.001f)
+    CTAssertDecimalNotEqual(test, d, f, 0.00000000000000001)
+    
+    ctest_int_t *testInternal = (ctest_int_t *)test->_internal;
+    
+    assert(testInternal->failures == 0);
+    
+    CTAssertDecimalNotEqual(test, a, b, 0.001f)
+    CTAssertDecimalNotEqual(test, d, e, 0.00000000000000001)
+    
+    assert(testInternal->failures == 2);
+    
+    ctfree(test);
+}
+
 struct ctest_acmp_ex_t {
     int a;
     int b;
@@ -361,6 +403,8 @@ void ctassert_tests() {
     ctassert_test_less_than_or_equal();
     ctassert_test_string_equal();
     ctassert_test_string_not_equal();
+    ctassert_test_decimal_equal();
+    ctassert_test_decimal_not_equal();
     ctassert_test_array_equal();
     ctassert_test_array_not_equal();
 }

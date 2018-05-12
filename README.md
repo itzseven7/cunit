@@ -163,6 +163,23 @@ ctest_return_t testExample(ctest_t *test, void *arg) {
 }
 ```
 
+###### Decimal equality
+
+**Warning**: remember that floating-point numbers comparison can lead to errors because of rounding.
+
+```c
+ctest_return_t testExample(ctest_t *test, void *arg) {
+    float a = 5.2f, b = 5.2f, c = 5.23f;
+    double d = 1.1, e = 1.1, f = 1.13;
+    
+    CTAssertDecimalEqual(test, a, b, 0.01f)
+    CTAssertDecimalNotEqual(test, a, c, 0.001)
+    
+    CTAssertDecimalEqual(test, d, e, 0.1f)
+    CTAssertDecimalNotEqual(test, e, f, 0.01)
+}
+```
+
 ###### String equality
 
 ```c
@@ -306,7 +323,7 @@ make install
 
 ## Changelog
 
-* v1.2 : 
+* v1.2 : decimal, string and array assertions + makefile
 * v1.1.1 : fix memory issues + improve logging
 * v1.1 : complete rewrite + expectations
 * v1.0.1 : rename assertion macros
