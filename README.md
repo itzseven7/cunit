@@ -2,7 +2,7 @@
 
 A C unit testing library (inspired by Apple's XCTest framework).
 
-Current release : 1.1.1
+Current release : 1.2
 
 The library provides the following features :
 
@@ -162,6 +162,51 @@ ctest_return_t testExample(ctest_t *test, void *arg) {
     CTAssertNotEqual(test, d - c, b, "%d - %d is equal to %d", d, c, b)
 }
 ```
+
+###### Decimal equality
+
+**Warning**: remember that floating-point numbers comparison can lead to errors because of rounding.
+
+```c
+ctest_return_t testExample(ctest_t *test, void *arg) {
+    float a = 5.2f, b = 5.2f, c = 5.23f;
+    double d = 1.1, e = 1.1, f = 1.13;
+    
+    CTAssertDecimalEqual(test, a, b, 0.01f)
+    CTAssertDecimalNotEqual(test, a, c, 0.001)
+    
+    CTAssertDecimalEqual(test, d, e, 0.1f)
+    CTAssertDecimalNotEqual(test, e, f, 0.01)
+}
+```
+
+###### String equality
+
+```c
+ctest_return_t testExample(ctest_t *test, void *arg) {
+    char string1[15] = "Hello there!", string2[15] = "Hello all!", string3[15] = "Hello there!";
+    
+    CTAssertStringEqual(test, string1, string3, "%s is not equal to %s", string1, string3)
+    
+    CTAssertStringNotEqual(test, string1, string2, "%s is equal to %s", string1, string2)
+}
+```
+
+###### Array equality
+
+```c
+int testIntComparison(const void *a, const void *b) {
+    return *((int *)a) - *((int *)b);
+}
+
+ctest_return_t testExample(ctest_t *test, void *arg) {
+    int arr1[5] = {0, 1, 2, 3 ,4}, arr2[5] = {1, 2, 3, 4 ,5}, arr3[5] = {0, 1, 2, 3 ,4};
+    
+    CTAssertArrayEqual(test, arr1, arr3, 5, sizeof(int), testIntComparison);
+    
+    CTAssertArrayNotEqual(test, arr1, arr2, 5, sizeof(int), testIntComparison);
+}
+```
     
 ##### Inequality
 
@@ -268,8 +313,17 @@ Finally, you just have to free your `ctsuite_t` object and all the associated ob
 
 **Warning : do NOT try to free a child object alone, the library assumes that you will free the parent.**
 
+## Installation
+
+Run the following command to install the library:
+
+```
+make install
+```
+
 ## Changelog
 
+* v1.2 : decimal, string and array assertions + makefile
 * v1.1.1 : fix memory issues + improve logging
 * v1.1 : complete rewrite + expectations
 * v1.0.1 : rename assertion macros

@@ -7,12 +7,13 @@
 //
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
 #include "ctassert.h"
 #include "_ctest.h"
 
-void _cfail(ctest_t *test, const char *expr1, const char *assertion, const char *expr2, const char *filename, unsigned long lineNumber, const char * format, ...) {
+void _ctfail(ctest_t *test, const char *expr1, const char *assertion, const char *expr2, const char *filename, unsigned long lineNumber, const char * format, ...) {
     
     ctestfail(test);
     
@@ -22,4 +23,18 @@ void _cfail(ctest_t *test, const char *expr1, const char *assertion, const char 
     va_start(argptr, format);
     vfprintf(stderr, buffer, argptr);
     va_end(argptr);
+}
+
+int _ctarraycmp(void *arr1, void *arr2, size_t asize, size_t atsize, int (* _aeltcmp)(const void *, const void *)) {
+    size_t i = 0;
+    int tmp = 0;
+    void *elt1 = arr1, *elt2 = arr2;
+    
+    for (i = asize; i--; ) {
+        tmp += abs(_aeltcmp(elt1, elt2));
+        elt1 += atsize;
+        elt2 += atsize;
+    }
+    
+    return tmp;
 }

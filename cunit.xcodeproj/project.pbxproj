@@ -75,6 +75,7 @@
 /* Begin PBXFileReference section */
 		0414536E201344BA00FB1FDC /* _ctsuite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _ctsuite.h; sourceTree = "<group>"; };
 		041453772013A11300FB1FDC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		0437527E20389084006BFD71 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		044A29A8200BB3F7005CC2F4 /* ctexpect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ctexpect.h; sourceTree = "<group>"; };
 		044A29A9200BB3F7005CC2F4 /* ctexpect.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ctexpect.c; sourceTree = "<group>"; };
 		044A29AD200BB5D2005CC2F4 /* _ctexpect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _ctexpect.h; sourceTree = "<group>"; };
@@ -175,8 +176,9 @@
 		04CBDD971FCDF3F500AFD45D = {
 			isa = PBXGroup;
 			children = (
+				0437527E20389084006BFD71 /* Makefile */,
 				041453772013A11300FB1FDC /* README.md */,
-				04CBDDA71FCDF3FB00AFD45D /* src */,
+				04CBDDA71FCDF3FB00AFD45D /* CUnit */,
 				04832448200A65C9006DC3FF /* CUnitTest */,
 				04528A30201132E7004EED31 /* CUnitExample */,
 				04CBDDA11FCDF3F500AFD45D /* Products */,
@@ -194,7 +196,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		04CBDDA71FCDF3FB00AFD45D /* src */ = {
+		04CBDDA71FCDF3FB00AFD45D /* CUnit */ = {
 			isa = PBXGroup;
 			children = (
 				04CBDDC21FCDF99200AFD45D /* include */,
@@ -205,7 +207,7 @@
 				044A29A9200BB3F7005CC2F4 /* ctexpect.c */,
 				04528A24201131A3004EED31 /* ctperf.c */,
 			);
-			path = src;
+			path = CUnit;
 			sourceTree = "<group>";
 		};
 		04CBDDBF1FCDF49600AFD45D /* Frameworks */ = {
@@ -559,7 +561,7 @@
 				DEPLOYMENT_POSTPROCESSING = NO;
 				DEVELOPMENT_TEAM = QQ64R4PS8Q;
 				DSTROOT = "/tmp/$(PROJECT_NAME).dist";
-				DYLIB_CURRENT_VERSION = 1.1.1;
+				DYLIB_CURRENT_VERSION = 1.2;
 				EXECUTABLE_PREFIX = lib;
 				INSTALL_PATH = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "";
@@ -576,7 +578,7 @@
 				DEPLOYMENT_POSTPROCESSING = NO;
 				DEVELOPMENT_TEAM = QQ64R4PS8Q;
 				DSTROOT = "/tmp/$(PROJECT_NAME).dist";
-				DYLIB_CURRENT_VERSION = 1.1.1;
+				DYLIB_CURRENT_VERSION = 1.2;
 				EXECUTABLE_PREFIX = lib;
 				INSTALL_PATH = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "";
